@@ -43,8 +43,7 @@ Basic Tutorial:
    - NumPy array basics: 1D arrays.
    - Reading data files.
    - More on NumPy: multi-dimensional arrays, slicing, elementary image
-     processing.
-   - Some powertools: pandas dataframe basics.
+     processing, random numbers.
    - Using SciPy for Linear Algebra, FFT's, root finding and integrating
      ODEs.
 
@@ -54,11 +53,7 @@ Basic Tutorial:
   A laptop is definitely recommended since this will be a hands-on
   session.  You will need to have Python (2.7/3.x would work fine),
   IPython (0.10.x), Numpy (1.x), SciPy (>0.5.x), matplotlib (any recent
-  version), Mayavi-3.x and above.
+  version).
 
-  On Windows and Mac OS X it is easiest to install these by installing
-  the Enthought Python Distribution.  On GNU/Linux these are typically
-  available along with the distribution.  The packages are all
-  available on Ubuntu.  FOSSEE provides a live Ubuntu-based DVD with
-  all the necessary packages.  It can be downloaded here:
-  http://fossee.in/download#DVDs
+  On Linux, Windows and Mac OS X it is easiest to install these by installing
+  the Enthought Canopy.
