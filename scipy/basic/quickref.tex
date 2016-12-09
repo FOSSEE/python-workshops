@@ -1,0 +1,297 @@
+\documentclass{article}
+\usepackage{graphicx}  
+\usepackage[landscape]{geometry}
+\usepackage[pdftex]{color}
+\usepackage{url}
+\usepackage{multicol}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\newcommand{\ex}{\color{blue}}
+\pagestyle{empty}
+\advance\topmargin-.9in
+\advance\textheight2in
+\advance\textwidth3.0in
+\advance\oddsidemargin-1.45in
+\advance\evensidemargin-1.45in
+\parindent0pt
+\parskip2pt
+
+\newcommand{\hr}{\centerline{\rule{3.5in}{1pt}}}
+\newcommand{\skipin}{\hspace*{12pt}}
+\newcommand{\typ}[1]{\lstinline{#1}}
+
+\usepackage{color}
+\definecolor{darkgreen}{rgb}{0,0.5,0}
+
+\usepackage{listings}
+\lstset{language=Python,
+    basicstyle=\ttfamily\bfseries,
+    commentstyle=\color{red}\itshape,
+  stringstyle=\color{darkgreen},
+  showstringspaces=false,
+  keywordstyle=\color{blue}\bfseries}
+
+\begin{document}
+\begin{multicols*}{3}
+\begin{center}
+\textbf{Scientific Computing with Python}\\
+\textbf{Quick Reference}\\
+\textbf{PyCon Asia-Pacific}\\
+\end{center}
+\vspace{-2ex}
+
+%*********************************************
+ \hr\textbf{Starting up}
+
+To start \lstinline|ipython| with \lstinline|pylab|:\\
+\lstinline|    $ ipython -pylab| %$
+
+To exit: \lstinline|^D| (Ctrl-d)
+
+To break from loops: \lstinline|^C| (Ctrl-c)
+
+%*********************************************
+\hr\textbf{Plotting}
+
+Creating a linear array:\\
+{\ex \lstinline|    x = linspace(0, 2*pi, 50)|}
+
+Plotting two variables:\\
+{\ex \lstinline|    plot(x, sin(x))|}
+
+Plotting two lists of equal length x, y:\\
+{\ex \lstinline|    plot(x, y)|}
+
+Plots with colors:\\
+{\ex \lstinline|    plot(x, sin(x), 'b')|} gives a blue line
+
+Line style and markers:\\
+{\ex \lstinline|    plot(x, sin(x), '--')|} gives a dashed line\\
+{\ex \lstinline|'.'|} --  a point marker, {\ex \lstinline|'o'|} -- a circle marker
+
+Labels:\\
+{\ex \lstinline|    xlabel('x')|} and {\ex \lstinline|ylabel('sin(x)')|}
+
+Title (\lstinline|pylab| accepts \TeX~in any text expression):\\
+{\ex \lstinline|    title(r'$\sigma$ vs. $\sin(\sigma)$')|} 
+
+Legend:\\
+{\ex \lstinline|    legend(['sin(x)'], loc=center)|}\\
+{\ex \lstinline|    legend(['sin(x)', 'cos(x)'])|}\\
+If \lstinline|loc| is not specified, \lstinline|best| is used
+
+Annotate:\\
+{\ex \lstinline|    annotate('annotation string', xy=(1.5, 1))|}
+
+Saving figures:\\
+{\ex \lstinline|    savefig('sinusoids.png')|}
+
+Axes lengths:\\
+Get the axes lengths:\\
+{\ex \lstinline|    xmin, xmax = xlim()|}\\
+{\ex \lstinline|    ymin, ymax = ylim()|}\\
+Set the axes lengths:\\
+{\ex \lstinline|    xlim(-2*pi, 2*pi)|}\\
+{\ex \lstinline|    ylim(-1.2, 1.2)|}
+
+Miscellaneous:\\
+{\ex \lstinline|    clf()|} to clear the plot area\\
+{\ex \lstinline|    close()|} to close the figure
+
+%*********************************************
+\hr\textbf{IPython tips}
+
+\typ{TAB} completes commands\\
+History: Up, down arrows or (\typ{Ctrl-p}/\typ{Ctrl-n})\\
+Search: \typ{Ctrl-r} and start typing\\
+\typ{Ctrl-a}: go to start of line\\
+\typ{Ctrl-e}: go to end of line\\
+\typ{Ctrl-k}: kill to end of line\\
+Help: \typ{object?}\\
+Source Code: \typ{object??}\\
+Time execution of expression/statement: \typ{\%timeit}
+
+%*********************************************
+\hr\textbf{Saving and Running scripts}
+
+{\ex \lstinline|    %hist|} returns history of commands used. \\
+To save a set of lines, say 14-18, 20, 22, to \lstinline|sample.py| \\
+{\ex \lstinline|    %save sample.py 14-18 20 22|}\\
+To run \lstinline|sample.py| \\
+{\ex \lstinline|    %run -i sample.py|}
+
+%*********************************************
+ \hr\textbf{Reading from files}
+
+\lstinline|filename.txt| is a file with float data. 
+Using loadtxt: \\
+{\ex \lstinline|X = loadtxt('filename.txt')|} \\
+X is an array with all the data from \lstinline|filename.txt|\\
+{\ex \lstinline|X,Y = loadtxt('filename.txt', unpack=True)|} \\
+X,Y contain each column of the data\\
+{\ex \lstinline|X = loadtxt('filename.txt', delimiter=';')|} \\
+when ';' delmits the columns of data
+
+%*********************************************
+\hr\textbf{Statistical operations}
+
+{\ex \lstinline|mean|, \lstinline|median|, \lstinline|std|}
+
+%*********************************************
+\hr\textbf{NumPy Arrays}
+
+Fixed size: \typ{arr.size}\\
+Homogeneous: \typ{arr.dtype}\\
+Extent along each dimension: \typ{arr.shape}\\
+Bytes per element: \typ{arr.itemsize}
+
+%*********************************************
+\hr\textbf{Array Creation}
+
+{\ex \lstinline|C = array([[11,12,13], [21,22,23], [31,32,33]])|}\\
+{\ex \lstinline|C.shape|} shape--- rows \& cols\\
+{\ex \lstinline|C.dtype|} data type\\
+{\ex \lstinline|B = ones_like(C)|} array of ones; same shape, dtype as C\\
+\skipin similarly \lstinline|zeros_like, empty_like| \\
+{\ex \lstinline|A = ones((3,2))|} array of ones of shape (3,2)\\
+\skipin similarly \lstinline|zeros, empty|\\
+{\ex \lstinline|I = identity(3)|} identity matrix of size 3x3\\
+{\ex \lstinline|x, y = mgrid[0:3, 0:5]|} mesh-grid of size 3x5\\
+{\ex \lstinline|x, y = ogrid[0:3, 0:5]|} open mesh-grid of size 3x5
+
+%*********************************************
+\hr\textbf{Accessing \& Changing elements}
+
+{\ex \lstinline|C[1, 2]|} gets third element of second row\\
+\skipin \textbf{Note:} Indexing starts from 0. \\
+{\ex \lstinline|C[1]|} gets the second row \\
+{\ex \lstinline|C[1,:]|} same as above (`:' implies all columns)\\
+{\ex \lstinline|C[:,1]|} gets the second column (`:' implies all rows)\\
+{\ex \lstinline|C[0:2,:]|} or {\ex \lstinline|C[:2,:]|} gets $1^{st}, 2^{nd}$ rows; all cols\\
+{\ex \lstinline|C[1:3,:]|} or {\ex \lstinline|C[1:,:]|} gets $2^{nd}, 3^{rd}$
+rows; all cols\\
+{\ex \lstinline|C[0:3:2,:]|} or {\ex \lstinline|C[::2,:]|} gets $1^{st}, 3^{rd}$
+rows; all cols
+ 
+%*********************************************
+\hr\textbf{Matrix Operations}
+
+For matrices A and B of equal shapes:\\
+{\ex \lstinline|A.T|} transpose\\
+{\ex \lstinline|sum(A)|} sum of all elements\\
+{\ex \lstinline|A+B|} addition\\
+{\ex \lstinline|A*B|} element wise product\\
+{\ex \lstinline|dot(A, B)|} Matrix multiplication\\
+{\ex \lstinline|inv(A)|} inverse, {\ex \lstinline|det(A)|} determinant\\
+{\ex \lstinline|eig(A)|} eigen values and vectors\\
+{\ex \lstinline|norm(A)|} norm\\
+{\ex \lstinline|svd(A)|} singular value decomposition
+
+%*********************************************
+\hr\textbf{Least Square Fit}
+
+To get the least square fit of $L$ vs. $tsq$:\\
+{\ex \lstinline|A = array([L, ones_like(L)])|}\\
+{\ex \lstinline|A = A.T|} vandermonde matrix\\
+{\ex \lstinline|result = lstsq(A, tsq)|}\\
+{\ex \lstinline|coef = result[0]|} coefficients
+{\ex \lstinline|Tline = coef[0]*L + coef[1]|}
+
+%*********************************************
+\hr\textbf{Solving Linear Equations}
+
+{\ex \lstinline|A = array([[3,2,-1], [2,-2,4], [-1, 0.5, -1]])|}\\
+\skipin coefficient array\\
+{\ex \lstinline|b = array([1, -2, 0])|} constant array\\
+{\ex \lstinline|x = solve(A, b)|} the required solution
+
+Checking the solution:\\
+{\ex \lstinline|Ax = dot(A,x)|} matrix multiplication of A and x\\
+{\ex \lstinline|allclose(Ax, b)|} check the closeness of Ax, b
+
+%*********************************************
+\hr\textbf{Roots of Polynomials}
+
+{\ex \lstinline|coeffs = [1, 6, 13]|} coefficients in descending order\\ 
+{\ex \lstinline|roots(coeffs)|} returns complex roots of the polynomial
+
+%*********************************************
+\hr\textbf{Roots of non-linear equations}
+
+{\ex \lstinline|from scipy.optimize import fsolve|}\\
+\skipin \lstinline|fsolve| is not in \lstinline|pylab|\\
+\skipin we import from \lstinline|scipy.optimize| \\ 
+We wish to find the roots of $f(x)=sin(x)+cos(x)^2$ 
+\vspace{-8pt}
+\begin{lstlisting}
+def f(x):
+    return sin(x)+cos(x)**2
+\end{lstlisting}
+\vspace{-8pt}
+{\ex \lstinline|fsolve(f, 0)|} \\
+\skipin arguments are function name and initial estimate
+
+%*********************************************
+\hr\textbf{ODE}
+
+To solve the ODE below:\\
+$\frac{dy}{dt} = ky(L-y)$, L = 25000, k = 0.00003, y(0) = 250\\
+\vspace{-8pt}
+\begin{lstlisting}
+def f(y, t):
+    k, L = 0.00003, 25000
+    return k*y*(L-y)
+\end{lstlisting}
+\vspace{-8pt}
+{\ex \lstinline|t = linspace(0, 12, 60)|} time over which to solve ODE\\
+{\ex \lstinline|y0 = 250|} initial conditions\\
+{\ex \lstinline|from scipy.integrate import odeint|}\\
+{\ex \lstinline|y = odeint(f, y0, t)|}
+
+\hr\textbf{FFT}
+
+{\ex \lstinline|t = linspace(0, 2*pi, 500)|}\\
+{\ex \lstinline|y = sin(4*pi*t)|} a sinusoidal signal\\
+{\ex \lstinline|f = fft(y)|}\\
+{\ex \lstinline|freq = fftfreq(500, t[1] - t[0])|}\\
+{\ex \lstinline|plot(freq[:250], abs(f)[:250])|}
+
+\hr\textbf{Random Numbers}
+
+{\ex \typ{from numpy import random}}\\
+{\ex \typ{random.random}}: Uniform deviates in $[0, 1)$\\
+{\ex \typ{random.normal}}: Random samples -- Gaussian dist.\\
+{\ex \typ{random.normal}}: Random samples -- Gaussian dist.\\
+{\ex \typ{x = random.random(size=1000)}}\\
+{\ex \typ{x,y = random.normal(size=(2,1000))}}
+
+\hr\textbf{Record Arrays}
+
+{\ex \typ{typ = [('id', int), ('x', float)]}}\\
+{\ex \typ{rec = numpy.zeros(10, dtype=typ)}}\\
+{\ex \typ{rec['id'] = range(10)}}\\
+{\ex \typ{rec['x'] = random.random(size=10)}}\\
+
+{\ex \typ{data = csv2rec('data.csv')}} from csv to record array
+
+\hr\textbf{\typ{mlab}}
+
+{\ex \typ{from enthought.mayavi import mlab}}  Ready to Go!\\
+{\ex \typ{mlab.test_<TAB>}}  Test Functions\\
+{\ex \typ{mlab.points3d(x, y, z)}}  Plot points in 3D\\
+{\ex \typ{mlab.contour3d(x*x*0.5 + y*y + z*z*2)}}  3D contours\\
+{\ex \typ{gcf}} get current figure\\
+{\ex \typ{savefig}} save current figure\\
+{\ex \typ{figure}} switch figure or new figure\\
+{\ex \typ{axes}} create axes\\
+{\ex \typ{outline}} create outline\\
+{\ex \typ{title}} add title\\
+{\ex \typ{xlabel, ylabel, zlabel}} labels\\
+{\ex \typ{colorbar}} Add colorbar\\
+{\ex \typ{scalarbar}} Add colorbar for scalar color mapping\\
+{\ex \typ{vectorbar}} Add colorbar for vector color mapping\\
+{\ex \typ{show}} show figure (standalone scripts)
+
+\end{multicols*}
+
+\end{document}
