@@ -1,5 +1,5 @@
 \documentclass{article}
-\usepackage{graphicx}  
+\usepackage{graphicx}
 \usepackage[landscape]{geometry}
 \usepackage[pdftex]{color}
 \usepackage{url}
@@ -36,7 +36,7 @@
 \begin{center}
 \textbf{Scientific Computing with Python}\\
 \textbf{Quick Reference}\\
-\textbf{PyCon Asia-Pacific}\\
+\textbf{SciPy India 2016}\\
 \end{center}
 \vspace{-2ex}
 
@@ -44,14 +44,14 @@
  \hr\textbf{Starting up}
 
 To start \lstinline|ipython| with \lstinline|pylab|:\\
-\lstinline|    $ ipython -pylab| %$
+\lstinline|    $ ipython --pylab| %$
 
 To exit: \lstinline|^D| (Ctrl-d)
 
 To break from loops: \lstinline|^C| (Ctrl-c)
 
 %*********************************************
-\hr\textbf{Plotting}
+\hr\textbf{Simple plotting}
 
 Creating a linear array:\\
 {\ex \lstinline|    x = linspace(0, 2*pi, 50)|}
@@ -73,7 +73,7 @@ Labels:\\
 {\ex \lstinline|    xlabel('x')|} and {\ex \lstinline|ylabel('sin(x)')|}
 
 Title (\lstinline|pylab| accepts \TeX~in any text expression):\\
-{\ex \lstinline|    title(r'$\sigma$ vs. $\sin(\sigma)$')|} 
+{\ex \lstinline|    title(r'$\sigma$ vs. $\sin(\sigma)$')|}
 
 Legend:\\
 {\ex \lstinline|    legend(['sin(x)'], loc=center)|}\\
@@ -123,7 +123,7 @@ To run \lstinline|sample.py| \\
 %*********************************************
  \hr\textbf{Reading from files}
 
-\lstinline|filename.txt| is a file with float data. 
+\lstinline|filename.txt| is a file with float data.
 Using loadtxt: \\
 {\ex \lstinline|X = loadtxt('filename.txt')|} \\
 X is an array with all the data from \lstinline|filename.txt|\\
@@ -172,7 +172,7 @@ Bytes per element: \typ{arr.itemsize}
 rows; all cols\\
 {\ex \lstinline|C[0:3:2,:]|} or {\ex \lstinline|C[::2,:]|} gets $1^{st}, 3^{rd}$
 rows; all cols
- 
+
 %*********************************************
 \hr\textbf{Matrix Operations}
 
@@ -194,7 +194,7 @@ To get the least square fit of $L$ vs. $tsq$:\\
 {\ex \lstinline|A = array([L, ones_like(L)])|}\\
 {\ex \lstinline|A = A.T|} vandermonde matrix\\
 {\ex \lstinline|result = lstsq(A, tsq)|}\\
-{\ex \lstinline|coef = result[0]|} coefficients
+{\ex \lstinline|coef = result[0]|} coefficients\\
 {\ex \lstinline|Tline = coef[0]*L + coef[1]|}
 
 %*********************************************
@@ -212,16 +212,18 @@ Checking the solution:\\
 %*********************************************
 \hr\textbf{Roots of Polynomials}
 
-{\ex \lstinline|coeffs = [1, 6, 13]|} coefficients in descending order\\ 
+{\ex \lstinline|coeffs = [1, 6, 13]|} coefficients in descending order\\
 {\ex \lstinline|roots(coeffs)|} returns complex roots of the polynomial
+\hr
+\pagebreak
 
 %*********************************************
 \hr\textbf{Roots of non-linear equations}
 
 {\ex \lstinline|from scipy.optimize import fsolve|}\\
 \skipin \lstinline|fsolve| is not in \lstinline|pylab|\\
-\skipin we import from \lstinline|scipy.optimize| \\ 
-We wish to find the roots of $f(x)=sin(x)+cos(x)^2$ 
+\skipin we import from \lstinline|scipy.optimize| \\
+We wish to find the roots of $f(x)=sin(x)+cos(x)^2$
 \vspace{-8pt}
 \begin{lstlisting}
 def f(x):
@@ -274,23 +276,23 @@ def f(y, t):
 
 {\ex \typ{data = csv2rec('data.csv')}} from csv to record array
 
-\hr\textbf{\typ{mlab}}
+\hr\textbf{3D plotting with Mayavi's \typ{mlab}}
 
-{\ex \typ{from enthought.mayavi import mlab}}  Ready to Go!\\
+{\ex \typ{from mayavi import mlab}}  Ready to Go!\\
 {\ex \typ{mlab.test_<TAB>}}  Test Functions\\
 {\ex \typ{mlab.points3d(x, y, z)}}  Plot points in 3D\\
 {\ex \typ{mlab.contour3d(x*x*0.5 + y*y + z*z*2)}}  3D contours\\
-{\ex \typ{gcf}} get current figure\\
-{\ex \typ{savefig}} save current figure\\
-{\ex \typ{figure}} switch figure or new figure\\
-{\ex \typ{axes}} create axes\\
-{\ex \typ{outline}} create outline\\
-{\ex \typ{title}} add title\\
-{\ex \typ{xlabel, ylabel, zlabel}} labels\\
-{\ex \typ{colorbar}} Add colorbar\\
-{\ex \typ{scalarbar}} Add colorbar for scalar color mapping\\
-{\ex \typ{vectorbar}} Add colorbar for vector color mapping\\
-{\ex \typ{show}} show figure (standalone scripts)
+{\ex \typ{mlab.gcf}} get current figure\\
+{\ex \typ{mlab.savefig}} save current figure\\
+{\ex \typ{mlab.figure}} switch figure or new figure\\
+{\ex \typ{mlab.axes}} create axes\\
+{\ex \typ{mlab.outline}} create outline\\
+{\ex \typ{mlab.title}} add title\\
+{\ex \typ{mlab.xlabel, ylabel, zlabel}} labels\\
+{\ex \typ{mlab.colorbar}} Add colorbar\\
+{\ex \typ{mlab.scalarbar}} Add colorbar for scalar color mapping\\
+{\ex \typ{mlab.vectorbar}} Add colorbar for vector color mapping\\
+{\ex \typ{mlab.show}} show figure (standalone scripts)
 
 \end{multicols*}
 
