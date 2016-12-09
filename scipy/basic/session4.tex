@@ -2,13 +2,13 @@
 %Tutorial slides on Python.
 %
 % Author: FOSSEE
-% Copyright (c) 2009, FOSSEE, IIT Bombay
+% Copyright (c) 2009-2016, FOSSEE, IIT Bombay
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \documentclass[14pt,compress]{beamer}
 %\documentclass[draft]{beamer}
 %\documentclass[compress,handout]{beamer}
-%\usepackage{pgfpages} 
+%\usepackage{pgfpages}
 %\pgfpagesuselayout{2 on 1}[a4paper,border shrink=5mm]
 
 % Modified from: generic-ornate-15min-45min.de.tex
@@ -45,7 +45,7 @@
 % Macros
 \setbeamercolor{emphbar}{bg=blue!20, fg=black}
 \newcommand{\emphbar}[1]
-{\begin{beamercolorbox}[rounded=true]{emphbar} 
+{\begin{beamercolorbox}[rounded=true]{emphbar}
       {#1}
  \end{beamercolorbox}
 }
@@ -80,13 +80,13 @@
 % Title page
 \title[Basic SciPy and Mayavi]{Introductory Scientific Computing with
 Python}
-\subtitle{Basic SciPy and Mayavi}
+\subtitle{Basic SciPy}
 
 \author[Prabhu] {FOSSEE}
 
 \institute[FOSSEE -- IITB] {Department of Aerospace Engineering\\IIT Bombay}
-\date[] {SciPy India, 2014\\
-December, 2014
+\date[] {SciPy India, 2016\\
+Mumbai
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -113,7 +113,7 @@ December, 2014
 }
 
 % If you wish to uncover everything in a step-wise fashion, uncomment
-% the following command: 
+% the following command:
 %\beamerdefaultoverlayspecification{<+->}
 
 %\includeonlyframes{current,current1,current2,current3,current4,current5,current6}
@@ -150,7 +150,7 @@ Solution:
 Let us now look at how to solve this using \kwrd{matrices}
   \begin{lstlisting}
 In []: A = array([[3,2,-1],
-                  [2,-2,4],                   
+                  [2,-2,4],
                   [-1, 0.5, -1]])
 In []: b = array([1, -2, 0])
 In []: x = solve(A, b)
@@ -182,7 +182,7 @@ We can use \kwrd{allclose()} to check.
 In []: allclose(Ax, b)
 Out[]: True
 \end{lstlisting}
-\inctime{5}
+\inctime{10}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -194,7 +194,6 @@ Solve the set of equations:
   2x + y -z + 3w & = -11 \\
   x - 3y + 2z + 7w & = -5\\
 \end{align*}
-\inctime{5}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -206,6 +205,7 @@ Use \kwrd{solve()}
   z & = 3\\
   w & = 0\\
 \end{align*}
+\inctime{5}
 \end{frame}
 
 \section{Finding Roots}
@@ -214,7 +214,7 @@ Use \kwrd{solve()}
 \frametitle{SciPy: \typ{roots}}
 \begin{itemize}
 \item Calculates the roots of polynomials
-\item To calculate the roots of $x^2-5x+6$ 
+\item To calculate the roots of $x^2-5x+6$
 \end{itemize}
 \begin{lstlisting}
   In []: coeffs = [1, -5, 6]
@@ -223,7 +223,7 @@ Use \kwrd{solve()}
 \end{lstlisting}
 \vspace*{-.2in}
 \begin{center}
-\includegraphics[height=1.6in, interpolate=true]{data/roots}    
+\includegraphics[height=1.6in, interpolate=true]{data/roots}
 \end{center}
 \end{frame}
 
@@ -232,7 +232,7 @@ Use \kwrd{solve()}
 Find the root of $sin(z)+cos^2(z)$ nearest to $0$
 \vspace{-0.1in}
 \begin{center}
-\includegraphics[height=2.8in, interpolate=true]{data/fsolve}    
+\includegraphics[height=2.8in, interpolate=true]{data/fsolve}
 \end{center}
 \end{frame}
 
@@ -259,8 +259,9 @@ In []: fsolve(g, 0)
 Out[]: -0.66623943249251527
 \end{lstlisting}
 \begin{center}
-\includegraphics[height=2in, interpolate=true]{data/fsolve}    
+\includegraphics[height=2in, interpolate=true]{data/fsolve}
 \end{center}
+\inctime{10}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -277,10 +278,12 @@ def g(x):
 fsolve(g, 0)
   \end{lstlisting}
   \end{small}
+  \vspace*{-0.2in}
   \begin{center}
-\includegraphics[height=2in, interpolate=true]{data/fsolve_tanx}
-  \end{center}
-  \inctime{10}
+\includegraphics[height=2.5in, interpolate=true]{data/fsolve_tanx}
+\end{center}
+\vspace*{-0.5in}
+  \inctime{5}
 \end{frame}
 
 %% \begin{frame}[fragile]
@@ -298,22 +301,29 @@ fsolve(g, 0)
 
 \section{ODEs}
 
-\begin{frame}[fragile]
+\begin{frame}
 \frametitle{Solving ODEs using SciPy}
 \begin{itemize}
 \item Consider the spread of an epidemic in a population
+  \vspace*{0.1in}
 \item $\frac{dy}{dt} = ky(L-y)$ gives the spread of the disease
+  \vspace*{0.1in}
 \item $L$ is the total population.
 \item Use $L = 2.5E5, k = 3E-5, y(0) = 250$
-\item Define a function as below
 \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Solving ODEs using SciPy}
+Define a function as below
+\small
 \begin{lstlisting}
 In []: from scipy.integrate import odeint
 In []: def epid(y, t):
-  ....     k = 3.0e-5
-  ....     L = 2.5e5
-  ....     return k*y*(L-y)
-  ....
+  ...:     k = 3.0e-5
+  ...:     L = 2.5e5
+  ...:     return k*y*(L-y)
+  ...:
 \end{lstlisting}
 \end{frame}
 
@@ -332,14 +342,16 @@ In []: plot(t, y)
 \begin{frame}[fragile]
 \frametitle{Result}
 \begin{center}
-\includegraphics[height=2in, interpolate=true]{data/image}  
+\includegraphics[height=3in, interpolate=true]{data/image}
 \end{center}
+\vspace*{-0.5in}
+\inctime{5}
 \end{frame}
 
 
 \begin{frame}[fragile]
 \frametitle{ODEs - Simple Pendulum}
-We shall use the simple ODE of a simple pendulum. 
+We shall use the simple ODE of a simple pendulum.
 \begin{equation*}
 \ddot{\theta} = -\frac{g}{L}sin(\theta)
 \end{equation*}
@@ -350,7 +362,7 @@ We shall use the simple ODE of a simple pendulum.
 \dot{\theta} &= \omega \\
 \dot{\omega} &= -\frac{g}{L}sin(\theta) \\
  \text{At}\ t &= 0 : \nonumber \\
- \theta = \theta_0(10^o)\quad & \&\quad  \omega = 0\ (Initial\ values)\nonumber 
+ \theta = \theta_0(10^o)\quad & \&\quad  \omega = 0\ (Initial\ values)\nonumber
 \end{align}
 \end{frame}
 
@@ -374,13 +386,13 @@ In []: def pend_int(initial, t):
 \begin{frame}[fragile]
 \frametitle{ODEs - Simple Pendulum \ldots}
 \begin{itemize}
-\item \typ{t} is the time variable \\ 
+\item \typ{t} is the time variable \\
 \item \typ{initial} has the initial values
 \end{itemize}
 \begin{lstlisting}
 In []: t = linspace(0, 20, 101)
 In []: initial = [10*2*pi/360, 0]
-\end{lstlisting} 
+\end{lstlisting}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -389,7 +401,7 @@ In []: initial = [10*2*pi/360, 0]
 \typ{In []: from scipy.integrate import odeint}
 %%\end{small}
 \begin{lstlisting}
-In []: pend_sol = odeint(pend_int, 
+In []: pend_sol = odeint(pend_int,
                          initial,t)
 \end{lstlisting}
 \end{frame}
@@ -397,7 +409,7 @@ In []: pend_sol = odeint(pend_int,
 \begin{frame}[fragile]
 \frametitle{Result}
 \begin{center}
-\includegraphics[height=2in, interpolate=true]{data/ode}  
+\includegraphics[height=2in, interpolate=true]{data/ode}
 \end{center}
   \inctime{10}
 \end{frame}
@@ -419,7 +431,7 @@ In []: freq = fftfreq(500, t[1] - t[0])
 
 In []: plot(freq[:250], abs(f)[:250])
 In []: grid()
-\end{lstlisting} 
+\end{lstlisting}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -428,7 +440,7 @@ In []: grid()
 In []: y1 = ifft(f) # inverse FFT
 In []: allclose(y, y1)
 Out[]: True
-\end{lstlisting} 
+\end{lstlisting}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -460,170 +472,12 @@ In []: yc = signal.wiener(yn, 5)
 In []: clf()
 In []: plot(t, yc)
 In []: figure()
-In []: plot(freq[:250], 
+In []: plot(freq[:250],
   ...:      abs(fft(yc))[:250])
 \end{lstlisting}
 Only scratched the surface here \dots
   \inctime{10}
 \end{frame}
-
-\section{Basic Mayavi: \typ{mlab}}
-
-\begin{frame}[fragile]
-\frametitle{Basic 3D visualization}
-\begin{itemize}
-    \item Simple one liners for 3D visualization
-    \item Must import mlab.
-\end{itemize}
-\begin{lstlisting}
-In []: from mayavi import mlab
-\end{lstlisting}
-Ready to go!
-\end{frame}
-
-\begin{frame}[fragile]
-    \frametitle{Simple examples}
-
-    \myemph{\Large Try these}
-
-    \begin{lstlisting}
-In []: mlab.test_<TAB>
-
-In []: mlab.test_points3d()
-In []: mlab.clf()
-In []: mlab.test_plot3d()
-In []: mlab.clf()
-In []: mlab.test_surf()
-In []: mlab.test_surf??
-    \end{lstlisting}
-Explore the UI.
-\end{frame}
-
-
-\begin{frame}[fragile]
-    \frametitle{\typ{mlab} plotting functions}
-    \begin{columns}
-        \column{0.25\textwidth}
-        \myemph{\Large 0D data}
-        \column{0.5\textwidth}
-    \pgfimage[width=2in]{../MEDIA/m2/mlab/points3d_ex}
-    \end{columns}
-
-    \begin{lstlisting}
-In []: t = linspace(0, 2*pi, 50)
-In []: u = cos(t) * pi
-In []: x, y, z = sin(u), cos(u), sin(t)
-    \end{lstlisting}
-    \emphbar{\PythonCode{In []: mlab.points3d(x, y, z)}}
-\end{frame}
-
-\begin{frame}[plain, fragile]
-    \frametitle{Changing how things look}
-
-    \begin{block}{Clearing the view}
-    \PythonCode{>>> mlab.clf()}
-    \end{block}
-
-    \pause
-
-    \begin{block}{IPython is your friend!}
-    \PythonCode{>>> mlab.points3d?}
-
-    \begin{itemize}
-
-        \item Extra argument: Scalars
-
-        \item Keyword arguments
-
-        \item UI
-    \end{itemize}
-    \end{block}
-\pause
-    \begin{lstlisting}
-In []: mlab.points3d(x, y, z, t, 
-                     scale_mode='none')
-    \end{lstlisting}
-
-\end{frame}
-
-
-
-\begin{frame}[fragile]
-  \begin{columns}
-        \column{0.25\textwidth}
-        \myemph{\Large 1D data}
-        \column{0.5\textwidth}
-        \pgfimage[width=2.5in]{../MEDIA/m2/mlab/plot3d_ex}
-  \end{columns}
-  \emphbar{\PythonCode{In []: mlab.plot3d(x, y, z, t)}}
-
-    Plots lines between the points
-    
-\end{frame}
-
-\begin{frame}[fragile]
-    \begin{columns}
-        \column{0.25\textwidth}
-        \myemph{\Large 2D data}
-        \column{0.5\textwidth}
-        \pgfimage[width=2in]{../MEDIA/m2/mlab/surf_ex}
-    \end{columns}            
-    \begin{lstlisting}
-In []: x, y = mgrid[-3:3:100j,-3:3:100j]
-In []: z = sin(x*x + y*y)
-    \end{lstlisting}
-
-    \emphbar{\PythonCode{In []: mlab.surf(x, y, z)}}
-
-    \alert{Assumes the points are rectilinear}
-
-\end{frame}
-
-
-\begin{frame}[plain, fragile]
-
-        \myemph{\Large 3D data}
-    \vspace*{0.25in}
-
-    \pgfimage[width=1.5in]{../MEDIA/m2/mlab/contour3d}\\
-    
-\begin{lstlisting}
-In []: x, y, z = ogrid[-5:5:64j, 
-  ...:                 -5:5:64j, 
-  ...:                 -5:5:64j]
-In []: mlab.contour3d(x*x*0.5 + y*y + 
-                   z*z*2)
-\end{lstlisting}
-\end{frame}
-
-\begin{frame}[plain]
-    {Other utility functions}
-    \begin{itemize}
-        \item \PythonCode{gcf}: get current figure
-            \pause
-        \item \PythonCode{savefig}, \PythonCode{figure}
-            \pause
-        \item \PythonCode{axes}, \PythonCode{outline}
-            \pause
-        \item \PythonCode{title}, \PythonCode{xlabel, ylabel, zlabel}
-            \pause
-        \item \PythonCode{colorbar}, \PythonCode{scalarbar},
-            \PythonCode{vectorbar}
-            \pause
-        \item \PythonCode{show}: Standalone mlab scripts
-            \pause
-        \item Others, see UG
-    \end{itemize}
-\end{frame}
-
-\begin{frame}
-    {Exploring the documentation}
-    \begin{center}
-    \pgfimage[width=4in]{../MEDIA/m2/m2_ug_doc}
-    \end{center}
-    \inctime{20}
-\end{frame}
-
 
 
 \begin{frame}
@@ -634,7 +488,6 @@ In []: mlab.contour3d(x*x*0.5 + y*y +
   \item Finding Roots
   \item Solving ODEs
   \item FFTs and basic signal processing
-  \item Basic 3D visualization with Mayavi
   \end{itemize}
 \end{frame}
 
@@ -646,7 +499,6 @@ In []: mlab.contour3d(x*x*0.5 + y*y +
         \item \url{matplotlib.sf.net/contents.html}
         \item \url{scipy.org/Tentative_NumPy_Tutorial}
         \item \url{docs.scipy.org/doc/scipy/reference/tutorial}
-        \item \url{github.enthought.com/mayavi/mayavi}
     \end{itemize}
 \end{frame}
 
@@ -777,4 +629,3 @@ do you use to check if this is true?
 %%   In []: x == y
 %% \end{lstlisting}
 %% \end{frame}
-

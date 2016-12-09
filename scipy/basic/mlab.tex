@@ -1,0 +1,295 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Tutorial slides on Python.
+%
+% Author: FOSSEE
+% Copyright (c) 2009-2016, FOSSEE, IIT Bombay
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[14pt,compress]{beamer}
+%\documentclass[draft]{beamer}
+%\documentclass[compress,handout]{beamer}
+%\usepackage{pgfpages}
+%\pgfpagesuselayout{2 on 1}[a4paper,border shrink=5mm]
+
+% Modified from: generic-ornate-15min-45min.de.tex
+\mode<presentation>
+{
+  \usetheme{Warsaw}
+  \useoutertheme{infolines}
+  \setbeamercovered{transparent}
+}
+
+\usepackage[english]{babel}
+\usepackage[latin1]{inputenc}
+%\usepackage{times}
+\usepackage[T1]{fontenc}
+\usepackage{pgf}
+
+% Taken from Fernando's slides.
+\usepackage{ae,aecompl}
+\usepackage{mathpazo,courier,euler}
+\usepackage[scaled=.95]{helvet}
+\usepackage{amsmath}
+
+\definecolor{darkgreen}{rgb}{0,0.5,0}
+
+\usepackage{listings}
+\lstset{language=Python,
+    basicstyle=\ttfamily\bfseries,
+    commentstyle=\color{red}\itshape,
+  stringstyle=\color{darkgreen},
+  showstringspaces=false,
+  keywordstyle=\color{blue}\bfseries}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Macros
+\setbeamercolor{emphbar}{bg=blue!20, fg=black}
+\newcommand{\emphbar}[1]
+{\begin{beamercolorbox}[rounded=true]{emphbar}
+      {#1}
+ \end{beamercolorbox}
+}
+
+\newcommand{\myemph}[1]{\structure{\emph{#1}}}
+\newcommand{\PythonCode}[1]{\lstinline{#1}}
+
+\newcounter{time}
+\setcounter{time}{0}
+\newcommand{\inctime}[1]{\addtocounter{time}{#1}{\tiny \thetime\ m}}
+
+\newcommand{\typ}[1]{\lstinline{#1}}
+
+\newcommand{\kwrd}[1]{ \texttt{\textbf{\color{blue}{#1}}}  }
+
+%%% This is from Fernando's setup.
+% \usepackage{color}
+% \definecolor{orange}{cmyk}{0,0.4,0.8,0.2}
+% % Use and configure listings package for nicely formatted code
+% \usepackage{listings}
+% \lstset{
+%    language=Python,
+%    basicstyle=\small\ttfamily,
+%    commentstyle=\ttfamily\color{blue},
+%    stringstyle=\ttfamily\color{orange},
+%    showstringspaces=false,
+%    breaklines=true,
+%    postbreak = \space\dots
+% }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Title page
+\title[Basic SciPy and Mayavi]{Introductory Scientific Computing with
+Python}
+\subtitle{Simple 3D plots with mlab}
+
+\author[Prabhu] {FOSSEE}
+
+\institute[FOSSEE -- IITB] {Department of Aerospace Engineering\\IIT Bombay}
+\date[] {SciPy India, 2016\\
+Mumbai
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\pgfdeclareimage[height=0.75cm]{iitmlogo}{iitmlogo}
+%\logo{\pgfuseimage{iitmlogo}}
+
+
+%% Delete this, if you do not want the table of contents to pop up at
+%% the beginning of each subsection:
+\AtBeginSubsection[]
+{
+  \begin{frame}<beamer>
+    \frametitle{Outline}
+    \tableofcontents[currentsection,currentsubsection]
+  \end{frame}
+}
+
+\AtBeginSection[]
+{
+  \begin{frame}<beamer>
+    \frametitle{Outline}
+    \tableofcontents[currentsection,currentsubsection]
+  \end{frame}
+}
+
+% If you wish to uncover everything in a step-wise fashion, uncomment
+% the following command:
+%\beamerdefaultoverlayspecification{<+->}
+
+%\includeonlyframes{current,current1,current2,current3,current4,current5,current6}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% DOCUMENT STARTS
+\begin{document}
+
+\begin{frame}
+  \maketitle
+\end{frame}
+
+\section{Basic Mayavi: \typ{mlab}}
+
+\begin{frame}[fragile]
+\frametitle{Basic 3D visualization}
+\begin{itemize}
+    \item Simple one liners for 3D visualization
+    \item Must import mlab.
+\end{itemize}
+\begin{lstlisting}
+In []: from mayavi import mlab
+\end{lstlisting}
+Ready to go!
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Simple examples}
+
+    \myemph{\Large Try these}
+
+    \begin{lstlisting}
+In []: mlab.test_<TAB>
+
+In []: mlab.test_points3d()
+In []: mlab.clf()
+In []: mlab.test_plot3d()
+In []: mlab.clf()
+In []: mlab.test_surf()
+In []: mlab.test_surf??
+    \end{lstlisting}
+Explore the UI.
+\end{frame}
+
+
+\begin{frame}[fragile]
+    \frametitle{\typ{mlab} plotting functions}
+    \begin{columns}
+        \column{0.25\textwidth}
+        \myemph{\Large 0D data}
+        \column{0.5\textwidth}
+    \pgfimage[width=2in]{mlab_data/points3d_ex}
+    \end{columns}
+
+    \begin{lstlisting}
+In []: t = linspace(0, 2*pi, 50)
+In []: u = cos(t) * pi
+In []: x, y, z = sin(u), cos(u), sin(t)
+    \end{lstlisting}
+    \emphbar{\PythonCode{In []: mlab.points3d(x, y, z)}}
+\end{frame}
+
+\begin{frame}[plain, fragile]
+    \frametitle{Changing how things look}
+
+    \begin{block}{Clearing the view}
+    \PythonCode{>>> mlab.clf()}
+    \end{block}
+
+    \pause
+
+    \begin{block}{IPython is your friend!}
+    \PythonCode{>>> mlab.points3d?}
+
+    \begin{itemize}
+
+        \item Extra argument: Scalars
+
+        \item Keyword arguments
+
+        \item UI
+    \end{itemize}
+    \end{block}
+\pause
+    \begin{lstlisting}
+In []: mlab.points3d(x, y, z, t,
+                     scale_mode='none')
+    \end{lstlisting}
+
+\end{frame}
+
+
+
+\begin{frame}[fragile]
+  \begin{columns}
+        \column{0.25\textwidth}
+        \myemph{\Large 1D data}
+        \column{0.5\textwidth}
+        \pgfimage[width=2.5in]{mlab_data/plot3d_ex}
+  \end{columns}
+  \emphbar{\PythonCode{In []: mlab.plot3d(x, y, z, t)}}
+
+    Plots lines between the points
+
+\end{frame}
+
+\begin{frame}[fragile]
+    \begin{columns}
+        \column{0.25\textwidth}
+        \myemph{\Large 2D data}
+        \column{0.5\textwidth}
+        \pgfimage[width=2in]{mlab_data/surf_ex}
+    \end{columns}
+    \begin{lstlisting}
+In []: x, y = mgrid[-3:3:100j,-3:3:100j]
+In []: z = sin(x*x + y*y)
+    \end{lstlisting}
+
+    \emphbar{\PythonCode{In []: mlab.surf(x, y, z)}}
+
+    \alert{Assumes the points are rectilinear}
+
+\end{frame}
+
+
+\begin{frame}[plain, fragile]
+
+        \myemph{\Large 3D data}
+    \vspace*{0.25in}
+
+    \pgfimage[width=1.5in]{mlab_data/contour3d}\\
+
+\begin{lstlisting}
+In []: x, y, z = ogrid[-5:5:64j,
+  ...:                 -5:5:64j,
+  ...:                 -5:5:64j]
+In []: mlab.contour3d(x*x*0.5 + y*y +
+                   z*z*2)
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[plain]
+    {Other utility functions}
+    \begin{itemize}
+        \item \PythonCode{gcf}: get current figure
+            \pause
+        \item \PythonCode{savefig}, \PythonCode{figure}
+           \pause
+        \item \PythonCode{axes}, \PythonCode{outline}
+            \pause
+        \item \PythonCode{title}, \PythonCode{xlabel, ylabel, zlabel}
+            \pause
+        \item \PythonCode{colorbar}, \PythonCode{scalarbar},
+            \PythonCode{vectorbar}
+            \pause
+        \item \PythonCode{show}: Standalone mlab scripts
+            \pause
+        \item Others, see UG
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    {Exploring the documentation}
+    \begin{center}
+    \pgfimage[width=4in]{mlab_data/m2_ug_doc}
+    \end{center}
+    \inctime{20}
+\end{frame}
+
+
+
+\begin{frame}
+    \frametitle{Further reading}
+    \begin{itemize}
+        \item \url{github.enthought.com/mayavi/mayavi}
+    \end{itemize}
+\end{frame}
+
+\end{document}
