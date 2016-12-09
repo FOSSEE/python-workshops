@@ -79,11 +79,11 @@
 Python}
 \subtitle{More plotting, lists and numpy arrays}
 
-\author[Prabhu] {FOSSEE}
+\author[FOSSEE] {FOSSEE}
 
 \institute[FOSSEE -- IITB] {Department of Aerospace Engineering\\IIT Bombay}
-\date[] {India\\
-2016
+\date[] {SciPy India 2016\\
+Mumbai
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -197,13 +197,13 @@ Out[]: <matplotlib.text.Text object at 0x98746ec>
 \begin{frame}[fragile]
   \frametitle{Lists: Introduction}
   \begin{lstlisting}
-    In []: time = [0, 1, 2, 3]
+In []: time = [0., 1., 2, 3]
 
-    In []: distance = [7, 11, 15, 19]
-
+In []: distance = [7., 11, 15, 19]
   \end{lstlisting}
-What are \typ{x} and \typ{y}?\\
+What are \typ{time} and \typ{distance}?\\
 \begin{center}
+  \large
 \alert{\typ{lists!!}}
 \end{center}
 \end{frame}
@@ -243,8 +243,14 @@ Out[]: [3, 5, 7]
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}[fragile]
+\begin{frame}[plain,fragile]
   \frametitle{List: Slicing \ldots}
+  \vspace*{-0.1in}
+  \begin{small}
+  \begin{block}{Remember\ldots}
+	\kwrd{In []: p = [ 2, 3, 5, 7]}
+\end{block}
+\end{small}
 \begin{lstlisting}
 In []: p[0:4:2]
 Out[]: [2, 5]
@@ -262,6 +268,9 @@ Out[]: [7, 5, 3, 2]
 
 \begin{frame}[fragile]
   \frametitle{List: Slicing}
+  \begin{block}{Remember\ldots}
+	\kwrd{In []: p = [ 2, 3, 5, 7]}
+  \end{block}
   What is the output of the following?
 \begin{lstlisting}
 In []: p[1::2]
@@ -298,7 +307,6 @@ Let us look at the Simple Pendulum experiment.
 \begin{tabular}{| c | c | c |}
 \hline
 $L$ & $T$ & $T^2$ \\ \hline
-0.1 & 0.69 & \\ \hline
 0.2 & 0.90 & \\ \hline
 0.3 & 1.19 & \\ \hline
 0.4 & 1.30 & \\ \hline
@@ -306,7 +314,6 @@ $L$ & $T$ & $T^2$ \\ \hline
 0.6 & 1.58 & \\ \hline
 0.7 & 1.77 & \\ \hline
 0.8 & 1.83 & \\ \hline
-0.9 & 1.94 & \\ \hline
 \end{tabular}
 \end{small}\\
 \alert{$L \alpha T^2$}
@@ -316,12 +323,12 @@ $L$ & $T$ & $T^2$ \\ \hline
 \begin{frame}[fragile]
 \frametitle{Lets use lists}
 \begin{lstlisting}
-In []: L = [0.1, 0.2, 0.3, 0.4, 0.5,
-            0.6, 0.7, 0.8, 0.9]
+In []: L = [0.2, 0.3, 0.4, 0.5,
+            0.6, 0.7, 0.8]
 
-In []: t = [0.69, 0.90, 1.19,
-            1.30, 1.47, 1.58,
-            1.77, 1.83, 1.94]
+In []: t = [0.90, 1.19, 1.30,
+            1.47, 1.58, 1.77,
+            1.83]
 \end{lstlisting}
 \alert{Gotcha}: Make sure \typ{L} and \typ{t} have the same number
 of elements
@@ -342,6 +349,17 @@ In []: print len(L), len(t)
 \end{frame}
 
 \begin{frame}[fragile]
+\frametitle{Looping with \texttt{for}}
+\begin{lstlisting}
+In []: for time in t:
+ ....:     print(time*time)
+ ....:
+ ....:
+\end{lstlisting}
+This will print the square of each item in the list, \typ{t}
+\end{frame}
+
+\begin{frame}[fragile]
 \frametitle{Plotting $L$ vs $T^2$}
 \begin{lstlisting}
 In []: tsq = []
@@ -354,8 +372,8 @@ In []: for time in t:
 \end{lstlisting}
 This gives \typ{tsq} which is the list of squares of \typ{t} values.
 \begin{lstlisting}
-In []: print len(L), len(t), len(tsq)
-Out[]: 9 9 9
+In []: print(len(L), len(t), len(tsq))
+Out[]: (7, 7, 7)
 
 In []: plot(L, tsq)
 \end{lstlisting}
@@ -365,71 +383,13 @@ In []: plot(L, tsq)
 \begin{figure}
 \includegraphics[width=3.5in]{data/L-TSq-limited.png}
 \end{figure}
+\inctime{10}
 \end{frame}
 
 
 \begin{frame}[fragile]
-\frametitle{This seems tedious}
-\begin{itemize}
-    \item Lists
-\begin{itemize}
-    \item Nice
-    \item Not too convenient
-    \item Slow
-\end{itemize}
-\item Enter NumPy arrays
-    \begin{itemize}
-        \item Fixed size, data type
-        \item Fast
-        \item Very convenient
-    \end{itemize}
-\end{itemize}
-\end{frame}
-
-\subsection{\num\ arrays}
-
-\begin{frame}[fragile]
-\frametitle{NumPy arrays}
-\begin{lstlisting}
-In []: t = array(t)
-
-In []: tsq = t*t
-
-In []: print tsq
-
-In []: plot(L, tsq) # works!
-\end{lstlisting}  %$
-\end{frame}
-
-
-\begin{frame}[fragile]
-\frametitle{Speed?}
-
-\noindent Lets use range to create a large list.
-
-\begin{lstlisting}
-In []: t = range(1000000)
-In []: tsq = []
-
-In []: for time in t:
- ....:     tsq.append(time*time)
- ....:
- ....:
-\end{lstlisting}  %$
-
-\noindent Now try it with
-
-\begin{lstlisting}
-In []: t = array(t)
-
-In []: tsq = t*t
-\end{lstlisting}
-\ldots
-\end{frame}
-
-\begin{frame}[fragile]
-\frametitle{How fast is this?}
-\noindent Lets define a function for the list
+\frametitle{Don't repeat yourself: functions}
+\noindent Let us define a function to square the list
 \begin{lstlisting}
 In []: def sqr(arr):
   ...:     result = []
@@ -444,7 +404,7 @@ In []: tsq = sqr(t)
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{Aside: Defining functions}
+  \frametitle{More on defining functions}
   \begin{itemize}
   \item Consider the function \texttt{f(x) = x\textasciicircum{}2}
   \item Let's write a Python function, equivalent to this
@@ -460,10 +420,86 @@ In []: tsq = sqr(t)
   \begin{itemize}
   \item \texttt{def} is a keyword
   \item \texttt{f} is the name of the function
-  \item \texttt{x} the parameter of the function
+  \item \texttt{x} the parameter of the function (local variable)
   \item \texttt{return} is a keyword
   \end{itemize}
 \end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Aside: Exercise}
+  \begin{itemize}
+  \item Write a function called \typ{mysum(a, b)} that returns sum of two
+    arguments.
+  \end{itemize}
+  \pause
+\begin{lstlisting}
+In []: def mysum(a, b):
+  ...:    return a + b
+  ...:
+In []: mysum(1, 2)
+
+In []: mysum([1, 2], [3, 4])
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{This seems tedious}
+
+  \begin{itemize}
+  \item Do we have to write a function just to get the square of a list?
+    \item Lists
+\begin{itemize}
+    \item Nice
+    \item Not too convenient for math
+    \item Slow
+\end{itemize}
+\item Enter NumPy arrays
+    \begin{itemize}
+        \item Fixed size, data type
+        \item Very convenient
+        \item Fast
+    \end{itemize}
+  \end{itemize}
+  \inctime{10}
+\end{frame}
+
+\subsection{\num\ arrays}
+
+\begin{frame}[fragile]
+\frametitle{NumPy arrays}
+\begin{lstlisting}
+In []: t = array(t)
+
+In []: tsq = t*t
+
+In []: print(tsq)
+
+In []: plot(L, tsq) # works!
+\end{lstlisting}  %$
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Speed?}
+
+\noindent Lets use range to create a large list.
+
+\begin{lstlisting}
+In []: t = range(1000000)
+
+In []: tsq = sqr(t)
+
+\end{lstlisting}  %$
+
+\noindent Now try it with
+
+\begin{lstlisting}
+In []: t = array(t)
+
+In []: tsq = t*t
+\end{lstlisting}
+\ldots
+\end{frame}
+
 
 \begin{frame}[fragile]
   \frametitle{IPython tip: Timing}
@@ -482,7 +518,7 @@ In []: %timeit?
       \item \typ{\%time}: less accurate, one measurement
   \end{itemize}
 
-\inctime{15}
+\inctime{10}
 \end{frame}
 
 
@@ -496,19 +532,41 @@ In []: %timeit?
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{The \num\ module}
-    \begin{itemize}
-    \item Efficient, powerful array type
-    \item Abstracts out standard operations on arrays
-    \item Convenience functions
-    \item \typ{ipython -pylab} imports part of numpy
-    \item Without the Pylab mode do:
-    \end{itemize}
-    \begin{lstlisting}
-In []: import numpy
+  \frametitle{Solution}
+\begin{lstlisting}
+In []: t = linspace(0, 10, 100000)
+In []: %timeit sqr(t)
+In []: %timeit t*t
+\end{lstlisting}
+  \inctime{5}
+\end{frame}
 
+\begin{frame}[fragile]
+  \frametitle{The \num\ module}
+  \begin{itemize}
+  \item Efficient, powerful array type
+  \item Abstracts out standard operations on arrays
+  \item Convenience functions
+  \item \typ{ipython --pylab} imports part of numpy
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Without Pylab}
+\begin{lstlisting}
 In []: from numpy import *
-    \end{lstlisting}
+In []: x = linspace(0, 1)
+\end{lstlisting}
+  Note that we had done this ``import'' earlier!
+\begin{lstlisting}
+# Can also do this:
+In []: import numpy
+In []: x = numpy.linspace(0, 1)
+# or
+In []: import numpy as np
+In []: x = np.linspace(0, 1)
+\end{lstlisting}
+  Note the use of \typ{numpy.linspace}
 \end{frame}
 
 \begin{frame}
@@ -532,8 +590,8 @@ In []: from numpy import *
 In []: a = array([1,2,3,4])
 In []: b = array([2,3,4,5])
 
-In []: print a[0], a[-1]
-1, 4
+In []: print(a[0], a[-1])
+(1, 4)
 
 In []: a[0] = -1
 In []: a[0] = 1
@@ -551,7 +609,11 @@ Out[]: array([2, 6, 12, 20])
 In []: a/b
 Out[]: array([0, 0, 0, 0])
 \end{lstlisting}
-Operations are elementwise, types matter.
+  \begin{itemize}
+  \item Operations are \alert{element-wise}
+  \item Types matter
+  \end{itemize}
+  \inctime{10}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -573,8 +635,8 @@ In []: x *= 2*pi/10
 In []: y = sin(x)
 In []: y = cos(x)
 In []: x[0] = -1
-In []: print x[0], x[-1]
--1.0 10.0
+In []: print(x[0], x[-1])
+(-1.0, 10.0)
 \end{lstlisting}
 \end{frame}
 
@@ -613,28 +675,57 @@ In []: a[1] # The second row
 array([10,11,12,-1])
 In []: a[1] = 0 # Entire row to zero.
 \end{lstlisting}
-
+\inctime{10}
 \end{frame}
 
-\begin{frame}[fragile]
+\begin{frame}[plain,fragile]
   \frametitle{Slicing arrays}
   \vspace*{-0.2in}
 \begin{lstlisting}
 In []: a = array([[1,2,3], [4,5,6],
   ...:            [7,8,9]])
 In []: a[0,1:3]
+\end{lstlisting}
+  \pause
+  \vspace*{-0.1in}
+\begin{lstlisting}
 Out[]: array([2, 3])
+
 In []: a[1:,1:]
+\end{lstlisting}
+  \pause
+  \vspace*{-0.1in}
+\begin{lstlisting}
 Out[]: array([[5, 6],
-              [8, 9]])
+                [8, 9]])
+
 In []: a[:,2]
+\end{lstlisting}
+  \pause
+  \vspace*{-0.1in}
+\begin{lstlisting}
 Out[]: array([3, 6, 9])
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[plain,fragile]
+  \frametitle{Slicing arrays ...}
+  \vspace*{-0.2in}
+\begin{lstlisting}
+In []: a = array([[1,2,3], [4,5,6],
+  ...:            [7,8,9]])
+
 In []: a[0::2,0::2] # Striding...
+\end{lstlisting}
+  \pause
+  \vspace*{-0.1in}
+\begin{lstlisting}
 Out[]: array([[1, 3],
               [7, 9]])
 # Slices refer to the same memory!
 \end{lstlisting}
 \end{frame}
+
 
 \begin{frame}[fragile]
   \frametitle{Array creation functions}
@@ -650,6 +741,7 @@ Out[]: array([[1, 3],
   May pass an optional \typ{dtype=} keyword argument
 
   For more dtypes see: \typ{numpy.typeDict}
+
 \end{frame}
 
 \begin{frame}[fragile]
@@ -657,16 +749,19 @@ Out[]: array([[1, 3],
   \vspace*{-0.25in}
 \begin{lstlisting}
 In []: a = array([1,2,3], dtype=float)
+In []: ones_like(a)
+Out[]: array([ 1.,  1.,  1.])
+
 In []: ones( (2, 3) )
 Out[]: array([[ 1.,  1.,  1.],
               [ 1.,  1.,  1.]])
+
 In []: identity(3)
 Out[]: array([[ 1.,  0.,  0.],
               [ 0.,  1.,  0.],
               [ 0.,  0.,  1.]])
-In []: ones_like(a)
-Out[]: array([ 1.,  1.,  1.,  1.])
 \end{lstlisting}
+  \inctime{15}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -684,6 +779,12 @@ Out[]: array([ 1.,  1.,  1.,  1.])
   \item Inplace operators: \typ{a += b}, or \typ{add(a, b,
       a)}
     \alert{What happens if \typ{a} is \typ{int} and \typ{b} is \typ{float?}}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Array math}
+  \begin{itemize}
   \item Logical operations: \typ{==, !=, <, >}, etc.
   \item \typ{sin(x), arcsin(x), sinh(x)},
       \typ{exp(x), sqrt(x)} etc.
@@ -710,7 +811,7 @@ In []: x.shape
 Out[]: (90,)
   \end{lstlisting}
 
-  \inctime{20}
+  \inctime{10}
 \end{frame}
 
 
@@ -729,8 +830,9 @@ Out[]: (90,)
 
 \begin{frame}[fragile]
   \frametitle{Learn more}
+  \small
     \begin{itemize}
-        \item \url{http://wiki.scipy.org/Tentative_NumPy_Tutorial}
+        \item \url{https://docs.scipy.org/doc/numpy-dev/user/quickstart.html}
         \item \url{http://numpy.org}
     \end{itemize}
 \end{frame}
@@ -744,7 +846,8 @@ Out[]: (90,)
       \item Array creation, dtypes
       \item Math
       \item \typ{loadtxt}
-  \end{itemize}
+      \end{itemize}
+      \inctime{5}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -787,16 +890,18 @@ In []: !ls
     do:
     \begin{lstlisting}
 In []: ?
+In []: %cd?
     \end{lstlisting}
 \end{frame}
 
 
 \begin{frame}[fragile]
-    \frametitle{Exercise}
-    \begin{itemize}
-        \item Plot L versus T square with dots
-        \item No line connecting points
-    \end{itemize}
+  \frametitle{Exercise}
+  \begin{itemize}
+  \item Plot L versus T square with dots
+  \item No line connecting points
+  \end{itemize}
+  \inctime{10}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -842,7 +947,7 @@ Out[]: 0.25979158313283879
   \item Introduction to \num\ arrays
 \end{itemize}
 
-\inctime{10}
+\inctime{5}
 \end{frame}
 
 \end{document}
