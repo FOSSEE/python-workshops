@@ -75,8 +75,7 @@ Python}
 \author[FOSSEE] {FOSSEE}
 
 \institute[IIT Bombay] {Department of Aerospace Engineering\\IIT Bombay}
-\date[] {SciPy India 2016,\\
-Mumbai
+\date[] {Mumbai, India
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -192,14 +191,13 @@ Mumbai
 \section{Starting up IPython}
 \begin{frame}[fragile]
 \frametitle{Starting up \ldots}
-\begin{block}{Enthought Canopy menu}
-\begin{itemize}
+\begin{block}{Start a terminal}
+  \begin{itemize}
     \item Canopy command prompt (Tools menu)
-    \item PyLab
 \end{itemize}
 \end{block}
 
-\begin{block}{Terminal}
+\begin{block}{On Terminal}
 \begin{lstlisting}
   $ ipython --pylab
 \end{lstlisting} %$
@@ -234,13 +232,20 @@ Exiting on the \textbf{terminal}
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{Pressed Ctrl-D on Canopy? }
+  \frametitle{IPython? }
   \begin{itemize}
-  \item Pressed \verb+Ctrl-D+ inside Canopy?
-  \item You suddenly lost the Python prompt?
-  \item Go to \verb+View->Python+
+  \item An enhanced Python interpreter
   \end{itemize}
 \end{frame}
+
+% \begin{frame}[fragile]
+%   \frametitle{Pressed Ctrl-D on Canopy? }
+%   \begin{itemize}
+%   \item Pressed \verb+Ctrl-D+ inside Canopy?
+%   \item You suddenly lost the Python prompt?
+%   \item Go to \verb+View->Python+
+%   \end{itemize}
+% \end{frame}
 
 
 \section{Breaking out of loops}
@@ -256,10 +261,35 @@ Breaking out of loops
   ------------------------------------
   KeyboardInterrupt
 \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Exercise}
+
+  \begin{itemize}
+  \item Exit the IPython interpreter
+  \item Close the terminal
+  \item Restart the terminal (Canopy tools menu)
+  \item Restart IPython using:
+  \end{itemize}
+\begin{lstlisting}
+  $ ipython --pylab
+\end{lstlisting} %$
   \inctime{10}
 \end{frame}
 
 \section{Plotting}
+
+\begin{frame}
+  \frametitle{Important instructions}
+  \begin{itemize}
+  \item For the first session, please do not experiment
+  \item Follow along and type everything!
+  \item Case matters
+  \item Every character you type matters!
+  \end{itemize}
+\end{frame}
+
 \subsection{Drawing plots}
 \begin{frame}[fragile]
 \frametitle{First Plot}
@@ -597,7 +627,7 @@ In []: plot?
         to get more information on \typ{plot}
 
       \item Use arrow keys to scroll docs
-      \item Note: exit help pager with ``q'' or ``ESC''
+      \item Note: exit help pager with ``q''
 \end{itemize}
 \end{frame}
 
@@ -675,14 +705,50 @@ This displays the ``Command History''
 \end{frame}
 
 \begin{frame}[fragile]
+  \frametitle{Saving commands into script}
+Use the \typ{\%save} \alert{magic} command of IPython
+\begin{block}{}
+\typ{\%save script_name line_numbers}
+\end{block}
+Line numbers specified individually separated by spaces or as a range separated by a dash.\\
+\begin{block}{}
+\typ{\%save four_plot.py} \alert{\typ{  16 18-27}} \\
+\end{block}
+Saves from history the commands entered on line numbers \alert{16, 18, 19, 20, \ldots 27}
+\end{frame}
+
+\begin{frame}[fragile]
   \frametitle{Saving commands into a script}
+  \begin{itemize}
+  \item Save lines relevant for the review problem
+  \item Hint: example\\ \typ{\%save four_plot.py 16 18-27}
+  \item Choose the lines carefully
+  \item Edit \typ{four_plot.py} on Canopy
+  \item Make sure all the lines are correct
+  \item Save the script
+  \end{itemize}
+\inctime{5}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Creating scripts: alternative}
   \begin{itemize}
   \item Create a new file on Canopy
   \item Copy commands for assignment with your mouse
   \item Save the script to \typ{four_plot.py}
   \end{itemize}
-\inctime{5}
 \end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Where is the script saved?}
+  \begin{itemize}
+  \item \typ{\%save} saves into the current directory
+    \vspace*{0.5in}
+  \item Use \typ{\%pwd} to print the current directory
+  \item Use \typ{\%cd} to change the directory
+  \end{itemize}
+\end{frame}
+
 
 \begin{frame}[fragile]
 \frametitle{Python Scripts\ldots}
@@ -706,6 +772,7 @@ In []: show()
   \frametitle{Exercise}
   \begin{itemize}
   \item Add the \typ{show()} command to \typ{four_plot.py}
+  \item Save the file
   \item Test that it works
   \end{itemize}
 \end{frame}
@@ -721,6 +788,7 @@ In []: show()
   \frametitle{Running with Python}
   \begin{itemize}
   \item Start a new Canopy terminal
+  \item Change directory to where you saved \typ{four_plot.py}
   \item Run the script as:
   \end{itemize}
 \begin{lstlisting}
@@ -755,7 +823,7 @@ In []: from pylab import linspace
   \end{itemize}
 \begin{lstlisting}
 # four_plot.py
-from pylab import linspace # <---
+from pylab import linspace # <-- added
 x = linspace(-5*pi, 5*pi, 500)
 plot(x, x, 'b')
 ...
@@ -789,7 +857,7 @@ NameError: name 'plot' is not defined
   \end{itemize}
 \begin{lstlisting}
 # four_plot.py
-from pylab import * # <---
+from pylab import * # <-- added
 x = linspace(-5*pi, 5*pi, 500)
 plot(x, x, 'b')
 ...
@@ -797,18 +865,37 @@ plot(x, x, 'b')
 \inctime{5}
 \end{frame}
 
+\begin{frame}[fragile]
+  \frametitle{Solution}
+  \small
+\begin{lstlisting}
+from pylab import *
+x = linspace(-5*pi, 5*pi, 500)
+plot(x, x, 'b')
+plot(x, -x, 'b')
+plot(x, sin(x), 'g', linewidth=2)
+plot(x, x*sin(x), 'r', linewidth=3)
+legend(['x', '-x', 'sin(x)',
+               'xsin(x)'])
+annotate('origin', xy = (0, 0))
+xlim(-5*pi, 5*pi)
+ylim(-5*pi, 5*pi)
+show()
+\end{lstlisting}
+\end{frame}
+
+
 
 \begin{frame}[fragile]
   \frametitle{What did we learn?}
   \begin{itemize}
     \item Starting up IPython
     \item Creating simple plots
-    \item Adding labels and legends
-    \item Annotating plots
-    \item Changing the looks: size, linewidth
+    \item Annotating: labels, legends, annotation
+    \item Changing the looks: color, linewidth
     \item Accessing history, documentation
     \item \kwrd{\%hist} - History of commands
-    \item Creating a Python script on Canopy
+    \item Creating a Python script with \typ{\%save}
     \item Running a script using \kwrd{\%run -i}
     \item Importing functionality
     \item Running a script with\ \typ{python script.py}
@@ -816,13 +903,15 @@ plot(x, x, 'b')
 \end{frame}
 
 \begin{frame}
-  \frametitle{Next: using Canopy}
+  \frametitle{Using Canopy}
   \begin{itemize}
   \item Much easier
   \item Write code in the editor
+  \item Embedded IPython
   \item Save (Ctrl-S or Cmd-S)
   \item Run selection: Ctrl-Shift-R (Cmd-Shift-R on OS X)
   \item Run code: Ctrl-R (Cmd-R on OS X)
+  \item Change directory with menu (\typ{\%cd})
   \end{itemize}
   \inctime{5}
 \end{frame}
