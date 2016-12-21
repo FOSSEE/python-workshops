@@ -5,7 +5,7 @@
 	pdflatex $*.tex
 
 SLIDES= intro.pdf prelims.pdf session1a.pdf \
-  session1b.pdf
+	session1b.pdf \
 	session2.pdf \
 	session3.pdf \
 	session4.pdf \
@@ -17,4 +17,4 @@ cleanall:
 	rm -f *.dvi *.log *.bak *.aux *.bbl *.blg *.idx *.ps *.eps *.pdf *.toc *.out *~ *.vrb *.nav *.snm
 
 clean:
-	rm -f *.log *.bak *.aux *.bbl *.blg *.idx *.toc *.out *~ *.vrb *.nav *.snm
+	rm -f *.log *.bak *.aux *.bbl *.blg *.idx *.toc *.out *~ *.vrb *.nav *.snm *.synctex.gz
