@@ -4,7 +4,8 @@
 	pdflatex $*.tex
 	pdflatex $*.tex
 
-SLIDES= session1.pdf \
+SLIDES= intro.pdf prelims.pdf session1a.pdf \
+  session1b.pdf
 	session2.pdf \
 	session3.pdf \
 	session4.pdf \
