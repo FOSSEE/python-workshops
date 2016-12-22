@@ -6,7 +6,8 @@
 
 SLIDES= intro.pdf prelims.pdf session1a.pdf \
 	session1b.pdf \
-	session2.pdf \
+	session2a.pdf \
+	session2b.pdf \
 	session3.pdf \
 	session4.pdf \
   mlab.pdf
