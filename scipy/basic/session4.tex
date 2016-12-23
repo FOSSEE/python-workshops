@@ -372,9 +372,9 @@ We shall use the simple ODE of a simple pendulum.
 \item Use \typ{odeint} to do the integration
 \end{itemize}
 \begin{lstlisting}
-In []: def pend_int(initial, t):
-  ....     theta = initial[0]
-  ....     omega = initial[1]
+In []: def pend_rhs(state, t):
+  ....     theta = state[0]
+  ....     omega = state[1]
   ....     g = 9.81
   ....     L = 0.2
   ....     F=[omega, -(g/L)*sin(theta)]
@@ -401,7 +401,7 @@ In []: initial = [10*2*pi/360, 0]
 \typ{In []: from scipy.integrate import odeint}
 %%\end{small}
 \begin{lstlisting}
-In []: pend_sol = odeint(pend_int,
+In []: pend_sol = odeint(pend_rhs,
                          initial,t)
 \end{lstlisting}
 \end{frame}
@@ -426,8 +426,9 @@ In []: pend_sol = odeint(pend_int,
 In []: t = linspace(0, 2*pi, 500)
 In []: y = sin(4*pi*t)
 
-In []: f = fft(y)
-In []: freq = fftfreq(500, t[1] - t[0])
+In []: f = fft.fft(y)
+In []: freq = fft.fftfreq(500,
+  ...:                    t[1] - t[0])
 
 In []: plot(freq[:250], abs(f)[:250])
 In []: grid()
@@ -437,7 +438,7 @@ In []: grid()
 \begin{frame}[fragile]
 \frametitle{FFTs cont\dots}
 \begin{lstlisting}
-In []: y1 = ifft(f) # inverse FFT
+In []: y1 = fft.ifft(f) # inverse FFT
 In []: allclose(y, y1)
 Out[]: True
 \end{lstlisting}
@@ -447,13 +448,15 @@ Out[]: True
 \frametitle{FFTs cont\dots}
 Let us add some noise to the signal
 \begin{lstlisting}
-In []: yr = y + random(size=500)*0.2
-In []: yn = y + normal(size=500)*0.2
+In []: yr = y +
+  ...:   random.random(size=500)*0.2
+In []: yn = y +
+  ...:   random.normal(size=500)*0.2
 
 In []: plot(t, yr)
 In []: figure()
 In []: plot(freq[:250],
-  ...:      abs(fft(yn))[:250])
+  ...:      abs(fft.fft(yr))[:250])
 \end{lstlisting}
 \begin{itemize}
     \item \typ{random}: produces uniform deviates in $[0, 1)$
@@ -473,7 +476,7 @@ In []: clf()
 In []: plot(t, yc)
 In []: figure()
 In []: plot(freq[:250],
-  ...:      abs(fft(yc))[:250])
+  ...:      abs(fft.fft(yc))[:250])
 \end{lstlisting}
 Only scratched the surface here \dots
 
