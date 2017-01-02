@@ -10,6 +10,7 @@ SLIDES= intro.pdf prelims.pdf session1a.pdf \
 	session2b.pdf \
 	session3.pdf \
 	session4.pdf \
+	exercises.pdf \
   mlab.pdf
 
 all: 	$(SLIDES) quickref.pdf
