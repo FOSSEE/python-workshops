@@ -38,6 +38,7 @@ Basic Tutorial:
   introduce the Python language in the context of these common tasks.
   Here is a rough outline of what we propose to cover:
 
+   - Introduction and Preliminaries.
    - Introduction to IPython.
    - Creating basic plots with matplotlib.
    - NumPy array basics: 1D arrays.
@@ -46,6 +47,20 @@ Basic Tutorial:
      processing, random numbers.
    - Using SciPy for Linear Algebra, FFT's, root finding and integrating
      ODEs.
+
+Session wise slide breakup:
+
+1. intro.pdf
+2. prelims.pdf
+3. ipython_plotting.pdf
+4. saving_scripts.pdf
+5. lists_arrays.pdf
+6. numpy.pdf
+7. more_numpy.pdf
+8. scipy.pdf
+9. exercises.pdf
+10. notebook.pdf
+11. mlab.pdf
 
 
 * Attendee Requirements:

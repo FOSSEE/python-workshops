@@ -4,12 +4,12 @@
 	pdflatex $*.tex
 	pdflatex $*.tex
 
-SLIDES= intro.pdf prelims.pdf session1a.pdf \
-	session1b.pdf \
-	session2a.pdf \
-	session2b.pdf \
-	session3.pdf \
-	session4.pdf \
+SLIDES= intro.pdf prelims.pdf ipython_plotting.pdf \
+  saving_scripts.pdf \
+	lists_arrays.pdf \
+	numpy.pdf \
+	more_numpy.pdf \
+	basic_scipy.pdf \
 	exercises.pdf \
   mlab.pdf \
   notebook.pdf

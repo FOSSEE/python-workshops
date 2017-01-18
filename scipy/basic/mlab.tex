@@ -80,7 +80,7 @@
 % Title page
 \title[Basic SciPy and Mayavi]{Introductory Scientific Computing with
 Python}
-\subtitle{Simple 3D plots with mlab}
+\subtitle{Simple 3D plots with Mayavi's mlab}
 
 \author[Prabhu] {FOSSEE}
 
@@ -124,6 +124,82 @@ Mumbai
 
 \begin{frame}
   \maketitle
+\end{frame}
+
+\section{Introduction to Mayavi}
+
+\begin{frame}
+  \frametitle{Mayavi}
+  \begin{itemize}
+  \item 3D visualization library
+  \item Application
+  \item Support for different data formats
+  \item Embeddable, extensible
+  \item Cross-platform
+  \item Fully scriptable
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Installation}
+  \begin{itemize}
+  \item Suggest using a Python distribution
+  \item Canopy's package manager
+  \item \typ{conda}
+  \item \typ{edm}
+  \end{itemize}
+\end{frame}
+
+\section{Getting started with mlab}
+
+\begin{frame}
+  {Overview}
+  \begin{itemize}
+  \item Simple
+  \item Convenient
+  \item Full-featured
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[plain,fragile]
+  \frametitle{Getting started}
+
+ \myemph{With \typ{jupyter}:}
+\begin{lstlisting}[language=bash]
+    $ jupyter console
+    In [1]: %gui qt
+\end{lstlisting} %$
+ \vspace*{0.15in}
+
+  \myemph{Vanilla:}
+\begin{lstlisting}[language=bash]
+    $ ipython --gui=qt
+\end{lstlisting} %$
+ \vspace*{0.15in}
+
+\myemph{Or:}
+\begin{lstlisting}[language=bash]
+    $ ipython
+    In [1]: %gui qt
+\end{lstlisting} %$
+
+\end{frame}
+
+\begin{frame}[fragile,plain]
+  \frametitle{Using notebooks}
+
+  Make sure you have the following code first:
+
+\begin{lstlisting}
+    In [1]: from mayavi import mlab
+    In [2]: mlab.init_notebook()
+\end{lstlisting}
+
+  \begin{itemize}
+    \item Can also use \typ{\%gui qt}
+    \item Plots will pop-up
+  \end{itemize}
+
 \end{frame}
 
 \section{Basic Mayavi: \typ{mlab}}
