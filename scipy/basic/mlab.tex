@@ -78,14 +78,14 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Title page
-\title[Basic SciPy and Mayavi]{Introductory Scientific Computing with
+\title[Mayavi mlab]{Introductory Scientific Computing with
 Python}
 \subtitle{Simple 3D plots with Mayavi's mlab}
 
 \author[Prabhu] {FOSSEE}
 
 \institute[FOSSEE -- IITB] {Department of Aerospace Engineering\\IIT Bombay}
-\date[] {SciPy India, 2016\\
+\date[] {
 Mumbai
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -141,12 +141,39 @@ Mumbai
 \end{frame}
 
 \begin{frame}
+    {Overview of features}
+      \vspace*{-0.3in}
+  \begin{center}
+    \hspace*{-0.2in}\pgfimage[width=5in]{mlab_data/m2_app3_3}
+  \end{center}
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{Mayavi in applications}
+      \vspace*{-0.3in}
+  \begin{center}
+    \hspace*{-0.2in}\pgfimage[width=4.5in]{mlab_data/m2_envisage}
+  \end{center}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Live in your dialogs}
+      \vspace*{0.1in}
+  \begin{center}
+    \hspace*{-0.2in}\pgfimage[width=2.5in]{mlab_data/mlab_tui}
+  \end{center}
+\end{frame}
+
+
+
+\begin{frame}
   \frametitle{Installation}
   \begin{itemize}
   \item Suggest using a Python distribution
-  \item Canopy's package manager
-  \item \typ{conda}
-  \item \typ{edm}
+  \item Canopy's package manager: simply install mayavi
+  \item \typ{conda install -c menpo mayavi}
+  \item \typ{edm install mayavi}
   \end{itemize}
 \end{frame}
 
@@ -161,7 +188,7 @@ Mumbai
   \end{itemize}
 \end{frame}
 
-\begin{frame}[plain,fragile]
+\begin{frame}[fragile]
   \frametitle{Getting started}
 
  \myemph{With \typ{jupyter}:}
@@ -185,7 +212,7 @@ Mumbai
 
 \end{frame}
 
-\begin{frame}[fragile,plain]
+\begin{frame}[fragile]
   \frametitle{Using notebooks}
 
   Make sure you have the following code first:
@@ -217,23 +244,31 @@ Ready to go!
 \end{frame}
 
 \begin{frame}[fragile]
-    \frametitle{Simple examples}
-
-    \myemph{\Large Try these}
+    \frametitle{Simple example}
 
     \begin{lstlisting}
 In []: mlab.test_<TAB>
 
-In []: mlab.test_points3d()
-In []: mlab.clf()
-In []: mlab.test_plot3d()
-In []: mlab.clf()
-In []: mlab.test_surf()
-In []: mlab.test_surf??
-    \end{lstlisting}
+# Let us start with this:
+In []: mlab.test_contour3d()
+\end{lstlisting}
 Explore the UI.
 \end{frame}
 
+\begin{frame}
+    {Exploring the view}
+    \begin{columns}
+        \column{0.6\textwidth}
+    \pgfimage[width=3in]{mlab_data/mlab_contour_window}
+        \column{0.4\textwidth}
+        \begin{itemize}
+            \item Mouse
+            \item Keyboard
+            \item Toolbar
+            \item Mayavi icon\pgfimage[width=0.2in]{mlab_data/m2_icon}
+        \end{itemize}
+    \end{columns}
+\end{frame}
 
 \begin{frame}[fragile]
     \frametitle{\typ{mlab} plotting functions}
@@ -278,9 +313,7 @@ In []: x, y, z = sin(u), cos(u), sin(t)
 In []: mlab.points3d(x, y, z, t,
                      scale_mode='none')
     \end{lstlisting}
-
 \end{frame}
-
 
 
 \begin{frame}[fragile]
@@ -314,8 +347,64 @@ In []: z = sin(x*x + y*y)
 
 \end{frame}
 
+\begin{frame}[fragile]
+  \frametitle{mgrid example}
+  \begin{lstlisting}
+In []: mgrid[0:3,0:3]
+Out[]:
+array([[[0, 0, 0],
+        [1, 1, 1],
+        [2, 2, 2]],
 
-\begin{frame}[plain, fragile]
+       [[0, 1, 2],
+        [0, 1, 2],
+        [0, 1, 2]]])
+
+In []: mgrid[-1:1:5j]
+Out[]: array([-1., -0.5,  0.,  0.5,  1.])
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{mgrid example}
+  \begin{lstlisting}
+In []: x, y = mgrid[-1:1:5j, -1:1:5j]
+In []: z = x*x + y*y
+
+In []: z
+Out[]:
+array([[ 2.  , 1.25, 1.  , 1.25, 2.  ],
+       [ 1.25, 0.5 , 0.25, 0.5 , 1.25],
+       [ 1.  , 0.25, 0.  , 0.25, 1.  ],
+       [ 1.25, 0.5 , 0.25, 0.5 , 1.25],
+       [ 2.  , 1.25, 1.  , 1.25, 2.  ]])
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+    \myemph{\Large 2D data: \texttt{mlab.mesh}}
+    \vspace*{0.25in}
+
+    \emphbar{\PythonCode{In []: mlab.mesh(x, y, z)}}
+
+    \alert{Points needn't be regular}
+
+    \vspace*{0.25in}
+\begin{lstlisting}
+In []: phi, theta = mgrid[0:pi:20j,
+...                         0:2*pi:20j]
+In []: x = sin(phi)*cos(theta)
+In []: y = sin(phi)*sin(theta)
+In []: z = cos(phi)
+In []: mlab.mesh(x, y, z,
+...           representation=
+...           'wireframe')
+\end{lstlisting}
+
+\end{frame}
+
+
+\begin{frame}[fragile]
 
         \myemph{\Large 3D data}
     \vspace*{0.25in}
@@ -323,7 +412,7 @@ In []: z = sin(x*x + y*y)
     \pgfimage[width=1.5in]{mlab_data/contour3d}\\
 
 \begin{lstlisting}
-In []: x, y, z = ogrid[-5:5:64j,
+In []: x, y, z = mgrid[-5:5:64j,
   ...:                 -5:5:64j,
   ...:                 -5:5:64j]
 In []: mlab.contour3d(x*x*0.5 + y*y +
@@ -331,7 +420,22 @@ In []: mlab.contour3d(x*x*0.5 + y*y +
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}[plain]
+\begin{frame}[fragile]
+
+    \myemph{\Large 3D vector data: \PythonCode{mlab.quiver3d}}
+    \vspace*{0.25in}
+
+    \pgfimage[width=2in]{mlab_data/quiver3d_ex}\\
+
+\begin{lstlisting}
+In []: mlab.test_quiver3d()
+\end{lstlisting}
+
+\emphbar{\PythonCode{obj = mlab.quiver3d(x, y, z, u, v, w)}}
+\end{frame}
+
+
+\begin{frame}[fragile]
     {Other utility functions}
     \begin{itemize}
         \item \PythonCode{gcf}: get current figure
@@ -351,21 +455,69 @@ In []: mlab.contour3d(x*x*0.5 + y*y +
     \end{itemize}
 \end{frame}
 
+
 \begin{frame}
     {Exploring the documentation}
     \begin{center}
     \pgfimage[width=4in]{mlab_data/m2_ug_doc}
     \end{center}
-    \inctime{20}
 \end{frame}
 
+\begin{frame}[fragile]
+    \frametitle{Explore the examples}
+
+    \myemph{\Large Try these}
+
+\begin{lstlisting}
+In []: mlab.clf()
+In []: mlab.test_points3d()
+In []: mlab.clf()
+In []: mlab.test_plot3d()
+In []: mlab.clf()
+\end{lstlisting}
+    Explore these later
+\end{frame}
 
 
 \begin{frame}
-    \frametitle{Further reading}
-    \begin{itemize}
-        \item \url{github.enthought.com/mayavi/mayavi}
-    \end{itemize}
+  \frametitle{Summary}
+  \begin{itemize}
+  \item Quick introduction to Mayavi's mlab
+  \item Documentation: \url{github.enthought.com/mayavi/mayavi}
+  \end{itemize}
+
 \end{frame}
 
 \end{document}
+
+
+\begin{frame}
+    {An exercise}
+
+        \begin{block}{Exercise}
+        Atmospheric data of temperature over the surface of the earth.
+        Let temperature ($T$) vary linearly with height ($z$):
+        \begin{center}
+        $T = 288.15 - 6.5z$
+        \end{center}
+        \end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Simple solution}
+
+    \begin{lstlisting}
+lat = linspace(-89, 89, 37)
+lon = linspace(0, 360, 37)
+z = linspace(0, 100, 11)
+    \end{lstlisting}
+\pause
+    \begin{lstlisting}
+x, y, z = mgrid[0:360:37j,-89:89:37j,
+                0:100:11j]
+t = 288.15 - 6.5*z
+mlab.contour3d(x, y, z, t)
+mlab.outline()
+mlab.colorbar()
+    \end{lstlisting}
+\end{frame}
