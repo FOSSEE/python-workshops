@@ -201,7 +201,7 @@ Out[]: array([0, 0, 0, 0])
 \end{lstlisting}
   \begin{itemize}
   \item Operations are \alert{element-wise}
-  \item Types matter
+  \item Types matter (only on Python 2.x)
   \end{itemize}
   \inctime{10}
 \end{frame}
@@ -213,6 +213,7 @@ Out[]: array([0, 0, 0, 0])
 In []: a = array([1.,2,3,4])
 In []: a/b
 \end{lstlisting}
+  This can happen on Python 2.x, so beware
 \end{frame}
 
 \begin{frame}[fragile]
