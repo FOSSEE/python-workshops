@@ -388,9 +388,50 @@ Out[]: False
 \end{frame}
 
 \begin{frame}[fragile]
+  \frametitle{The \typ{assert} statement}
+  \begin{itemize}
+  \item You will see it in tests and your exam!
+  \end{itemize}
+
+  \begin{small}
+\begin{lstlisting}
+In []: assert p != n
+In []: assert p == n
+------------------------------------------------------
+AssertionError      Traceback (most recent call last)
+----> 1 assert p == n
+
+AssertionError:
+\end{lstlisting}
+  \end{small}
+  \begin{itemize}
+  \item No error if condition is True
+  \item Raises error if False
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{\typ{assert} examples}
+  \begin{small}
+\begin{lstlisting}
+In []: assert p == n, "Oops condition failed"
+------------------------------------------------------
+AssertionError      Traceback (most recent call last)
+----> 1 assert p == n
+
+AssertionError: Oops condition failed
+\end{lstlisting}
+  \end{small}
+  \begin{itemize}
+  \item Can supply an optional message
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]
 \frametitle{String containership}
   \begin{lstlisting}
-In []: fruits = 'apple, banana, pear, mango'
+In []: fruits = 'apple, banana, pear'
 In []: 'apple' in fruits
 Out[]: True
 
