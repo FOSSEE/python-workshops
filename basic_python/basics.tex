@@ -159,6 +159,23 @@ TypeError: 'str' object does not
   \end{lstlisting}
 \end{frame}
 
+\begin{frame}[fragile]
+  \frametitle{Finding the type}
+\begin{lstlisting}
+In []: a = 1.0
+In []: type(a)
+Out[]: float
+In []: type(1)
+Out[]: int
+
+In []: type(1+1j)
+Out[]: complex
+
+In []: type('hello')
+Out[]: str
+\end{lstlisting}
+\end{frame}
+
 \section{Operators}
 
 \begin{frame}[fragile]
