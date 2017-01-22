@@ -1,0 +1,542 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Tutorial slides on Python.
+%
+% Author: FOSSEE
+% Copyright (c) 2009-2017, FOSSEE, IIT Bombay
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[14pt,compress]{beamer}
+
+\input{macros.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Title page
+\title[Basic Python]{Python language: Basics}
+
+\author[FOSSEE Team] {The FOSSEE Group}
+
+\institute[FOSSEE -- IITB] {Department of Aerospace Engineering\\IIT Bombay}
+\date[] {Mumbai, India}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% DOCUMENT STARTS
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}
+  \frametitle{Outline}
+  \tableofcontents
+  % You might wish to add the option [pausesections]
+\end{frame}
+
+\section{Data types}
+
+\begin{frame}
+  \frametitle{Primitive Data types}
+  \begin{itemize}
+    \item Numbers: float, int, complex
+    \item Strings
+    \item Booleans
+  \end{itemize}
+\end{frame}
+
+\subsection{Numbers}
+\begin{frame}[fragile]
+  \frametitle{Numbers}
+  \begin{itemize}
+    \item \kwrd{int}\\ whole number, no matter what the size!
+  \begin{lstlisting}
+In []: a = 13
+
+In []: b = 99999999999999999999
+  \end{lstlisting}
+    \item \kwrd{float}
+  \begin{lstlisting}
+In []: p = 3.141592
+  \end{lstlisting}
+    \item \kwrd{complex}
+  \begin{lstlisting}
+In []: c = 3+4j
+  \end{lstlisting}
+  \end{itemize}
+\end{frame}
+
+\subsection{Booleans}
+\begin{frame}[fragile]
+  \frametitle{Booleans}
+  \begin{lstlisting}
+In []: t = True
+
+In []: F = not t
+
+In []: F or t
+Out[]: True
+
+In []: F and t
+Out[]: False
+  \end{lstlisting}
+%%  \inctime{5}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{( )  for precedence}
+  \begin{lstlisting}
+In []: a = False
+In []: b = True
+In []: c = True
+
+In []: (a and b) or c
+Out[]: True
+
+In []: a and (b or c)
+Out[]: False
+  \end{lstlisting}
+%%  \inctime{5}
+\end{frame}
+
+\subsection{Strings}
+
+\begin{frame}[fragile]
+\frametitle{Strings}
+Anything within ``quotes'' is a string!
+\begin{lstlisting}
+' This is a string '
+" This too! "
+""" This one too! """
+''' And one more! '''
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Strings}
+Why so many?
+\begin{lstlisting}
+' "Do or do not.  No try." said Yoda.'
+" ' is a mighty lonely quote."
+\end{lstlisting}
+The triple quoted ones can span multiple lines!
+
+\begin{lstlisting}
+""" The quick brown
+fox jumped over
+    the lazy dingbat.
+"""
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Strings}
+  \begin{lstlisting}
+In []: w = "hello"
+
+In []: print(w[0], w[1], w[-1])
+
+In []: len(w)
+Out[]: 5
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Strings \ldots}
+  \emphbar{Strings are immutable}
+  \begin{lstlisting}
+In []: w[0] = 'H'
+  \end{lstlisting}
+  \pause
+  \begin{lstlisting}
+--------------------------------------------
+TypeError  Traceback (most recent call last)
+
+<ipython console> in <module>()
+
+TypeError: 'str' object does not
+         support item assignment
+  \end{lstlisting}
+\end{frame}
+
+\section{Operators}
+
+\begin{frame}[fragile]
+  \frametitle{Arithmetic operators}
+  \small
+  \begin{lstlisting}
+In []: 1786 % 12
+Out[]: 10
+
+In []: 45 % 2
+Out[]: 1
+
+In []: 864675 % 10
+Out[]: 5
+
+In []: 3124 * 126789
+Out[]: 396088836
+
+In []: big = 1234567891234567890 ** 3
+
+In []: verybig = big * big * big * big
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Arithmetic operators}
+  \begin{lstlisting}
+In []: 17 / 2
+Out[]: 8
+
+In []: 17 / 2.0
+Out[]: 8.5
+
+In []: 17.0 / 2
+Out[]: 8.5
+
+In []: 17.0 / 8.5
+Out[]: 2.0
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Arithmetic operators: floor division}
+  \begin{lstlisting}
+In []: 17 // 2
+Out[]: 8
+
+In []: 17 // 2.0
+Out[]: 8.0
+
+In []: 17.0 // 2.0
+Out[]: 8.0
+
+In []: 17.0 // 8.6
+Out[]: 1.0
+  \end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{Arithmetic operators}
+  \begin{lstlisting}
+In []: c = 3+4j
+
+In []: abs(c)
+Out[]: 5.0
+
+In []: c.imag
+Out[]: 4.0
+
+In []: c.real
+Out[]: 3.0
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Arithmetic operators}
+  \begin{lstlisting}
+In []: a = 7546
+
+In []: a += 1
+In []: a
+Out[]: 7547
+
+In []: a -= 5
+In []: a
+
+In []: a *= 2
+
+In []: a /= 5
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{String operations}
+  \begin{lstlisting}
+In []: s = 'Hello'
+
+In []: p = 'World'
+
+In []: s + p
+Out[]: 'HelloWorld'
+
+In []: s * 4
+Out[]: 'HelloHelloHelloHello'
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{String operations \ldots}
+  \begin{lstlisting}
+In []: s * s
+  \end{lstlisting}
+  \pause
+  \begin{lstlisting}
+--------------------------------------------
+TypeError  Traceback (most recent call last)
+
+<ipython console> in <module>()
+
+TypeError: can`t multiply sequence by
+                non-int of type `str`
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{String methods}
+  \begin{lstlisting}
+In []: a = 'Hello World'
+In []: a.startswith('Hell')
+Out[]: True
+
+In []: a.endswith('ld')
+Out[]: True
+
+In []: a.upper()
+Out[]: 'HELLO WORLD'
+
+In []: a.lower()
+Out[]: 'hello world'
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Strings: \typ{split} \& \typ{join}}
+  \begin{lstlisting}
+In []: chars = 'a b c'
+In []: chars.split()
+Out[]: ['a', 'b', 'c']
+In []: ' '.join(['a', 'b', 'c'])
+Out[]: 'a b c'
+  \end{lstlisting}
+
+  \begin{lstlisting}
+In []: alpha = ', '.join(['a', 'b', 'c'])
+In []: alpha
+Out[]: 'a, b, c'
+In []: alpha.split(', ')
+Out[]: ['a', 'b', 'c']
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{String formatting}
+  \begin{lstlisting}
+In []: x, y = 1, 1.234
+
+In []: 'x is %s, y is %s' %(x, y)
+Out[]: 'x is 1, y is 1.234'
+  \end{lstlisting}
+  \begin{itemize}
+    \item \emph{\%d}, \emph{\%f} etc. available
+  \end{itemize}
+  \emphbar{\url{http://docs.python.org/library/stdtypes.html}}
+%%  \inctime{10}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Relational and logical operators}
+  \begin{lstlisting}
+In []: p, z, n = 1, 0, -1
+In []: p == n
+Out[]: False
+
+In []: p >= n
+Out[]: True
+
+In []: n < z < p
+Out[]: True
+
+In []: p + n != z
+Out[]: False
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Built-ins}
+  \begin{lstlisting}
+In []: int(17 / 2.0)
+Out[]: 8
+
+In []: float(17 / 2)
+Out[]: 8.0
+
+In []: str(17 / 2.0)
+Out[]: '8.5'
+
+In []: round( 7.5 )
+Out[]: 8.0
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Odds and ends}
+  \begin{itemize}
+    \item Case sensitive
+    \item Dynamically typed $\Rightarrow$ need not specify a type
+      \begin{lstlisting}
+In []: a = 1
+In []: a = 1.1
+In []: a = "Now I am a string!"
+      \end{lstlisting}
+    \item Comments:
+      \begin{lstlisting}
+In []: a = 1  # In-line comments
+In []: # A comment line.
+In []: a = "# Not a comment!"
+      \end{lstlisting}
+  \end{itemize}
+%%  \inctime{15}
+\end{frame}
+
+\section{Simple IO}
+\begin{frame}[fragile]
+  \frametitle{Simple IO: Console Input}
+  \small
+  \begin{itemize}
+    \item \typ{input()} waits for user input.
+      \begin{lstlisting}
+In []: a = input()
+5
+
+In []: a
+Out[]: '5'
+
+In []: a = input('Enter a value: ')
+Enter a value: 5
+      \end{lstlisting}
+    \item Prompt string is optional.
+    \item All keystrokes are strings!
+    \item \typ{int()} converts string to int.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Simple IO: Python 2.x vs 3.x}
+  \begin{itemize}
+  \item \typ{print} is familiar to us
+  \item Changed from Python 2.x to 3.x
+  \item We use the Python 3 convention here
+    \vspace*{2em}
+  \item If on Python 2.x do this:
+  {
+    \small
+\begin{lstlisting}
+In []: from __future__ import print_function
+\end{lstlisting}
+  }
+  \item Safe to use in Python 3.x also
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Simple IO: Console output}
+  \begin{itemize}
+  \item Put the following code snippet in a file \typ{hello1.py}
+  \end{itemize}
+  \begin{lstlisting}
+print("Hello", "World")
+print("Goodbye", "World")
+\end{lstlisting}
+Now run it like so:
+\begin{lstlisting}
+In []: %run hello1.py
+Hello World
+Goodbye World
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Simple IO: Console output \ldots}
+Put the following code snippet in a file \typ{hello2.py}
+  \begin{lstlisting}
+print("Hello", end=' ')
+print("World")
+\end{lstlisting}
+Now run it like so:
+\begin{lstlisting}
+In []: %run hello2.py
+Hello World
+  \end{lstlisting}
+
+\pause
+
+\begin{block}{Mini Exercise}
+  \begin{itemize}
+  \item Read docs for \typ{print}
+  \item Remember: use \typ{print?} \
+  \end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{What did we learn?}
+  \begin{itemize}
+    \item Data types: int, float, complex, boolean, string
+    \item Operators: +, -, *, /, \%, **, +=, -=, *=, /=, >, <, <=, >=, ==, !=, a < b < c
+    \item Simple IO: \kwrd{input} and \kwrd{print}
+  \end{itemize}
+\end{frame}
+
+
+\end{document}
+
+%% Questions for Quiz %%
+%% ------------------ %%
+
+
+\begin{frame}
+\frametitle{\incqno }
+  What is the largest integer value that can be represented natively by Python?
+\end{frame}
+
+\begin{frame}
+\frametitle{\incqno }
+  What is the result of 17.0 / 2?
+\end{frame}
+
+\begin{frame}
+\frametitle{\incqno }
+  Which of the following is not a type in Python?
+  \begin{enumerate}
+    \item int
+    \item float
+    \item char
+    \item string
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}
+\frametitle{\incqno }
+How do you create a complex number with real part 2 and imaginary part
+0.5.
+\end{frame}
+
+\begin{frame}
+\frametitle{\incqno }
+  What is the difference between \kwrd{print} \emph{x} and \kwrd{print} \emph{x,} ?
+\end{frame}
+
+\begin{frame}
+\frametitle{\incqno }
+  What does '*' * 40 produce?
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{\incqno }
+    What is the output of:
+    \begin{lstlisting}
+In []: ', '.join(['a', 'b', 'c'])
+    \end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]
+    \frametitle{\incqno}
+  \begin{lstlisting}
+In []: 47 % 3
+  \end{lstlisting}
+  What is the output?
+\end{frame}
