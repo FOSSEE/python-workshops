@@ -97,7 +97,6 @@ Out[]: 2
 In []: num.index(2)
 Out[]: 2
 
-In []: num.sort()
 In []: num.pop()
 9
 In []: num
@@ -105,7 +104,39 @@ In []: num
   \end{lstlisting}
 \end{frame}
 
+\begin{frame}[fragile]
+  \frametitle{Removing elements}
+\begin{itemize}
+  \item Elements can be removed based on their index OR
+  \item based on the value of the element
+  \end{itemize}
+  \begin{lstlisting}
+   In []: del num[1]
 
+   In []: p.remove(6)
+  \end{lstlisting}
+  \begin{itemize}
+  \item \alert{When removing by value, first element is removed}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Sorting}
+  \begin{lstlisting}
+  In []: a = [5, 1, 6, 7, 7, 10]
+  In []: a.sort()
+  In []: a
+  \end{lstlisting}
+  \begin{itemize}
+  \item \texttt{sort} method sorts the list in-place
+  \item Use \texttt{sorted} if you require a new list
+  \end{itemize}
+  \begin{lstlisting}
+  In []: a = [5, 1, 6, 7, 7, 10]
+  In []: sorted(a)
+  In []: a
+  \end{lstlisting}
+\end{frame}
 
 \begin{frame}[fragile]
 \frametitle{List containership}
@@ -147,7 +178,7 @@ In []: t[4] = 7
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{Tuple expansion}
+  \frametitle{Tuple packing and expansion}
   Try these:
 \begin{lstlisting}
 In []: a, b = 1, 2
@@ -161,20 +192,29 @@ In []: a, = [1]
 \end{frame}
 
 \begin{frame}[fragile]
-  {A classic problem}
-  \begin{block}
-    {Interchange values}
-    How to interchange values of two variables?
-  \end{block}
-  \pause
-\begin{lstlisting}
-In []: a, b = 0, 1
-In []: a, b = b, a
+  \frametitle{Swapping values}
+  \vspace*{-1em}
+  \begin{lstlisting}
+  In[]: a, b = 5, 7
+
+  In[]: temp = a
+  In[]: a = b
+  In[]: b = temp
+  \end{lstlisting}
+  \begin{itemize}
+  \item Here's the Pythonic way of doing it
+  \end{itemize}
+  \begin{lstlisting}
+  In[]: a, b = b, a
+  \end{lstlisting}
+  \begin{itemize}
+  \item The variables can be of different data-types
+  \end{itemize}
+  \begin{lstlisting}
+  In[]: a = 2.5
+  In[]: b = "hello"
+  In[]: a, b = b, a
 \end{lstlisting}
-  \begin{block}{Note:}
-    This Python idiom works for all types of variables.\\
-They need not be of the same type!
-  \end{block}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -193,6 +233,47 @@ In []: tuple('hello')
 \end{lstlisting}
 \end{frame}
 
+\begin{frame}
+  \frametitle{Slicing}
+  \begin{itemize}
+  \item Slicing works the same way for all sequence types
+  \item Indices also work the same way
+  \item Lists, tuples, and strings
+  \item \alert{\typ{sequence[initial:final:step]}}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Problem - Day of the Week?}
+  \begin{itemize}
+  \item Strings have methods to manipulate them
+  \end{itemize}
+  \begin{block}{Problem}
+    Given a list, \texttt{week}, containing names of the days of the
+    week and a string \texttt{s}, check if the string is a day of the
+    week. We should be able to check for any of the forms like,
+    \emph{sat, Sat, SAT}
+  \end{block}
+  \begin{itemize}
+  \item Get the first 3 characters of the string
+  \item Convert it all to lower case
+  \item Check for existence in the list, \texttt{week}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Solution - Day of the Week?}
+\begin{lstlisting}
+In []: week = 'mon tue wed thu fri sat sun'.split()
+In []: s = 'Sunday'
+In []: s.lower()[:3] in week
+\end{lstlisting}
+  OR
+\begin{lstlisting}
+In []: s[:3].lower() in week
+\end{lstlisting}
+\end{frame}
+
 \subsection{Dictionaries}
 
 \begin{frame}[fragile]
@@ -206,12 +287,14 @@ In []: tuple('hello')
     \item Dictionaries index not just with integers!
     \item Following examples are for string indices
     \item Will also work for integers, floats, tuples, and others
+    \item \alert{No ordering of keys!}
   \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]
   \frametitle{Dictionaries \ldots}
-  \begin{lstlisting}
+\begin{lstlisting}
+In []: mtdict = {}
 In []: d = {'png' : 'image file',
       'txt' : 'text file',
       'py' : 'python code',
@@ -268,6 +351,46 @@ Out[]:
 \end{frame}
 
 \begin{frame}[fragile]
+  \frametitle{Adding \& Removing Elements}
+  \begin{itemize}
+  \item Adding a new key-value pair
+  \end{itemize}
+  \begin{lstlisting}
+   In[]: extensions['c++'] = 'C++ code'
+   In[]: extensions
+  \end{lstlisting}
+  \begin{itemize}
+  \item Deleting a key-value pair
+  \end{itemize}
+  \begin{lstlisting}
+   In[]: del extension['java']
+   In[]: extensions
+  \end{lstlisting}
+  \begin{itemize}
+  \item Assigning to existing key, modifies the value
+  \end{itemize}
+  \begin{lstlisting}
+   In[]: extensions['cpp'] = 'C++ source code'
+   In[]: extensions
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Dictionaries:  methods}
+\begin{lstlisting}
+In []: d.keys()
+In []: d.values()
+In []: d.get('bin')
+Out[]: 'binary file'
+In []: d.get('junk')  # No error!
+
+In []: d.update({'bin': 'Binary file',
+.....:           'exe': 'executable'})
+In []: d.clear())
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
   \frametitle{Dictionaries: containership}
   \begin{lstlisting}
 In []: 'bin' in d
@@ -282,21 +405,6 @@ Out[]: False
       \item Not values
     \end{itemize}
   \end{block}
-\end{frame}
-
-\begin{frame}[fragile]
-  \frametitle{Dictionaries:  iterations}
-\begin{lstlisting}
-In []: d.keys()
-In []: d.values()
-In []: d.get('bin')
-Out[]: 'binary file'
-In []: d.get('junk')  # No error!
-
-In []: d.update({'bin': 'Binary file',
-.....:           'exe': 'executable'})
-In []: d.clear())
-\end{lstlisting}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -366,55 +474,83 @@ print((yyyy, mm, dd))
 \subsection{Sets}
 \begin{frame}[fragile]
   \frametitle{Sets}
-    \begin{itemize}
-      \item Simplest container, mutable
-      \item No ordering, no duplicates
-      \item usual suspects: union, intersection, subset \ldots
-      \item >, >=, <, <=, in, \ldots
-    \end{itemize}
-    \begin{lstlisting}
-
-In []: f10 = set([1,2,3,5,8])
-
-In []: p10 = set([2,3,5,7])
-
-In []: f10 | p10
-Out[]: set([1, 2, 3, 5, 7, 8])
-\end{lstlisting}
+  \begin{itemize}
+  \item Conceptually identical to the sets in mathematics
+  \item Simplest container, mutable
+  \item No ordering, no duplicates
+  \item usual suspects: union, intersection, subset \ldots
+  \item >, >=, <, <=, in, \ldots
+  \end{itemize}
+  \begin{lstlisting}
+  In[]: a_list = [1, 2, 1, 4, 5, 6, 2]
+  In[]: a = set(a_list)
+  In[]: a
+  \end{lstlisting}
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{Set \ldots}
+  \frametitle{Operations on Sets}
+  \begin{lstlisting}
+  In []: f10 = set([1, 2, 3, 5, 8])
+  In []: p10 = set([2, 3, 5, 7])
+  \end{lstlisting}
+  \begin{itemize}
+  \item Mathematical operations performed on sets, can be performed
+  \end{itemize}
+  \begin{itemize}
+  \item Union
     \begin{lstlisting}
-In []: f10 & p10
-Out[]: set([2, 3, 5])
-
-In []: f10 - p10
-Out[]: set([1, 8])
-
-In []: p10 - f10, f10 ^ p10
-Out[]: (set([7]), set([1, 7, 8]))
-
-In []: set([2,3]) < p10
-Out[]: True
-\end{lstlisting}
+    In []: f10 | p10
+    \end{lstlisting}
+  \item Intersection
+    \begin{lstlisting}
+    In []: f10 & p10
+    \end{lstlisting}
+  \item Difference
+    \begin{lstlisting}
+    In []: f10 - p10
+    \end{lstlisting}
+  \item Symmetric Difference
+\begin{lstlisting}
+    In []: f10 ^ p10
+    \end{lstlisting}
+  \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{Set \ldots}
+  \frametitle{Sub-sets}
+  \begin{itemize}
+  \item Proper Subset
     \begin{lstlisting}
-In []: set([2,3]) <= p10
-Out[]: True
+    In[]: b = set([1, 2])
+    In[]: b < f10
+    \end{lstlisting}
+  \item Subsets
+    \begin{lstlisting}
+    In[]: f10 <= f10
+    \end{lstlisting}
+  \end{itemize}
+\end{frame}
 
-In []: 2 in p10
-Out[]: True
-
-In []: 4 in p10
-Out[]: False
-
-In []: len(f10)
-Out[]: 5
-\end{lstlisting}
+\begin{frame}[fragile]
+  \frametitle{Elements of sets}
+  \begin{itemize}
+  \item Containership
+    \begin{lstlisting}
+    In[]: 1 in f10
+    In[]: 4 in f10
+    \end{lstlisting}
+  \item Iterating over elements
+    \begin{lstlisting}
+    In[]: for i in f10:
+    ....:      print(i)
+    ....:
+    \end{lstlisting}
+  \item Subsets
+    \begin{lstlisting}
+    In[]: f10 <= f10
+    \end{lstlisting}
+  \end{itemize}
 \end{frame}
 
 \begin{frame}
@@ -500,7 +636,7 @@ In []: set([1, 2, 8, 2, 13, 8, 9])
   \begin{lstlisting}
 In []: a = {'a': 1, 'b': 2}
 In []: a['a'] = 10
-In []: print a
+In []: print(a)
   \end{lstlisting}
   What is the output?
 \end{frame}
@@ -509,7 +645,7 @@ In []: print a
     \frametitle{\incqno}
   \begin{lstlisting}
 In []: for i in range(3, 10, 2):
-  ...:     print i
+  ...:     print(i)
   \end{lstlisting}
   What is the output?
 \end{frame}
