@@ -252,6 +252,7 @@ In []: a /= 5
   \end{lstlisting}
 \end{frame}
 
+
 \begin{frame}[fragile]
   \frametitle{String operations}
   \begin{lstlisting}
@@ -303,6 +304,22 @@ Out[]: 'hello world'
 \end{frame}
 
 \begin{frame}[fragile]
+  \frametitle{String methods}
+  \begin{lstlisting}
+In []: a = '  Hello World  '
+In []: b = a.strip()
+In []: b
+Out[]: 'Hello World'
+
+In []: b.index('ll')
+Out[]: 2
+In []: b.replace('Hello', 'Goodbye')
+Out[]: 'Goodbye World'
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]
 \frametitle{Strings: \typ{split} \& \typ{join}}
   \begin{lstlisting}
 In []: chars = 'a b c'
@@ -311,7 +328,6 @@ Out[]: ['a', 'b', 'c']
 In []: ' '.join(['a', 'b', 'c'])
 Out[]: 'a b c'
   \end{lstlisting}
-
   \begin{lstlisting}
 In []: alpha = ', '.join(['a', 'b', 'c'])
 In []: alpha
@@ -355,6 +371,24 @@ Out[]: False
 \end{frame}
 
 \begin{frame}[fragile]
+\frametitle{String containership}
+  \begin{lstlisting}
+In []: fruits = 'apple, banana, pear, mango'
+In []: 'apple' in fruits
+Out[]: True
+
+In []: 'potato' in fruits
+Out[]: False
+
+\end{lstlisting}
+  \begin{itemize}
+  \item Use tab complete to list other string methods
+  \item Use \typ{?} to find more information
+  \end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]
   \frametitle{Built-ins}
   \begin{lstlisting}
 In []: int(17 / 2.0)
@@ -390,6 +424,37 @@ In []: a = "# Not a comment!"
   \end{itemize}
 %%  \inctime{15}
 \end{frame}
+
+\begin{frame}
+  \frametitle{Exercise 1}
+  Given a 2 digit integer\ \typ{x}, find the digits of the number.
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Possible Solution}
+\begin{lstlisting}
+In []: a = x//10
+In []: b = x%10
+In []: a*10 + b == x
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Exercise 2}
+  Given an arbitrary integer, count the number of digits it has.
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Possible solution}
+\begin{lstlisting}
+In []: x = 12345678
+In []: len(str(x))
+\end{lstlisting}
+
+  Sneaky solution!
+\end{frame}
+
+
 
 \section{Simple IO}
 \begin{frame}[fragile]
@@ -477,6 +542,15 @@ Hello World
     \item Data types: int, float, complex, boolean, string
     \item Operators: +, -, *, /, \%, **, +=, -=, *=, /=, >, <, <=, >=, ==, !=, a < b < c
     \item Simple IO: \kwrd{input} and \kwrd{print}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Homework}
+  \begin{itemize}
+  \item Explore the various string methods
+  \item Read the documentation for the string methods
+  \item Explore the different builtins seen so far also
   \end{itemize}
 \end{frame}
 

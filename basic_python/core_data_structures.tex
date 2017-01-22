@@ -1,0 +1,545 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Tutorial slides on Python.
+%
+% Author: FOSSEE
+% Copyright (c) 2009-2017, FOSSEE, IIT Bombay
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[14pt,compress]{beamer}
+\input{macros.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Title page
+\title[Data structures]{Python language: Core data structures}
+
+\author[FOSSEE Team] {The FOSSEE Group}
+
+\institute[IIT Bombay] {Department of Aerospace Engineering\\IIT Bombay}
+\date[] {Mumbai, India}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% DOCUMENT STARTS
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}
+  \frametitle{Outline}
+  \tableofcontents
+  % You might wish to add the option [pausesections]
+\end{frame}
+
+\section{Data structures}
+\subsection{Lists}
+\begin{frame}[fragile]
+  \frametitle{Lists}
+\begin{block}{We already know that}
+  \begin{lstlisting}
+num = [1, 2, 3, 4]
+  \end{lstlisting}
+is a list
+\end{block}
+\pause
+\begin{itemize}
+\item Lists can contain different types
+\item including nested lists
+\end{itemize}
+\begin{lstlisting}
+x = ['apple', 1, 'banana', 2.5,
+     'shirt', [1,2,3]]
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Lists: methods}
+  \begin{lstlisting}
+In []: num = [9, 8, 2, 3, 7]
+
+In []: num + [4, 5, 6]
+Out[]: [9, 8, 2, 3, 7, 4, 5, 6]
+
+In []: num.append([4, 5, 6])
+
+In []: num
+Out[]: [9, 8, 2, 3, 7, [4, 5, 6]]
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Lists: methods}
+  \begin{lstlisting}
+In []: num = [9, 8, 2, 3, 7]
+
+In []: num.extend([4, 5, 6])
+In []: num
+Out[]: [9, 8, 2, 3, 7, 4, 5, 6]
+
+In []: num.reverse()
+In []: num
+Out[]: [6, 5, 4, 7, 3, 2, 8, 9]
+
+In []: num.remove(6)
+In []: num
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Lists: methods}
+  \begin{lstlisting}
+In []: num = [9, 8, 2, 3, 1, 2, 3, 4]
+In []: num.count(2)
+Out[]: 2
+
+In []: num.index(2)
+Out[]: 2
+
+In []: num.sort()
+In []: num.pop()
+9
+In []: num
+[1, 2, 2, 3, 3, 4, 8]
+  \end{lstlisting}
+\end{frame}
+
+
+
+\begin{frame}[fragile]
+\frametitle{List containership}
+\emphbar{Recall \typ{num} is \typ{[9, 8, 2, 3, 7]}}
+\begin{lstlisting}
+In []: 4 in num
+Out[]: False
+
+In []: b = 8
+In []: b in num
+Out[]: True
+
+In []: b not in num
+Out[]: False
+\end{lstlisting}
+\end{frame}
+
+\subsection{Tuples}
+\begin{frame}[fragile]
+\frametitle{Tuples: Immutable sequence}
+\begin{lstlisting}
+In []: x = 1, 2, 3
+In []: x
+(1, 2, 3)
+
+In []: t = (1, 2, 3, 4, 5, 6, 7, 8)
+In []: t[0] + t[3] + t[-1]
+Out[]: 13
+
+In []: t[4] = 7
+\end{lstlisting}
+\pause
+\begin{block}{Note:}
+\begin{itemize}
+  \item Tuples are immutable - cannot be changed
+\end{itemize}
+\end{block}
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Tuple expansion}
+  Try these:
+\begin{lstlisting}
+In []: a, b = 1, 2
+
+In []: a, b, c = 1, 2, 3
+
+In []: a, b = 1, 2, 3
+
+In []: a, = [1]
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  {A classic problem}
+  \begin{block}
+    {Interchange values}
+    How to interchange values of two variables?
+  \end{block}
+  \pause
+\begin{lstlisting}
+In []: a, b = 0, 1
+In []: a, b = b, a
+\end{lstlisting}
+  \begin{block}{Note:}
+    This Python idiom works for all types of variables.\\
+They need not be of the same type!
+  \end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{\typ{tuple, list} functions}
+  Try these:
+\begin{lstlisting}
+In []: x = 1,2,3
+
+In []: list(x)
+Out[]: [1, 2, 3]
+
+In []: tuple(list(x))
+Out[]: (1, 2, 3)
+
+In []: tuple('hello')
+\end{lstlisting}
+\end{frame}
+
+\subsection{Dictionaries}
+
+\begin{frame}[fragile]
+  \frametitle{Dictionaries: Introduction}
+  \begin{itemize}
+  \item Lists index using integers; recall that :\\
+    \vspace*{1em}
+      If \typ{p = [2, 3, 5, 7]}\\
+      \typ{p[1]} is equal to \typ{3}
+      \vspace*{2em}
+    \item Dictionaries index not just with integers!
+    \item Following examples are for string indices
+    \item Will also work for integers, floats, tuples, and others
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Dictionaries \ldots}
+  \begin{lstlisting}
+In []: d = {'png' : 'image file',
+      'txt' : 'text file',
+      'py' : 'python code',
+      'java': 'bad code',
+      'cpp': 'complex code'}
+
+In []: d['txt']
+Out[]: 'text file'
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Dictionaries \ldots}
+  \begin{lstlisting}
+In []: 'py' in d
+Out[]: True
+
+In []: 'jpg' in d
+Out[]: False
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Dictionaries \ldots}
+  \begin{small}
+    \begin{lstlisting}
+In []: list(d.keys())
+Out[]: ['cpp', 'py', 'txt', 'java', 'png']
+
+In []: list(d.values())
+Out[]: ['complex code', 'python code',
+        'text file', 'bad code',
+        'image file']
+    \end{lstlisting}
+  \end{small}
+%%  \inctime{10}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Inserting elements}
+  \emphbar{\alert{\typ{d[key] = value}}}
+  \begin{lstlisting}
+In []: d['bin'] = 'binary file'
+In []: d
+Out[]:
+{'bin': 'binary file',
+ 'cpp': 'complex code',
+ 'java': 'bad code',
+ 'png': 'image file',
+ 'py': 'python code',
+ 'txt': 'text file'}
+  \end{lstlisting}
+  \emphbar{\alert{Duplicate keys are overwritten!}}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Dictionaries: containership}
+  \begin{lstlisting}
+In []: 'bin' in d
+Out[]: True
+
+In []: 'hs' in d
+Out[]: False
+  \end{lstlisting}
+  \begin{block}{Note}
+    \begin{itemize}
+      \item We can check for the containership of keys only
+      \item Not values
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Dictionaries:  iterations}
+\begin{lstlisting}
+In []: d.keys()
+In []: d.values()
+In []: d.get('bin')
+Out[]: 'binary file'
+In []: d.get('junk')  # No error!
+
+In []: d.update({'bin': 'Binary file',
+.....:           'exe': 'executable'})
+In []: d.clear())
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Dictionaries:  iteration}
+  \begin{lstlisting}
+In []: for v in d.values():
+.....:     print(v)
+.....:
+
+In []: for k, v in d.items():
+.....:     print(k, v)
+.....:
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{\typ{dict} built-in}
+Like \typ{list, tuple} can also create dicts like so:
+\begin{lstlisting}
+In []: d = dict(png='image file',
+.....:          txt='text file',
+.....:          py='python code')
+\end{lstlisting}
+\begin{itemize}
+\item Check more of the dictionary methods yourself
+\end{itemize}
+\end{frame}
+
+\begin{frame} {Problem 2.1}
+
+  You are given date strings of the form ``29 Jul, 2009'', or ``4 January
+  2008''. In other words a number, a string and another number, with a comma
+  sometimes separating the items.
+
+  Write a program that takes such a string as input and prints a tuple (yyyy,
+  mm, dd) where all three elements are ints.
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Some hints}
+  \begin{itemize}
+  \item Simplify the problem
+  \item Try to explain how someone can do it
+    \vspace*{2em}
+
+  \item Replace ',' with space
+  \item \typ{string.split()} method is your friend
+  \item Need a mapping from month (string) to a number: use a dict
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Partial solution}
+\begin{lstlisting}
+month2mm = {'jan': 1, 'feb': 2, #...
+           }
+date = input('Enter a date string: ')
+date = date.replace(',', ' ')
+day, month, year = date.split()
+dd, yyyy = int(day), int(year)
+mon = month[:3].lower()
+mm = month2mm[mon]
+print((yyyy, mm, dd))
+\end{lstlisting}
+\end{frame}
+
+\subsection{Sets}
+\begin{frame}[fragile]
+  \frametitle{Sets}
+    \begin{itemize}
+      \item Simplest container, mutable
+      \item No ordering, no duplicates
+      \item usual suspects: union, intersection, subset \ldots
+      \item >, >=, <, <=, in, \ldots
+    \end{itemize}
+    \begin{lstlisting}
+
+In []: f10 = set([1,2,3,5,8])
+
+In []: p10 = set([2,3,5,7])
+
+In []: f10 | p10
+Out[]: set([1, 2, 3, 5, 7, 8])
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Set \ldots}
+    \begin{lstlisting}
+In []: f10 & p10
+Out[]: set([2, 3, 5])
+
+In []: f10 - p10
+Out[]: set([1, 8])
+
+In []: p10 - f10, f10 ^ p10
+Out[]: (set([7]), set([1, 7, 8]))
+
+In []: set([2,3]) < p10
+Out[]: True
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Set \ldots}
+    \begin{lstlisting}
+In []: set([2,3]) <= p10
+Out[]: True
+
+In []: 2 in p10
+Out[]: True
+
+In []: 4 in p10
+Out[]: False
+
+In []: len(f10)
+Out[]: 5
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Problem 2.2}
+  Given a dictionary of the names of students and their marks,
+
+  \begin{enumerate}
+  \item identify how many duplicate marks are there?
+  \item and what are these duplicate marks?
+  \end{enumerate}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Hints}
+  \begin{itemize}
+  \item Use a set to find the unique marks: first part
+  \item Second part can be done in a few different ways
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Possible solution}
+\begin{lstlisting}
+students = {'x': 60, 'y': 60, 'z': 55}
+all_marks = list(students.values())
+unique = set(all_marks)
+n_dups = len(all_marks) - len(unique)
+print(n_dups, 'duplicates')
+
+# Part 2
+for i in unique:
+    all_marks.remove(i)
+print('Duplicates are', set(all_marks))
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}
+  \frametitle{What did we learn?}
+  \begin{itemize}
+    \item Core Python data structures:
+    \begin{itemize}
+      \item Lists
+      \item Tuples
+      \item Dictionaries
+      \item Sets
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Homework}
+
+  \begin{itemize}
+  \item Explore all the methods of the various data structures you have seen
+    so far.
+  \item Read the documentation for each of these methods.
+  \item Solve all problems discussed
+  \end{itemize}
+\end{frame}
+
+\end{document}
+
+%% Questions for Quiz %%
+%% ------------------ %%
+
+\begin{frame}
+    \frametitle{\incqno}
+  How do you find the presence of an element \emph{x} in the list \emph{a}?
+\end{frame}
+
+
+\begin{frame}[fragile]
+    \frametitle{\incqno}
+  \begin{lstlisting}
+In []: set([1, 2, 8, 2, 13, 8, 9])
+  \end{lstlisting}
+  What is the output?
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{\incqno}
+  \begin{lstlisting}
+In []: a = {'a': 1, 'b': 2}
+In []: a['a'] = 10
+In []: print a
+  \end{lstlisting}
+  What is the output?
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{\incqno}
+  \begin{lstlisting}
+In []: for i in range(3, 10, 2):
+  ...:     print i
+  \end{lstlisting}
+  What is the output?
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{\incqno}
+  \begin{lstlisting}
+In []: a = [1, 2, 3]
+In []: a.extend([5, 6])
+  \end{lstlisting}
+  What is the value of a?
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{\incqno}
+  \begin{lstlisting}
+In []: a = (1, 2, 3)
+In []: a[1] = 10
+  \end{lstlisting}
+  What is the result?
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{\incqno}
+  \begin{lstlisting}
+def func(x, y=10):
+    print x+1, y+10
+
+func(1)
+
+  \end{lstlisting}
+  What is the output?
+\end{frame}

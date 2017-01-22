@@ -5,7 +5,8 @@
 	pdflatex $*.tex
 
 SLIDES= basics.pdf \
-  control_flow.pdf
+  control_flow.pdf \
+  core_data_structures.pdf
 
 all: 	$(SLIDES)
 
