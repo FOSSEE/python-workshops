@@ -62,6 +62,7 @@ In []: p = 3.141592
     \item \kwrd{complex}
   \begin{lstlisting}
 In []: c = 3+4j
+In []: c = complex(3, 4)
   \end{lstlisting}
   \end{itemize}
 \end{frame}
@@ -204,7 +205,7 @@ In []: verybig = big * big * big * big
   \frametitle{Arithmetic operators}
   \begin{lstlisting}
 In []: 17 / 2
-Out[]: 8
+Out[]: 8.5    # 8 on Python 2.x
 
 In []: 17 / 2.0
 Out[]: 8.5
@@ -245,9 +246,11 @@ Out[]: 5.0
 
 In []: c.imag
 Out[]: 4.0
-
 In []: c.real
 Out[]: 3.0
+
+In []: c.conjugate()
+(3-4j)
   \end{lstlisting}
 \end{frame}
 
@@ -452,7 +455,7 @@ Out[]: False
 In []: int(17 / 2.0)
 Out[]: 8
 
-In []: float(17 / 2)
+In []: float(17 // 2)
 Out[]: 8.0
 
 In []: str(17 / 2.0)
@@ -486,6 +489,13 @@ In []: a = "# Not a comment!"
 \begin{frame}
   \frametitle{Exercise 1}
   Given a 2 digit integer\ \typ{x}, find the digits of the number.
+  \vspace*{1em}
+
+  \begin{itemize}
+  \item For example, let us say \typ{x = 38}
+  \item Find a way to get \typ{a = 3} and \typ{b = 8} using \typ{x}?
+  \end{itemize}
+
 \end{frame}
 
 \begin{frame}[fragile]
@@ -496,6 +506,17 @@ In []: b = x%10
 In []: a*10 + b == x
 \end{lstlisting}
 \end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Another Solution}
+\begin{lstlisting}
+In []: sx = str(x)
+In []: a = int(sx[0]])
+In []: b = int(sx[1]])
+In []: a*10 + b == x
+\end{lstlisting}
+\end{frame}
+
 
 \begin{frame}
   \frametitle{Exercise 2}
