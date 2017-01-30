@@ -546,13 +546,13 @@ In []: a = input()
 5
 
 In []: a
-Out[]: '5'
+Out[]: '5'  # Python 3.x!
 
 In []: a = input('Enter a value: ')
 Enter a value: 5
       \end{lstlisting}
     \item Prompt string is optional.
-    \item All keystrokes are strings!
+    \item \typ{input} produces strings (Python 3.x)
     \item \typ{int()} converts string to int.
   \end{itemize}
 \end{frame}
@@ -580,7 +580,8 @@ In []: from __future__ import print_function
   \begin{itemize}
   \item Put the following code snippet in a file \typ{hello1.py}
   \end{itemize}
-  \begin{lstlisting}
+\begin{lstlisting}
+from __future__ import print_function
 print("Hello", "World")
 print("Goodbye", "World")
 \end{lstlisting}
@@ -596,6 +597,7 @@ Goodbye World
   \frametitle{Simple IO: Console output \ldots}
 Put the following code snippet in a file \typ{hello2.py}
   \begin{lstlisting}
+from __future__ import print_function
 print("Hello", end=' ')
 print("World")
 \end{lstlisting}
@@ -618,9 +620,10 @@ Hello World
 \begin{frame}[fragile]
   \frametitle{What did we learn?}
   \begin{itemize}
-    \item Data types: int, float, complex, boolean, string
-    \item Operators: +, -, *, /, \%, **, +=, -=, *=, /=, >, <, <=, >=, ==, !=, a < b < c
-    \item Simple IO: \kwrd{input} and \kwrd{print}
+  \item Data types: int, float, complex, boolean, string
+  \item Use \typ{type} builtin function to find the type
+  \item Operators: +, -, *, /, \%, **, +=, -=, *=, /=, >, <, <=, >=, ==, !=, a < b < c
+  \item Simple IO: \kwrd{input} and \kwrd{print}
   \end{itemize}
 \end{frame}
 

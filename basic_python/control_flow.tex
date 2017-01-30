@@ -82,14 +82,19 @@ else:
   \item \texttt{if-else} construct or the ternary operator
   \end{itemize}
   \begin{lstlisting}
-   In []: if score_str != 'AA':
-   .....:     score = int(score_str)
-   .....: else:
-   .....:     score = 0
+In []: if score_str != 'AA':
+.....:     score = int(score_str)
+.....: else:
+.....:     score = 0
   \end{lstlisting}
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Ternary operator}
+  With the ternary operator you can do this:
+  \small
   \begin{lstlisting}
-   In []: ss = score_str
-   In []: score = int(ss) if ss != 'AA' else 0
+In []: ss = score_str
+In []: score = int(ss) if ss != 'AA' else 0
   \end{lstlisting}
 \end{frame}
 
@@ -136,8 +141,8 @@ else:
   \pause
 \item Shift \typ{a, b} to next values
   \begin{itemize}
-  \item \typ{b = next}
   \item \typ{a = b}
+  \item \typ{b = next}
   \end{itemize}
   \pause
 \item Repeat steps 2, 3 when \typ{b < 30}
