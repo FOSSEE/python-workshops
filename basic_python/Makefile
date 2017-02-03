@@ -5,6 +5,7 @@
 	pdflatex $*.tex
 
 SLIDES= basics.pdf \
+  practice_basics.pdf \
   control_flow.pdf \
   core_data_structures.pdf
 

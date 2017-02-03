@@ -1,0 +1,301 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Tutorial slides on Python.
+%
+% Author: FOSSEE
+% Copyright (c) 2009-2017, FOSSEE, IIT Bombay
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[14pt,compress]{beamer}
+
+\input{macros.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Title page
+\title[Basic Python]{Practice exercises: Basics}
+
+\author[FOSSEE Team] {The FOSSEE Group}
+
+\institute[FOSSEE -- IITB] {Department of Aerospace Engineering\\IIT Bombay}
+\date[] {Mumbai, India}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% DOCUMENT STARTS
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}[fragile,plain]
+  \frametitle{Note: Python 2.x and 3.x}
+
+ If you are using Python 2.x
+  \begin{itemize}
+  \item Use \typ{raw\_input} instead of \typ{input}
+  \item Use the following for \typ{print}
+  \end{itemize}
+ \begin{lstlisting}
+from __future__ import print_function
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[plain]
+  \frametitle{Exercise: print string}
+  \begin{enumerate}
+  \item Ask the user to enter a name
+    \begin{itemize}
+    \item use \typ{input()} or \typ{raw\_input()}
+    \end{itemize}
+  \item Lets say the user entered: \\ \typ{abc}\\  then print \\ \typ{hello abc}
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile,plain]
+\frametitle{Possible solution}
+\begin{lstlisting}
+  name = input() # Or raw_input()
+  print("Hello", name)
+\end{lstlisting}
+
+\end{frame}
+
+
+\begin{frame}[plain]
+  \frametitle{Exercise: input prompt}
+  \begin{enumerate}
+  \item Ask the user to enter a name but give them a prompt:\\ \typ{"Please
+    enter your name: "} \\ (note the trailing space)
+  \item Lets say the user entered: \\ \typ{abc}\\  then print \\ \typ{hello abc}
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile,plain]
+\frametitle{Possible solution}
+\begin{lstlisting}
+name = input("Please enter your name: ")
+print("Hello", name)
+\end{lstlisting}
+
+\end{frame}
+
+\begin{frame}[plain]
+  \frametitle{Exercise: integers}
+  \begin{enumerate}
+  \item Ask the user for a single integer (no prompt string)
+  \item Print the square of this number
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile,plain]
+\frametitle{Possible solution}
+\begin{lstlisting}
+  x_str = input()
+  x = int(x_str)
+  print(x*x)
+\end{lstlisting}
+
+\end{frame}
+
+
+\begin{frame}[plain]
+  \frametitle{Exercise: digits of integer}
+  \begin{enumerate}
+  \item Ask the user for a single integer (use an empty prompt)
+  \item Square this integer
+  \item Print the number of digits the squared integer has
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile,plain]
+\frametitle{Possible solution}
+\begin{lstlisting}
+  x_str = input()
+  x = int(x_str)
+  y_str = str(x*x)
+  print(len(y_str))
+\end{lstlisting}
+
+\end{frame}
+
+\begin{frame}[fragile,plain]
+  \frametitle{Exercise: complex numbers}
+  \begin{enumerate}
+  \item Ask the user for a single complex number
+  \item If the number entered was \typ{1+2j}, print the following:
+    \begin{lstlisting}
+      1 2
+    \end{lstlisting}
+  \item Print the absolute value of this complex number
+  \item Print the conjugate of this complex number
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile,plain]
+\frametitle{Possible solution}
+\begin{lstlisting}
+  z_str = input()
+  z = complex(z_str)
+  print(z.real, z.imag)
+  print(abs(z))
+  print(z.conjugate())
+\end{lstlisting}
+
+\end{frame}
+
+\begin{frame}[plain]
+  \frametitle{Exercise: Booleans}
+  \begin{enumerate}
+  \item Ask the user to enter an integer (use an empty prompt)
+  \item Print \typ{True} if the number is odd print \typ{False} otherwise
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile,plain]
+\frametitle{Possible solution}
+\begin{lstlisting}
+  x_str = input()
+  x = int(x_str)
+  print(x%2 == 1)
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[plain]
+  \frametitle{Exercise: Booleans}
+  \begin{enumerate}
+  \item Ask the user to enter an integer (use an empty prompt)
+  \item Print \typ{True} if the number is even print \typ{False} otherwise
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile,plain]
+\frametitle{Possible solution}
+\begin{lstlisting}
+  x_str = input()
+  x = int(x_str)
+  print(x%2 == 0)
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[plain]
+  \frametitle{Exercise: string operations 1}
+  \begin{itemize}
+  \item Ask the user to enter a name (use an empty prompt)
+  \item Print the name entered but in upper case
+  \item For example, if the user enters 'abc', print 'ABC'
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,plain]
+\frametitle{Possible solution}
+\begin{lstlisting}
+  name = input()
+  print("Hello", name.upper())
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[plain]
+  \frametitle{Exercise: string operations 2}
+  \begin{enumerate}
+  \item Ask the user to enter the name of a file (use an empty prompt)
+  \item Add an extension '.txt' to the name and print it
+  \item For example, if the user enters 'abc', print 'abc.txt'
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile,plain]
+\frametitle{Possible solution}
+\begin{lstlisting}
+  name = input()
+  print(name + '.txt')
+\end{lstlisting}
+
+\end{frame}
+
+
+\begin{frame}[fragile,plain]
+  \frametitle{Exercise: string slicing}
+  \begin{enumerate}
+  \item Ask the user to enter a string
+  \item Print all parts of the string except the first character
+  \item Print the string without the last character
+  \item Then print the string in reverse
+  \item Finally print every alternate character of the string starting from
+    the first
+  \end{enumerate}
+  For example, if the user enters 'abcd', print the following:
+  \begin{lstlisting}
+    bcd
+    abc
+    dcba
+    ac
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,plain]
+\frametitle{Possible solution}
+\begin{lstlisting}
+  name = input()
+  print(name[1:])
+  print(name[:-1])
+  print(name[::-1])
+  print(name[::2])
+\end{lstlisting}
+
+\end{frame}
+
+\begin{frame}[plain]
+  \frametitle{Exercise: string manipulations}
+  \begin{itemize}
+  \item Ask the user to enter a string
+  \item Count the number of vowels in the string
+  \item The code should be case-insensitive
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,plain]
+\frametitle{Possible solution}
+\begin{lstlisting}
+  x = input()
+  x = x.lower()
+  n = (x.count('a') + x.count('e') +
+       x.count('i') + x.count('o') +
+       x.count('u'))
+  print(n)
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[plain]
+  \frametitle{Exercise: digits of an integer}
+  Given a 2 digit integer\ \typ{x}, find the digits of the number.
+  \vspace*{1em}
+
+  \begin{itemize}
+  \item For example, let us say \typ{x = 38}
+  \item Find a way to get \typ{a = 3} and \typ{b = 8} using \typ{x}
+  \item Print the digits, one in each line
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,plain]
+  \frametitle{Possible Solution}
+  \begin{lstlisting}
+x = int(input())
+a = x//10
+b = x%10
+print(a)
+print(b)
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,plain]
+  \frametitle{Another Solution}
+\begin{lstlisting}
+  x = input()
+  print(x[0])
+  print(x[1])
+\end{lstlisting}
+\end{frame}
+
+\end{document}
