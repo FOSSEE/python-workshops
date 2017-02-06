@@ -1,0 +1,372 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Tutorial slides on Python.
+%
+% Author: FOSSEE
+% Copyright (c) 2009-2017, FOSSEE, IIT Bombay
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[14pt,compress]{beamer}
+
+\input{macros.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Title page
+\title[Basic Python]{Practice exercises: Control flow}
+
+\author[FOSSEE Team] {The FOSSEE Group}
+
+\institute[FOSSEE -- IITB] {Department of Aerospace Engineering\\IIT Bombay}
+\date[] {Mumbai, India}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% DOCUMENT STARTS
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}[fragile,plain]
+  \frametitle{Note: Python 2.x and 3.x}
+
+ If you are using Python 2.x
+  \begin{itemize}
+  \item Use \typ{raw\_input} instead of \typ{input}
+  \item Use the following for \typ{print}
+  \end{itemize}
+ \begin{lstlisting}
+from __future__ import print_function
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[plain]
+  \frametitle{Exercise: simple \typ{if}}
+  \begin{enumerate}
+  \item Ask the user to enter an integer
+  \item If the number is positive, print "Positive"
+  \item If the number is negative, say -10 print:\\ "Negative of 10"
+  \item If the number is zero, print "Zero"
+  \item Finally, print "Done"
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile,plain]
+\frametitle{Solution}
+\begin{lstlisting}
+  x = int(input())
+  if x < 0:
+      print("Negative of", abs(x))
+  elif x > 0:
+      print("Positive")
+  else:
+      print("Zero")
+  print("Done")
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[plain]
+  \frametitle{Exercise: simple \typ{if} 2}
+  \begin{enumerate}
+  \item Ask the user to enter two integers, one on each line say \typ{x} and \typ{y}
+  \item If \typ{x} is larger than \typ{y} print, "first", store the value of \typ{x} in a
+    variable \typ{highest}
+  \item If \typ{y} is larger than \typ{x} print, "second", store the value of \typ{y} in a
+    variable \typ{highest}
+  \item If they are equal, print "same", store either as the \typ{highest}
+  \item Finally, print the square of the \typ{highest}
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile,plain]
+\frametitle{Solution}
+\begin{lstlisting}
+  x = int(input())
+  y = int(input())
+  if x > y:
+      print("first")
+      highest = x
+  elif y > x:
+      print("second")
+      highest = y
+  else:
+      print("same")
+      highest = x
+  print(highest*highest)
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[plain]
+  \frametitle{Simple \typ{while} loop 1}
+  \begin{enumerate}
+  \item Use a while loop to print the numbers from 1 to 10
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile,plain]
+\frametitle{Solution}
+\begin{lstlisting}
+  x = 1
+  while x < 11:
+      print(x)
+      x += 1
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[plain]
+  \frametitle{Simple \typ{while} loop 2}
+  \begin{enumerate}
+  \item Use a while loop to print the odd numbers from 1 to 10
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile,plain]
+\frametitle{Solution}
+\begin{lstlisting}
+  x = 1
+  while x < 11:
+      print(x)
+      x += 2
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[plain]
+  \frametitle{Simple \typ{while} loop 2}
+  \begin{enumerate}
+  \item Use a while loop to generate the numbers from 1 to 10
+  \item If a number divisible by 3 is found, print ***
+  \item If a number divisible by 5 is found, print *****
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile,plain]
+\frametitle{Solution}
+\begin{lstlisting}
+  x = 1
+  while x < 11:
+      if x%3 == 0:
+          print('***')
+      elif x%5 == 0:
+          print('*****')
+      else:
+          print(x)
+      x += 1
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[plain]
+  \frametitle{Simple \typ{while} loop 3}
+  \begin{enumerate}
+  \item Use a while loop to generate the numbers from 10 to 1
+  \item For each number, print that many * characters
+  \item That is, if the number is 1 print *, if the number is 3, print *** etc.
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile,plain]
+\frametitle{Solution}
+\begin{lstlisting}
+  x = 10
+  while x > 0:
+      print('*'*x)
+      x -= 1
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[plain,fragile]
+  \frametitle{Simple \typ{while} loop 4}
+  \begin{enumerate}
+  \item Ask the user for an integer, \typ{n} (>=2)
+  \item Use a while loop to print \typ{n} numbers uniformly spaced between 0 and 1
+  \item Include both 0 and 1
+  \end{enumerate}
+  For example if the user entered 3, print
+  \begin{lstlisting}
+    0.0
+    0.5
+    1.0
+  \end{lstlisting}
+
+\end{frame}
+
+\begin{frame}[fragile,plain]
+\frametitle{Solution}
+\begin{lstlisting}
+  n = int(input())
+  dx = 1.0/(n-1)
+  x = 0.0
+  while x < (1.0-dx/2):
+      print(x)
+      x += dx
+  print(1.0)
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[plain,fragile]
+  \frametitle{Simple \typ{for} loop 1}
+  \begin{enumerate}
+  \item Ask the user for an integer
+  \item Use a for loop to generate the multiplication table for the number (up
+    to 10)
+  \end{enumerate}
+  If the user entered 5, print the following
+  \begin{lstlisting}
+    5 x 1 = 5
+    5 x 2 = 10
+    5 x 3 = 15
+    ...
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,plain]
+\frametitle{Solution}
+\begin{lstlisting}
+  n = int(input())
+  for i in range(1, 11):
+      print(n, 'x', i, '=', n*i)
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[plain,fragile]
+  \frametitle{\typ{for} loop Fibonacci}
+  \begin{enumerate}
+  \item Ask the user for an integer, \typ{n} (>=1)
+  \item Print the first \typ{n} numbers of the Fibonacci sequence
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile,plain]
+\frametitle{Solution}
+\begin{lstlisting}
+  n = int(input())
+  a, b = 0, 1
+  print(a)
+  for i in range(n-1):
+      print(b)
+      a, b = b, a+b
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[plain,fragile]
+  \frametitle{\typ{for} loop over list 1}
+  \begin{enumerate}
+  \item Ask the user for an integer, \typ{n}
+  \item Use the range to create numbers from 1 to \typ{n}
+  \item Print each value in this in a separate line
+  \end{enumerate}
+  For example let us say user enters \typ{3}, print
+  \begin{lstlisting}
+    1
+    2
+    3
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,plain]
+\frametitle{Solution}
+\begin{lstlisting}
+  n = int(input())
+  for x in range(1, n+1):
+      print(x)
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[plain,fragile]
+  \frametitle{\typ{for} loop over array}
+  \begin{enumerate}
+  \item Ask the user for an integer, \typ{n}
+  \item Use numpy's \typ{linspace} to create n points from 1 to 2
+  \item Print each value in this in a separate line
+  \end{enumerate}
+  For example let us say user enters \typ{3}, print
+  \begin{lstlisting}
+    1.0
+    1.5
+    2.0
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,plain]
+\frametitle{Solution}
+\begin{lstlisting}
+  from numpy import linspace
+  n = int(input())
+  data = linspace(0, 1, n)
+  for x in data:
+      print(x)
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[plain,fragile]
+  \frametitle{\typ{for} loop over list 2}
+  \begin{enumerate}
+  \item Ask the user for an list of fruits separated by a space
+  \item Print each fruit in a separate line
+  \end{enumerate}
+  For example let us say user enters \typ{apple, pear}, print
+  \begin{lstlisting}
+    apple
+    pear
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,plain]
+\frametitle{Solution}
+\begin{lstlisting}
+  fruits = input()
+  fruits = fruits.split(',')
+  for fruit in fruits:
+      print(fruit)
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[plain,fragile]
+  \frametitle{\typ{for} loop over string}
+  \begin{enumerate}
+  \item Ask the user for a string
+  \item Print each character of the string using a for loop
+  \end{enumerate}
+  For example let us say user enters \typ{box}, print
+  \begin{lstlisting}
+    b
+    o
+    x
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,plain]
+\frametitle{Solution}
+\begin{lstlisting}
+  s = input()
+  for char in s:
+      print(char)
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[plain,fragile]
+  \frametitle{Exercise: Fibonacci divisible by 4}
+  \begin{enumerate}
+  \item Find the first number in the Fibonacci sequence divisible by 4 but > 8
+    and less than 500.
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile,plain]
+\frametitle{Solution}
+\begin{lstlisting}
+a, b = 0, 1
+while b < 500:
+    if b % 4 == 0 and b > 8:
+        print(b)
+        break
+    a, b = b, a+b
+\end{lstlisting}
+\end{frame}
+
+
+\end{document}
