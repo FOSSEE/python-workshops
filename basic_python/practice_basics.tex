@@ -46,7 +46,7 @@ from __future__ import print_function
   \begin{enumerate}
   \item Ask the user to enter a name
     \begin{itemize}
-    \item use \typ{input()} or \typ{raw\_input()}
+    \item use \typ{input()} (or \typ{raw\_input()} on 2.x)
     \end{itemize}
   \item Lets say the user entered: \\ \typ{abc}\\  then print \\ \typ{hello abc}
   \end{enumerate}
@@ -123,7 +123,7 @@ print("Hello", name)
   \frametitle{Exercise: complex numbers}
   \begin{enumerate}
   \item Ask the user for a single complex number
-  \item If the number entered was \typ{1+2j}, print the following:
+  \item If the number entered was \typ{1+2j}, print:
     \begin{lstlisting}
       1 2
     \end{lstlisting}
@@ -148,7 +148,7 @@ print("Hello", name)
   \frametitle{Exercise: Booleans}
   \begin{enumerate}
   \item Ask the user to enter an integer (use an empty prompt)
-  \item Print \typ{True} if the number is odd print \typ{False} otherwise
+  \item Print \typ{True} if the number is odd, print \typ{False} otherwise
   \end{enumerate}
 \end{frame}
 
@@ -165,7 +165,7 @@ print("Hello", name)
   \frametitle{Exercise: Booleans}
   \begin{enumerate}
   \item Ask the user to enter an integer (use an empty prompt)
-  \item Print \typ{True} if the number is even print \typ{False} otherwise
+  \item Print \typ{True} if the number is even, print \typ{False} otherwise
   \end{enumerate}
 \end{frame}
 
@@ -218,9 +218,9 @@ print("Hello", name)
   \frametitle{Exercise: string slicing}
   \begin{enumerate}
   \item Ask the user to enter a string
-  \item Print all parts of the string except the first character
+  \item Print the string without the first character
   \item Print the string without the last character
-  \item Then print the string in reverse
+  \item Print the string in reverse
   \item Finally print every alternate character of the string starting from
     the first
   \end{enumerate}
@@ -263,6 +263,23 @@ print("Hello", name)
        x.count('i') + x.count('o') +
        x.count('u'))
   print(n)
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[plain]
+  \frametitle{Exercise: string containership}
+  \begin{itemize}
+  \item Ask the user to enter a string
+  \item Check if the substrings 'abc' OR 'def' exist in the string
+  \item If it does, print True, else False
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,plain]
+\frametitle{Possible solution}
+\begin{lstlisting}
+  x = input().lower()
+  print('abc' in x or 'def' in x)
 \end{lstlisting}
 \end{frame}
 
