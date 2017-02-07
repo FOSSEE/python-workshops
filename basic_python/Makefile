@@ -7,7 +7,9 @@
 SLIDES= basics.pdf \
   practice_basics.pdf \
   control_flow.pdf \
-  core_data_structures.pdf
+  practice_control_flow.pdf \
+  core_data_structures.pdf \
+  practice_ds.pdf
 
 all: 	$(SLIDES)
 

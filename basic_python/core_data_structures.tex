@@ -51,6 +51,7 @@ is a list
 \begin{lstlisting}
 x = ['apple', 1, 'banana', 2.5,
      'shirt', [1,2,3]]
+len(x)
 \end{lstlisting}
 \end{frame}
 
@@ -242,6 +243,22 @@ In []: tuple('hello')
   \item Lists, tuples, and strings
   \item \alert{\typ{sequence[initial:final:step]}}
   \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Slicing \& Striding examples}
+  \begin{lstlisting}
+In[]: primes = [2, 3, 5, 7, 11, 13, 17]
+In[]: primes[2:6]
+In[]: primes[:4]
+
+In[]: num = list(range(14))
+In[]: num[1:10:2]
+In[]: num[:10]
+In[]: num[10:]
+In[]: num[::2]
+In[]: num[::-1]
+  \end{lstlisting}
 \end{frame}
 
 \begin{frame}

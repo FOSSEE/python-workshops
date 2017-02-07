@@ -1,0 +1,345 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Tutorial slides on Python.
+%
+% Author: FOSSEE
+% Copyright (c) 2017, FOSSEE, IIT Bombay
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[14pt,compress]{beamer}
+
+\input{macros.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Title page
+\title[Basic Python]{Practice exercises: data structures}
+
+\author[FOSSEE Team] {The FOSSEE Group}
+
+\institute[FOSSEE -- IITB] {Department of Aerospace Engineering\\IIT Bombay}
+\date[] {Mumbai, India}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% DOCUMENT STARTS
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}[fragile,plain]
+  \frametitle{Note: Python 2.x and 3.x}
+
+ If you are using Python 2.x
+  \begin{itemize}
+  \item Use \typ{raw\_input} instead of \typ{input}
+  \item Use the following for \typ{print}
+  \end{itemize}
+ \begin{lstlisting}
+from __future__ import print_function
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[plain]
+  \frametitle{Exercise: simple list creation}
+  \begin{enumerate}
+  \item Ask the user to enter an integer, \typ{n}
+  \item Create a list of integers from 0 to \typ{n-1}
+  \item Print this list
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile,plain]
+\frametitle{Solution}
+\begin{lstlisting}
+  n = int(input())
+  x = list(range(n))
+  print(x)
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[plain]
+  \frametitle{Exercise: more list creation}
+  \begin{enumerate}
+  \item Ask the user to enter an integer, \typ{n}
+  \item Store the square of all the odd numbers less than \typ{n} in a list
+  \item Print this list
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile,plain]
+\frametitle{Solution}
+\begin{lstlisting}
+  n = int(input())
+  result = []
+  for i in range(1, n, 2):
+      result.append(i*i)
+  print(result)
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[plain]
+  \frametitle{Exercise: more list creation}
+  \begin{enumerate}
+  \item Ask the user to enter an integer, \typ{n}
+  \item Store the square of all the odd numbers less than \typ{n}
+  \item Print a tuple of this list
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile,plain]
+\frametitle{Solution}
+\begin{lstlisting}
+  n = int(input())
+  result = []
+  for i in range(1, n, 2):
+      result.append(i*i)
+  print(tuple(result))
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[plain,fragile]
+  \frametitle{Hint: string to list/tuple}
+  Here is an easy way to convert a string to a list of characters.
+
+  Try this:
+  \begin{lstlisting}
+    In []: x = 'hello'
+    In []: print(list(x))
+    In []: print(tuple(x))
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[plain]
+  \frametitle{Exercise: list of Fibonacci}
+  \begin{enumerate}
+  \item Ask the user to enter an integer, \typ{n} ($\geq 1$)
+  \item Store the first \typ{n} numbers of the Fibonnaci series in a list
+  \item Print this list
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile,plain]
+\frametitle{Solution}
+\begin{lstlisting}
+  n = int(input())
+  a, b = 0, 1
+  result = [0]
+  for i in range(n):
+      result.append(a)
+      a, b = b, a+b
+  print(result)
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[plain,fragile]
+  \frametitle{Exercise: square a list of integers}
+  \begin{enumerate}
+  \item Ask the user to enter a list of integers separated by spaces
+  \item Convert this into a list of integers but square each element
+  \item Print this list
+  \end{enumerate}
+  For example, if the user enters \typ{1 2 3 4}, print:
+  \begin{lstlisting}
+    [1, 4, 9, 16]
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,plain]
+\frametitle{Solution}
+\begin{lstlisting}
+  text = input()
+  result = []
+  for item in text.split():
+      x = int(item)
+      result.append(x*x)
+  print(result)
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[plain,fragile]
+  \frametitle{Exercise: list of tuples}
+  \begin{enumerate}
+  \item Ask the user to enter a list of integers separated by spaces
+  \item Convert this into a list of integers but square each element
+  \item Store the integer and its square in a tuple, put this into a list
+  \item Print this list
+  \end{enumerate}
+  For example, if the user enters \typ{1 2 3 4}, print:
+  \begin{lstlisting}
+    [(1, 1), (2, 4), (3, 9), (4, 16)]
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,plain]
+\frametitle{Solution}
+\begin{lstlisting}
+  text = input()
+  result = []
+  for item in text.split():
+      x = int(item)
+      result.append((x, x*x))
+  print(result)
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[plain,fragile]
+  \frametitle{Hint: iterating over a list of tuples}
+  Consider the following code:
+  \begin{small}
+  \begin{lstlisting}
+In []: data = [(1, 1), (2, 4), (3, 9), (4, 16)]
+\end{lstlisting}
+\end{small}
+We can iterate over this as follows:
+\begin{small}
+\begin{lstlisting}
+In []: for x, y in data:
+.....:     print(x, y)
+\end{lstlisting}
+\end{small}
+\end{frame}
+
+
+\begin{frame}[plain,fragile]
+  \frametitle{Exercise: list methods}
+  \begin{enumerate}
+  \item Ask the user to enter a string
+  \item Convert this into a list of characters
+  \item Sort this list in ascending order
+  \item Now eliminate any repeated values in this list
+  \item Print this list
+  \end{enumerate}
+  For example, if the user enters \typ{hello}, print:
+  \begin{lstlisting}
+    ['e', 'h', 'l', 'o']
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,plain]
+\frametitle{Solution}
+\begin{lstlisting}
+  text = input()
+  chars = list(text)
+  chars.sort()
+  result = []
+  for c in chars:
+      if c not in result:
+          result.append(c)
+  print(result)
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,plain]
+\frametitle{Another solution}
+\begin{lstlisting}
+  text = input()
+  chars = set(text)
+  chars = list(chars)
+  chars.sort()
+  print(chars)
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,plain]
+\frametitle{Another solution}
+\begin{lstlisting}
+  chars = set(input())
+  print(sorted(chars))
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[plain,fragile]
+  \frametitle{Exercise: dictionaries}
+  \begin{enumerate}
+  \item Ask the user to enter a string
+  \item Convert this to lower case
+  \item Count the number of occurrences of each character in the string
+  \item Hint: use a dict
+  \item Print the result in sorted order of the characters
+  \end{enumerate}
+  For example, if the user enters \typ{helloo}, print:
+  \begin{lstlisting}
+    e 1
+    h 1
+    l 2
+    o 2
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,plain]
+\frametitle{Solution}
+\begin{lstlisting}
+  text = input().lower()
+  result = {}
+  for char in text:
+      if char in result:
+          result[char] += 1
+      else:
+          result[char] = 1
+
+  for char in sorted(result):
+      print(char, result[char])
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[plain]
+  \frametitle{Problem: Day of the Week}
+  \begin{block}{Problem}
+    Given a list, \texttt{week}, containing names of the days of the
+    week and a string \texttt{s}, check if the string is a day of the
+    week. We should be able to check for any of the forms like,
+    \emph{sat, Sat, SAT}
+  \end{block}
+  \begin{itemize}
+  \item Ask the user for a string of length 3
+  \item Check if the string is a day of the week
+  \item Print True or False
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile, plain]
+  \frametitle{Solution}
+  \small
+  \begin{lstlisting}
+week = 'mon tue wed thu fri sat sun'.split()
+s = input().lower()
+print(s in week)
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[plain]
+  {Problem: datestring to date tuple}
+
+  You are given date strings of the form ``29 Jul, 2009'', or ``4 January
+  2008''. In other words a number, a string and another number, with a comma
+  sometimes separating the items.
+
+  Write a program that takes such a string as input and prints a tuple (yyyy,
+  mm, dd) where all three elements are ints.
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Solution}
+ \small
+  \begin{lstlisting}
+months = ('jan feb mar apr may jun jul ' +
+         'aug sep oct nov dec').split()
+month2mm = {}
+for i in range(len(months)):
+    month2mm[months[i]] = i
+
+date = input()
+date = date.replace(',', ' ')
+day, month, year = date.split()
+
+dd, yyyy = int(day), int(year)
+mon = month[:3].lower()
+mm = month2mm[mon]
+print((yyyy, mm, dd))
+\end{lstlisting}
+\end{frame}
+\end{document}
