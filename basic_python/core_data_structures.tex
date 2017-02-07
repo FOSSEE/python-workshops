@@ -113,7 +113,7 @@ In []: num
   \begin{lstlisting}
    In []: del num[1]
 
-   In []: p.remove(6)
+   In []: num.remove(3)
   \end{lstlisting}
   \begin{itemize}
   \item \alert{When removing by value, first element is removed}
@@ -128,12 +128,13 @@ In []: num
   In []: a
   \end{lstlisting}
   \begin{itemize}
-  \item \texttt{sort} method sorts the list in-place
-  \item Use \texttt{sorted} if you require a new list
+  \item \typ{sort} method sorts the list in-place
+  \item Use \typ{sorted} if you require a new list
+  \item Pass \typ{reverse=True} to reverse the ordering
   \end{itemize}
   \begin{lstlisting}
   In []: a = [5, 1, 6, 7, 7, 10]
-  In []: sorted(a)
+  In []: sorted(a, reverse=True)
   In []: a
   \end{lstlisting}
 \end{frame}
@@ -263,14 +264,15 @@ In []: tuple('hello')
 
 \begin{frame}[fragile]
   \frametitle{Solution - Day of the Week?}
+  \small
 \begin{lstlisting}
-In []: week = 'mon tue wed thu fri sat sun'.split()
-In []: s = 'Sunday'
-In []: s.lower()[:3] in week
+week = 'mon tue wed thu fri sat sun'.split()
+s = 'Sunday'
+s.lower()[:3] in week
 \end{lstlisting}
   OR
 \begin{lstlisting}
-In []: s[:3].lower() in week
+s[:3].lower() in week
 \end{lstlisting}
 \end{frame}
 
@@ -488,14 +490,14 @@ print((yyyy, mm, dd))
   \end{lstlisting}
 \end{frame}
 
-\begin{frame}[fragile]
+\begin{frame}[fragile,plain]
   \frametitle{Operations on Sets}
   \begin{lstlisting}
   In []: f10 = set([1, 2, 3, 5, 8])
   In []: p10 = set([2, 3, 5, 7])
   \end{lstlisting}
   \begin{itemize}
-  \item Mathematical operations performed on sets, can be performed
+  \item Mathematical operations can be performed on sets
   \end{itemize}
   \begin{itemize}
   \item Union
