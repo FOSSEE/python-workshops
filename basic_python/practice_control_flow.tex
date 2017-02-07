@@ -349,6 +349,32 @@ from __future__ import print_function
 \end{frame}
 
 \begin{frame}[plain,fragile]
+  \frametitle{Nested \typ{for} loops}
+  \begin{enumerate}
+  \item Let us say the user supplies an integer, \typ{n} (empty prompt)
+  \item Print an n x n matrix where each entry is the sum of the row + column
+  \end{enumerate}
+  For example let us say user enters \typ{3}, print
+  \begin{lstlisting}
+    0 1 2
+    1 2 3
+    2 3 4
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,plain]
+\frametitle{Solution}
+\begin{lstlisting}
+  n = input()
+  for i in range(n):
+      for j in range(n):
+          print(i+j, end=' ')
+      print()
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[plain,fragile]
   \frametitle{Exercise: Fibonacci divisible by 4}
   \begin{enumerate}
   \item Find the first number in the Fibonacci sequence divisible by 4 but > 8
