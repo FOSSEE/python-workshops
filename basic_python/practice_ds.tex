@@ -251,6 +251,90 @@ In []: for x, y in data:
 \end{lstlisting}
 \end{frame}
 
+\begin{frame}[fragile,plain,fragile]
+  \frametitle{Exercise: simple dictionaries}
+  \begin{enumerate}
+  \item Ask the user for a list of integers separated by spaces
+  \item For each integer, store the string version as the key and the square of
+    the integer value as the value in a dictionary.
+  \item Print the resulting dictionary
+  \end{enumerate}
+For example if the user enters "1 3 5", print:
+\begin{lstlisting}
+{'1': 1, '3': 9, '5': 25}
+\end{lstlisting}
+Hint: simply print the resulting dictionary
+\end{frame}
+
+\begin{frame}[fragile,plain]
+\frametitle{Solution}
+\begin{lstlisting}
+text = input()
+d = {}
+for item in text.split():
+    x = int(item)
+    d[item] = x*x
+print(d)
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile,plain,fragile]
+  \frametitle{Exercise: mapping using dicts}
+  \begin{enumerate}
+  \item Create a mapping from 3 character month name to month number
+  \item Hint: for example \typ{\{'jan': 1, 'dec': 12\}}
+  \item Ask the user for a 3 character month code lower/upper mixed
+  \item Print the month number corresponding to the month the user entered.
+  \end{enumerate}
+For example if the user enters "Jul", print:
+\begin{lstlisting}
+7
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,plain]
+\frametitle{Solution}
+\begin{lstlisting}
+months = ('jan feb mar apr may jun jul ' +
+         'aug sep oct nov dec').split()
+month2mm = {}
+for i in range(1, len(months)+1):
+    month2mm[months[i]] = i
+
+text = input()
+mon = text[:3].lower()
+print(month2mm[mon])
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,plain]
+\frametitle{Aside: using \typ{enumerate} example}
+\begin{lstlisting}
+for i, char in enumerate('hello'):
+    print(i, char)
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,plain]
+\frametitle{Aside: using \typ{enumerate}}
+\begin{lstlisting}
+months = ('jan feb mar apr may jun jul ' +
+         'aug sep oct nov dec').split()
+month2mm = {}
+for i, month in enumerate(months):
+    month2mm[month] = i+1
+
+# Is easier/nicer than this:
+
+for i in range(1, len(months)+1):
+    month2mm[months[i]] = i
+\end{lstlisting}
+
+\end{frame}
+
+
+
 \begin{frame}[plain,fragile]
   \frametitle{Exercise: dictionaries}
   \begin{enumerate}
@@ -285,31 +369,6 @@ In []: for x, y in data:
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}[plain]
-  \frametitle{Problem: Day of the Week}
-  \begin{block}{Problem}
-    Given a list, \texttt{week}, containing names of the days of the
-    week and a string \texttt{s}, check if the string is a day of the
-    week. We should be able to check for any of the forms like,
-    \emph{sat, Sat, SAT}
-  \end{block}
-  \begin{itemize}
-  \item Ask the user for a string of length 3
-  \item Check if the string is a day of the week
-  \item Print True or False
-  \end{itemize}
-\end{frame}
-
-\begin{frame}[fragile, plain]
-  \frametitle{Solution}
-  \small
-  \begin{lstlisting}
-week = 'mon tue wed thu fri sat sun'.split()
-s = input().lower()
-print(s in week)
-\end{lstlisting}
-\end{frame}
-
 
 \begin{frame}[plain]
   {Problem: datestring to date tuple}
@@ -329,7 +388,7 @@ print(s in week)
 months = ('jan feb mar apr may jun jul ' +
          'aug sep oct nov dec').split()
 month2mm = {}
-for i in range(len(months)):
+for i in range(1, len(months)+1):
     month2mm[months[i]] = i
 
 date = input()
@@ -341,5 +400,12 @@ mon = month[:3].lower()
 mm = month2mm[mon]
 print((yyyy, mm, dd))
 \end{lstlisting}
+\end{frame}
+
+\begin{frame}
+  \centering
+  \Huge
+
+  That's all folks!
 \end{frame}
 \end{document}

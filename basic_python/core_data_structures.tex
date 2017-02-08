@@ -99,9 +99,9 @@ In []: num.index(2)
 Out[]: 2
 
 In []: num.pop()
-9
+4
 In []: num
-[1, 2, 2, 3, 3, 4, 8]
+[9, 8, 2, 3, 1, 2, 3]
   \end{lstlisting}
 \end{frame}
 
@@ -375,22 +375,22 @@ Out[]:
   \item Adding a new key-value pair
   \end{itemize}
   \begin{lstlisting}
-   In[]: extensions['c++'] = 'C++ code'
-   In[]: extensions
+   In[]: d['c++'] = 'C++ code'
+   In[]: d
   \end{lstlisting}
   \begin{itemize}
   \item Deleting a key-value pair
   \end{itemize}
   \begin{lstlisting}
-   In[]: del extension['java']
-   In[]: extensions
+   In[]: del d['java']
+   In[]: d
   \end{lstlisting}
   \begin{itemize}
   \item Assigning to existing key, modifies the value
   \end{itemize}
   \begin{lstlisting}
-   In[]: extensions['cpp'] = 'C++ source code'
-   In[]: extensions
+   In[]: d['cpp'] = 'C++ source code'
+   In[]: d
   \end{lstlisting}
 \end{frame}
 
@@ -405,7 +405,7 @@ In []: d.get('junk')  # No error!
 
 In []: d.update({'bin': 'Binary file',
 .....:           'exe': 'executable'})
-In []: d.clear())
+In []: d.clear()
 \end{lstlisting}
 \end{frame}
 
@@ -429,6 +429,10 @@ Out[]: False
 \begin{frame}[fragile]
   \frametitle{Dictionaries:  iteration}
   \begin{lstlisting}
+In []: for v in d:
+.....:     print(v)
+.....:
+
 In []: for v in d.values():
 .....:     print(v)
 .....:

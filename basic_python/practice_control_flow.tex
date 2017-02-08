@@ -138,6 +138,7 @@ from __future__ import print_function
   \item Use a while loop to generate the numbers from 1 to 10
   \item If a number divisible by 3 is found, print ***
   \item If a number divisible by 5 is found, print *****
+  \item Otherwise just print the number
   \end{enumerate}
 \end{frame}
 
@@ -295,7 +296,7 @@ from __future__ import print_function
 \begin{lstlisting}
   from numpy import linspace
   n = int(input())
-  data = linspace(0, 1, n)
+  data = linspace(1, 2, n)
   for x in data:
       print(x)
 \end{lstlisting}
@@ -305,7 +306,7 @@ from __future__ import print_function
 \begin{frame}[plain,fragile]
   \frametitle{\typ{for} loop over list 2}
   \begin{enumerate}
-  \item Ask the user for an list of fruits separated by a space
+  \item Ask the user for an list of fruits separated by a comma
   \item Print each fruit in a separate line
   \end{enumerate}
   For example let us say user enters \typ{apple, pear}, print
@@ -365,7 +366,7 @@ from __future__ import print_function
 \begin{frame}[fragile,plain]
 \frametitle{Solution}
 \begin{lstlisting}
-  n = input()
+  n = int(input())
   for i in range(n):
       for j in range(n):
           print(i+j, end=' ')
