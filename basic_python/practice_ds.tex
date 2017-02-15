@@ -80,7 +80,7 @@ from __future__ import print_function
 \end{frame}
 
 \begin{frame}[plain]
-  \frametitle{Exercise: more list creation}
+  \frametitle{Exercise: tuple creation}
   \begin{enumerate}
   \item Ask the user to enter an integer, \typ{n}
   \item Store the square of all the odd numbers less than \typ{n}
@@ -127,8 +127,8 @@ from __future__ import print_function
   n = int(input())
   a, b = 0, 1
   result = [0]
-  for i in range(n):
-      result.append(a)
+  for i in range(n-1):
+      result.append(b)
       a, b = b, a+b
   print(result)
 \end{lstlisting}
@@ -299,8 +299,8 @@ For example if the user enters "Jul", print:
 months = ('jan feb mar apr may jun jul ' +
          'aug sep oct nov dec').split()
 month2mm = {}
-for i in range(1, len(months)+1):
-    month2mm[months[i]] = i
+for i in range(len(months)):
+    month2mm[months[i]] = i + 1
 
 text = input()
 mon = text[:3].lower()
@@ -323,12 +323,12 @@ months = ('jan feb mar apr may jun jul ' +
          'aug sep oct nov dec').split()
 month2mm = {}
 for i, month in enumerate(months):
-    month2mm[month] = i+1
+    month2mm[month] = i + 1
 
 # Is easier/nicer than this:
 
-for i in range(1, len(months)+1):
-    month2mm[months[i]] = i
+for i in range(len(months)):
+    month2mm[months[i]] = i + 1
 \end{lstlisting}
 
 \end{frame}
@@ -388,8 +388,8 @@ for i in range(1, len(months)+1):
 months = ('jan feb mar apr may jun jul ' +
          'aug sep oct nov dec').split()
 month2mm = {}
-for i in range(1, len(months)+1):
-    month2mm[months[i]] = i
+for i, month in enumerate(months):
+    month2mm[month] = i + 1
 
 date = input()
 date = date.replace(',', ' ')
