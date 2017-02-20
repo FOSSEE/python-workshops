@@ -269,7 +269,7 @@ Out[]: ['i', 'am', 'batman']
 \begin{frame}[plain,fragile]
   \frametitle{Exercise: returning a function}
   \begin{enumerate}
-  \item Define a function called \typ{power2()} which takes a single argument
+  \item Define a function called \typ{power2()} which takes no argument
   \item It should return a function which takes a single argument \typ{x} but
     returns $2^x$
   \end{enumerate}
@@ -278,7 +278,7 @@ Out[]: ['i', 'am', 'batman']
     In []: f = power2()
     In []: f(2)
     Out[]: 4
-    In []: power(2)(4)
+    In []: power2()(4)
     Out[]: 16
   \end{lstlisting}
 \end{frame}
