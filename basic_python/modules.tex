@@ -1,0 +1,278 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Tutorial slides on Python.
+%
+% Author: FOSSEE
+% Copyright (c) 2017, FOSSEE, IIT Bombay
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[14pt,compress]{beamer}
+\input{macros.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Title page
+\title[Modules]{Python language: modules}
+
+\author[FOSSEE Team] {The FOSSEE Group}
+
+\institute[IIT Bombay] {Department of Aerospace Engineering\\IIT Bombay}
+\date[] {Mumbai, India}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% DOCUMENT STARTS
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\section{Python modules}
+
+\begin{frame}
+  \frametitle{Modules}
+  \begin{itemize}
+      \item Organize your code
+      \item Collect similar functionality
+      \item Functions, classes, constants, etc.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Modules}
+  \begin{itemize}
+  \item Define variables, functions and classes in a file with a
+    \texttt{.py} extension
+  \item This file becomes a module!
+  \item File name should be valid variable name
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Modules \ldots}
+  \begin{itemize}
+  \item The \typ{import} keyword ``loads'' a module
+  \item One can also use:
+    \mbox{\typ{from module import name1, name2}}\\
+    where \typ{name1} etc. are names in the module, \typ{module}
+  \item \typ{from module import *} \ --- imports everything from module,
+    \alert{use only in interactive mode}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Note on module file names}
+  \begin{itemize}
+  \item Should start with a letter or underscore
+  \item Can use \typ{\_} (underscore) and numbers
+  \item No \typ{.} allowed
+  \item No spaces or special characters
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Test}
+  \begin{itemize}
+  \item \typ{1\_script.py}
+  \item \typ{script\_1.py}
+  \item \typ{one11.py}
+  \item \typ{\_one11.py}
+  \item \typ{one script.py}
+  \item \typ{one,script;xxx.py}
+  \item \typ{one.two.py}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Modules: example}
+  \begin{lstlisting}
+# --- fib.py ---
+some_var = 1
+def fib(n):
+    """Print Fibonacci series up to n.
+    """
+    a, b = 0, 1
+    while b < n:
+        print(b, end=' ')
+        a, b = b, a+b
+# EOF
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Modules: example}
+  \begin{lstlisting}
+>>> import fib
+>>> fib.fib(10)
+1 1 2 3 5 8
+>>> fib.some_var
+1
+  \end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]
+  \frametitle{Python path}
+  \begin{itemize}
+  \item In IPython type the following
+  \end{itemize}
+  \begin{lstlisting}
+    import sys
+    sys.path
+  \end{lstlisting}
+  \begin{itemize}
+  \item List of locations where python searches for a module
+  \item \texttt{import sys} -- searches for file \texttt{sys.py} or
+    dir \texttt{sys} in all these locations
+  \item Modules can be in any one of the locations
+  \item Current working directory is one of the locations
+  \item Can also set \texttt{PYTHONPATH} env var
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Running a module}
+  \begin{itemize}
+  \item Let us say we want to run some code in \typ{fib.py} so we get:
+  \end{itemize}
+  \begin{lstlisting}
+    $ python fib.py
+    1 1 2 3 5 8
+  \end{lstlisting} %$
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Modules: Running a module}
+  \begin{lstlisting}
+# --- fib.py ---
+some_var = 1
+def fib(n):
+    """Print Fibonacci series up to n.
+    """
+    a, b = 0, 1
+    while b < n:
+        print(b, end=' ')
+        a, b = b, a+b
+
+fib(10)
+# EOF
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Modules: example}
+  \begin{lstlisting}
+>>> import fib
+1 1 2 3 5 8
+\end{lstlisting}
+
+\begin{itemize}
+\item So the code is called even when we import the module
+\item We do not want this!
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Using \texttt{\_\_name\_\_}}
+  \begin{lstlisting}
+    import fib
+  \end{lstlisting}
+  \begin{itemize}
+  \item The import is successful
+  \item But \typ{fib(10)}, gets run
+    \pause
+  \item Add it to the following \texttt{if} block
+  \end{itemize}
+  \begin{lstlisting}
+    if __name__ == "__main__":
+        fib(10)
+  \end{lstlisting}
+  \begin{itemize}
+  \item Now the script runs properly
+  \item As well as the import works; the code is not executed
+  \item \texttt{\_\_name\_\_} is local to every module and is equal
+    to \texttt{'\_\_main\_\_'} only when the file is run as a script.
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]
+  \frametitle{Modules: using \typ{\_\_name\_\_}}
+  \vspace*{-1ex}
+  \begin{lstlisting}
+# --- fib.py ---
+def fib(n):
+    """Print Fibonacci series up to n.
+    """
+    a, b = 0, 1
+    while b < n:
+        print(b, end=' ')
+        a, b = b, a+b
+
+print(__name__)
+if __name__ == '__main__':
+    fib(10)
+# EOF
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Modules: using \typ{\_\_name\_\_}}
+  \begin{lstlisting}
+    >>> import fib
+  \end{lstlisting}
+  Try this:
+  \begin{lstlisting}
+    $ python fib.py
+  \end{lstlisting} %$
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Stand-alone scripts}
+Consider a file \texttt{f.py}:
+\footnotesize
+\begin{lstlisting}
+#!/usr/bin/env python
+"""Module level documentation."""
+# First line tells the shell that it should use Python
+# to interpret the code in the file.
+def f():
+    print "f"
+
+# Check if we are running standalone or as module.
+# When imported, __name__ will not be '__main__'
+if __name__ == '__main__':
+    # This is not executed when f.py is imported.
+    f()
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Standard library}
+  \begin{itemize}
+  \item Operating system interface: \typ{os}, \typ{os.path}
+  \item System, Command line arguments: \typ{sys}
+  \item Regular expressions: \typ{re}
+  \item Math: \typ{math}, \typ{random}
+  \item Internet access: \typ{urllib}, \typ{smtplib}
+  \item Data compression: \typ{zlib}, \typ{gzip}, \typ{bz2},
+    \typ{zipfile}, and \typ{tarfile}
+  \item Unit testing: \typ{doctest} and \typ{unittest}
+  \item And a whole lot more!
+  \item Check out the Python Library reference:
+    \url{http://docs.python.org/lib/lib.html}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Summary}
+  \begin{itemize}
+  \item Creating modules
+  \item Importing modules
+  \item Running modules as scripts
+  \item \texttt{\_\_name\_\_}
+  \end{itemize}
+\end{frame}
+
+\end{document}
