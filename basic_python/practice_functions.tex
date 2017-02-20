@@ -1,0 +1,357 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Tutorial slides on Python.
+%
+% Author: FOSSEE
+% Copyright (c) 2017, FOSSEE, IIT Bombay
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[14pt,compress]{beamer}
+
+\input{macros.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Title page
+\title[Basic Python]{Practice exercises: functions}
+
+\author[FOSSEE Team] {The FOSSEE Group}
+
+\institute[FOSSEE -- IITB] {Department of Aerospace Engineering\\IIT Bombay}
+\date[] {Mumbai, India}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% DOCUMENT STARTS
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}[fragile,plain]
+  \frametitle{Note: Python 2.x and 3.x}
+
+ If you are using Python 2.x
+  \begin{itemize}
+  \item Use \typ{raw\_input} instead of \typ{input}
+  \item Use the following for \typ{print}
+  \end{itemize}
+ \begin{lstlisting}
+from __future__ import print_function
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[plain]
+  \frametitle{Exercise: function without arguments}
+  \begin{enumerate}
+  \item Define a function called \typ{prompt}
+  \item The function should ask the user to enter their name (no prompt)
+  \item The function should not take any arguments
+  \item The function should not return anything
+  \item The function should print \typ{Hello <name>}
+  \end{enumerate}
+  For example if the user enters \typ{Sam}, print:
+  Hello Sam
+\end{frame}
+
+\begin{frame}[fragile,plain]
+\frametitle{Solution}
+\begin{lstlisting}
+  def prompt():
+      name = input()
+      print('Hello', name)
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[plain]
+  \frametitle{Exercise: function with one argument}
+  \begin{enumerate}
+  \item Define a function called \typ{prompt}
+  \item The function should take a single string argument
+  \item \textbf{Do not ask the user for input, i.e. do not use input}
+  \item The function should not return anything
+  \item The function should print \typ{Hello <name>}
+  \end{enumerate}
+  For example if the function is passed \typ{'Sam'}, print:
+  Hello Sam
+\end{frame}
+
+\begin{frame}[fragile,plain]
+\frametitle{Solution}
+\begin{lstlisting}
+  def prompt(name):
+      print('Hello', name)
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[plain,fragile]
+  \frametitle{Exercise: function with \typ{return}}
+  \begin{enumerate}
+  \item Define a function called \typ{prompt}
+  \item The function should take a single string argument
+  \item The function should return a string with \typ{'Hello'}
+  \item \textbf{Do not use input}
+  \item \textbf{Do not print anything}
+  \end{enumerate}
+  For example if the function is passed \typ{'Sam'}, return:
+  \begin{lstlisting}
+    'Hello Sam'
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,plain]
+\frametitle{Solution}
+\begin{lstlisting}
+  def prompt(name):
+      return 'Hello ' + name
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[plain]
+  \frametitle{Exercise: function with two args}
+  \begin{enumerate}
+  \item Define a function called \typ{add}
+  \item The function should take two arguments
+  \item The function should return the sum of the two arguments
+  \item \textbf{Do not use input}
+  \item \textbf{Do not print anything}
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile,plain]
+\frametitle{Solution}
+\begin{lstlisting}
+  def add(a, b):
+      return a + b
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[plain]
+  \frametitle{Exercise: function returning boolean}
+  \begin{enumerate}
+  \item Define a function called \typ{is\_even}
+  \item The function should take a single integer argument
+  \item The function should return \typ{True} if the number is even and \typ{False} otherwise
+  \item \textbf{Do not use input}
+  \item \textbf{Do not print anything}
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile,plain]
+\frametitle{Naive Solution}
+\begin{lstlisting}
+  def is_even(x):
+      if x%2 == 0:
+          return True
+      else:
+          return False
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,plain]
+\frametitle{Elegant Solution}
+\begin{lstlisting}
+  def is_even(x):
+      return x%2 == 0
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[plain,fragile]
+  \frametitle{Exercise: function returning two values}
+  \begin{enumerate}
+  \item Define a function called \typ{even\_square}
+  \item The function should take a single argument
+  \item The function should return if the number is even and the square of the number
+  \item \textbf{Do not use input}
+  \item \textbf{Do not print anything}
+  \end{enumerate}
+  For example:
+  \begin{lstlisting}
+    In []: even_square(2)
+    Out[]: (True, 4)
+    In []: even_square(3)
+    Out[]: (False, 9)
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,plain]
+  \frametitle{Solution}
+  \begin{lstlisting}
+  def even_square(x):
+      return x%2 == 0, x*x
+    \end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[plain,fragile]
+  \frametitle{Exercise: default arguments}
+  \begin{enumerate}
+  \item Define a function called \typ{greet}
+  \item The function should take one positional argument, \typ{name}
+  \item The function should take one optional argument, \typ{message}
+  \item If \typ{message} is not given, it should default to \typ{'Hello'}
+  \item It should return the string with the greeting
+  \end{enumerate}
+  For example:
+  \begin{lstlisting}
+    In []: greet('Sam')
+    Out[]: 'Hello Sam'
+    In []: greet('Sam', 'Hi')
+    Out[]: 'Hi Sam'
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,plain]
+  \frametitle{Solution}
+  \begin{lstlisting}
+    def greet(name, message='Hello'):
+        return message + ' ' + name
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[plain, fragile]
+  \frametitle{Exercise: functions and lists}
+  \begin{enumerate}
+  \item Define a function called \typ{to\_lower}
+  \item The function should take a single list of strings
+  \item The function should return the list of strings but all in lowercase
+  \item \textbf{Do not use input}
+  \item \textbf{Do not print anything}
+  \end{enumerate}
+  For example:
+  \begin{lstlisting}
+In []: to_lower(['I', 'am', 'Batman'])
+Out[]: ['i', 'am', 'batman']
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,plain]
+\frametitle{Solution}
+\begin{lstlisting}
+  def to_lower(data):
+      result = []
+      for x in data:
+          result.append(x.lower())
+      return result
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[plain,fragile]
+  \frametitle{Exercise: list of Fibonacci}
+  \begin{enumerate}
+  \item Define a function called \typ{fib} taking one argument \typ{n}
+  \item Where, \typ{n>0} is an integer but defaults to 8
+  \item Return the first \typ{n} terms of the Fibonacci sequence
+  \end{enumerate}
+  For example:
+  \begin{lstlisting}
+    In []: fib(4)
+    Out[]: [0, 1, 1, 2]
+    In []: fib()
+    Out[]: [0, 1, 1, 2, 3, 5, 8, 13]
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,plain]
+\frametitle{Solution}
+\begin{lstlisting}
+  def fib(n=8):
+      a, b = 0, 1
+      result = [0]
+      for i in range(n-1):
+          result.append(b)
+          a, b = b, a+b
+      return result
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[plain,fragile]
+  \frametitle{Exercise: returning a function}
+  \begin{enumerate}
+  \item Define a function called \typ{power2()} which takes a single argument
+  \item It should return a function which takes a single argument \typ{x} but
+    returns $2^x$
+  \end{enumerate}
+  For example:
+  \begin{lstlisting}
+    In []: f = power2()
+    In []: f(2)
+    Out[]: 4
+    In []: power(2)(4)
+    Out[]: 16
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,plain]
+\frametitle{Solution}
+\begin{lstlisting}
+  def power2():
+      def f(x):
+          return 2**x
+      return f
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,plain]
+  \frametitle{Another solution}
+  \begin{lstlisting}
+    def power(n=2):
+        def f(x):
+            return n**x
+        return f
+   \end{lstlisting}
+   \begin{itemize}
+   \item This is called a closure.
+   \item Note that \typ{f} ``stores'' the value of \typ{n}
+   \end{itemize}
+   \pause
+   \begin{lstlisting}
+     In []: p2 = power(2)
+     In []: p3 = power(3)
+     In []: p2(2)
+     Out[]: 4
+     In []: p3(2)
+     Out[]: 9
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[plain,fragile]
+  \frametitle{Exercise: function as an argument}
+  \begin{enumerate}
+  \item Define a function called \typ{apply(f, data)}
+  \item Where \typ{f} is a function taking a single value
+  \item Where \typ{data} is a list
+  \item It should return a list where the function is applied to each element
+    of \typ{data}
+  \end{enumerate}
+  For example:
+  \begin{lstlisting}
+    In []: def double(x):
+    .....:    return 2*x
+    .....:
+    In []: apply(double, [1, 2, 3])
+    Out[]: [2, 4, 6]
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[plain, fragile]
+  \frametitle{Solution}
+  \begin{lstlisting}
+    def apply(f, data):
+        result = []
+        for x in data:
+            result.append(f(x))
+        return result
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}
+  \centering
+  \Huge
+
+  That's all folks!
+\end{frame}
+\end{document}
+
+\end{document}
