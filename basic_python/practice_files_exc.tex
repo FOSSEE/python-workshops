@@ -1,0 +1,206 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Tutorial slides on Python.
+%
+% Author: FOSSEE
+% Copyright (c) 2017, FOSSEE, IIT Bombay
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[14pt,compress]{beamer}
+
+\input{macros.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Title page
+\title[Files/exceptions]{Practice exercises: files and exceptions}
+
+\author[FOSSEE Team] {The FOSSEE Group}
+
+\institute[FOSSEE -- IITB] {Department of Aerospace Engineering\\IIT Bombay}
+\date[] {Mumbai, India}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% DOCUMENT STARTS
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+
+\begin{frame}[plain]
+  \frametitle{Exercise: reading from a file}
+  \begin{enumerate}
+  \item Define a function called \typ{largest} which takes a single argument
+  \item The argument passed will be an opened file object
+  \item Read the data in the file
+  \item Assume that the data is separated by spaces and are all numbers
+  \item Find the maximum value in the file
+  \item Do not use \typ{loadtxt}!
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile,plain]
+\frametitle{Solution}
+\begin{lstlisting}
+  def largest(f):
+      data = []
+      for line in f:
+          for field in line.split():
+              data.append(float(field))
+      return max(data)
+
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,plain]
+\frametitle{Another solution}
+\begin{lstlisting}
+def largest(f):
+    res = -1e20
+    for line in f:
+        for field in line.split():
+            res = max(res, float(field))
+    return res
+
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[plain]
+  \frametitle{Exercise: reading/writing files}
+  \begin{enumerate}
+  \item Read the \typ{pendulum.txt} file
+  \item Print the second column alone to another file called \typ{col2.txt}
+  \item Remember to add a newline
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile,plain]
+\frametitle{Solution}
+\begin{lstlisting}
+  f = open('pendulum.txt')
+  out = open('col2.txt', 'w')
+  for line in f:
+      fields = line.split()
+      out.write(fields[1] + '\n')
+  f.close()
+  out.close()
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,plain]
+\frametitle{Another solution}
+\begin{lstlisting}
+  f = open('pendulum.txt')
+  out = open('col2.txt', 'w')
+  for line in f:
+      fields = line.split()
+      print(fields[1], file=out)
+  f.close()
+  out.close()
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[plain, fragile]
+  \frametitle{Exercise: simple exceptions}
+  \begin{enumerate}
+  \item Write a function called \typ{my\_sum}
+  \item The function is passed a single string with terms separated by spaces
+  \item The string contains both names and integer values in arbitrary order
+  \item Find the sum of all the numbers in the string
+  \end{enumerate}
+  For example:
+  \begin{lstlisting}
+>>> my_sum('1 fox, 2 dogs and 3 jackals')
+6
+>>> my_sum('3 blind mice and 1 man')
+4
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,plain]
+\frametitle{Possible solution}
+\begin{lstlisting}
+  def my_sum(s):
+      total = 0
+      for word in s.split():
+          try:
+              total += int(word)
+          except ValueError:
+              pass
+      return total
+ \end{lstlisting}
+\end{frame}
+
+\begin{frame}[plain, fragile]
+  \frametitle{Exercise: catching exceptions}
+  \small
+  \begin{enumerate}
+  \item Write a function called \typ{safe\_run(f, x)}
+  \item \typ{f} is a function and \typ{x} is a value
+  \item \typ{f} can raise either \typ{ValueError} or \typ{TypeError}
+  \item Your function should return \typ{'OK'} if no exception is raised
+  \item Return \typ{'ValueError'} if \typ{ValueError} is raised
+  \item Return \typ{'TypeError'} if \typ{TypeError} is raised
+  \end{enumerate}
+  For example:
+  \begin{lstlisting}
+    >>> safe_run(float, 'A')
+    'ValueError'
+    >>> def f(x): return x + 2
+    >>> safe_run(f, '2')
+    'TypeError'
+    >>> safe_run(float, '2')
+    'OK'
+  \end{lstlisting}
+
+\end{frame}
+
+\begin{frame}[fragile,plain]
+\frametitle{Possible solution}
+\begin{lstlisting}
+  def safe_run(f, x):
+      try:
+          f(x)
+      except ValueError:
+          return 'ValueError'
+      except TypeError:
+          return 'TypeError'
+      else:
+          return 'OK'
+
+ \end{lstlisting}
+\end{frame}
+
+\begin{frame}[plain, fragile]
+  \frametitle{Exercise: raising exceptions}
+  \begin{enumerate}
+  \item Write a function \typ{func} which takes a single integer argument
+  \item If \typ{x} is not a positive integer raise a \typ{ValueError}
+  \item If \typ{x} is not an integer type raise a \typ{TypeError}
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile,plain]
+  \frametitle{Possible solution}
+  \small
+\begin{lstlisting}
+  def func(x):
+      if type(x) != int:
+          raise TypeError('Expected int')
+      elif x < 0:
+          raise ValueError('Got negative int')
+
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}
+  \centering
+  \Huge
+
+  Thank you!
+\end{frame}
+\end{document}
+
+\end{document}

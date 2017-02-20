@@ -1,0 +1,289 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Tutorial slides on Python.
+%
+% Author: FOSSEE
+% Copyright (c) 2017, FOSSEE, IIT Bombay
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[14pt,compress]{beamer}
+\input{macros.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Title page
+\title[Exceptions]{Python language: exceptions}
+
+\author[FOSSEE Team] {The FOSSEE Group}
+
+\institute[IIT Bombay] {Department of Aerospace Engineering\\IIT Bombay}
+\date[] {Mumbai, India}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% DOCUMENT STARTS
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Motivation}
+    \begin{itemize}
+        \item How do you signal errors to a user?
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Exceptions}
+  \begin{itemize}
+  \item Python's way of notifying you of errors
+  \item Several standard exceptions: \texttt{SyntaxError}, \texttt{IOError}
+    etc.
+  \item Users can also \texttt{raise} errors
+  \item Users can create their own exceptions
+  \item Exceptions can be ``caught'' via \texttt{try/except} blocks
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+ \frametitle{Exceptions: examples}
+ \begin{lstlisting}
+In []: while True print('Hello world')
+ \end{lstlisting}
+\pause
+  \begin{lstlisting}
+File "<stdin>", line 1, in ?
+    while True print('Hello world')
+                   ^
+SyntaxError: invalid syntax
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+ \frametitle{Exceptions: examples}
+ \begin{lstlisting}
+In []: print(spam)
+\end{lstlisting}
+\pause
+\begin{lstlisting}
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+NameError: name 'spam' is not defined
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+ \frametitle{Exceptions: examples}
+ \begin{lstlisting}
+In []: 1 / 0
+\end{lstlisting}
+\pause
+\begin{lstlisting}
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+ZeroDivisionError: integer division
+or modulo by zero
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]
+  \frametitle{Exceptions: examples}
+\begin{lstlisting}
+In []: '2' + 2
+\end{lstlisting}
+\pause
+\begin{lstlisting}
+Traceback (most recent call last):
+  File "<stdin>", line 1, in ?
+TypeError: cannot concatenate 'str' and 'int' objects
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]
+  \frametitle{Processing user input}
+  \begin{lstlisting}
+prompt = 'Enter a number(Q to quit): '
+a = input(prompt)
+
+num = int(a) if a != 'Q' else 0
+  \end{lstlisting}
+  \emphbar{What if the user enters some other alphabet?}
+\end{frame}
+
+
+\begin{frame}[fragile]
+  \frametitle{Handling Exceptions}
+  Python provides a \typ{try} and \typ{except} clause.
+  \begin{lstlisting}
+prompt = 'Enter a number(Q to quit): '
+a = input(prompt)
+try:
+    num = int(a)
+    print(num)
+except:
+    if a == 'Q':
+        print("Exiting ...")
+    else:
+        print("Wrong input ...")
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Handling Exceptions a little better}
+  Use specific exceptions; avoid blanket except clauses
+  \begin{lstlisting}
+prompt = 'Enter a number(Q to quit): '
+a = input(prompt)
+try:
+    num = int(a)
+    print(num)
+except ValueError:
+    if a == 'Q':
+        print("Exiting ...")
+    else:
+        print("Wrong input ...")
+  \end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]
+  \frametitle{Exceptions: examples}
+  \small
+\begin{lstlisting}
+prompt = "Enter a number: "
+while True:
+    try:
+        x = int(input(prompt))
+        break
+    except ValueError:
+        print("Invalid input, try again...")
+
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Catching multiple exceptions}
+\begin{lstlisting}
+data = input()
+try:
+    x = int(data.split(',')[1])
+    break
+except IndexError:
+    print('Input at least 2 values.')
+except ValueError:
+    print("Invalid input, try again...")
+
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]
+  \frametitle{Catching multiple exceptions}
+\begin{lstlisting}
+data = input()
+try:
+    x = int(data.split(',')[1])
+    break
+except (ValueError, IndexError):
+    print("Invalid input ...")
+
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{\typ{try, except, else}}
+\begin{lstlisting}
+data = input()
+try:
+    x = int(data.split(',')[1])
+    break
+except (ValueError, IndexError):
+    print("Invalid input ...")
+else:
+    print('All is well!')
+  \end{lstlisting}
+
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Some comments}
+  \begin{itemize}
+  \item In practice NEVER use blanket except clauses
+  \item Always catch specific exceptions
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Exceptions: raising your exceptions}
+\small
+\begin{lstlisting}
+>>> raise ValueError("your error message")
+Traceback (most recent call last):
+  File "<stdin>", line 2, in ?
+ValueError: your error message
+\end{lstlisting}
+\end{frame}
+
+
+
+\begin{frame}[fragile]
+  \frametitle{Exceptions: try/finally}
+  \small
+\begin{lstlisting}
+while True:
+    try:
+        x = int(input(prompt))
+        break
+    except ValueError:
+        print("Invalid number, try again...")
+    finally:
+        print "All good!"
+
+      \end{lstlisting}
+      \normalsize
+      Always runs the finally clause!
+\end{frame}
+
+
+\begin{frame}[fragile]
+  \frametitle{Exceptions: try/finally}
+  \begin{lstlisting}
+def f(x):
+    try:
+        y = int(x)
+        return y
+    except ValueError:
+        print(x)
+    finally:
+        print('finally')
+
+>>> f(1)
+>>> f('a')
+\end{lstlisting}
+Always runs the finally clause!
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Summary}
+  \begin{itemize}
+  \item Catching exceptions with \typ{try/except}
+  \item Catching multiple exceptions
+  \item Cleanup with \typ{finally}
+  \item Raising your own exceptions
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{What next?}
+  \begin{itemize}
+  \item Only covered the very basics
+  \item More advanced topics remain
+  \item Read the official Python tutorial:
+    \url{docs.python.org/tutorial/}
+  \end{itemize}
+\end{frame}
+
+\end{document}

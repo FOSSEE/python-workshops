@@ -9,7 +9,13 @@ SLIDES= basics.pdf \
   control_flow.pdf \
   practice_control_flow.pdf \
   core_data_structures.pdf \
-  practice_ds.pdf
+  practice_ds.pdf \
+  functions.pdf \
+  practice_functions.pdf \
+  modules.pdf \
+  files.pdf \
+  exceptions.pdf \
+  practice_files_exc.pdf
 
 all: 	$(SLIDES)
 
