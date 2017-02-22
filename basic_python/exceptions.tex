@@ -164,15 +164,17 @@ while True:
 
 \begin{frame}[fragile]
   \frametitle{Catching multiple exceptions}
+  \small
 \begin{lstlisting}
-data = input()
-try:
-    x = int(data.split(',')[1])
-    break
-except IndexError:
-    print('Input at least 2 values.')
-except ValueError:
-    print("Invalid input, try again...")
+while True:
+    try:
+        data = input()
+        x = int(data.split(',')[1])
+        break
+    except IndexError:
+        print('Input at least 2 values.')
+    except ValueError:
+        print("Invalid input, try again...")
 
 \end{lstlisting}
 \end{frame}
@@ -184,7 +186,6 @@ except ValueError:
 data = input()
 try:
     x = int(data.split(',')[1])
-    break
 except (ValueError, IndexError):
     print("Invalid input ...")
 
@@ -193,15 +194,17 @@ except (ValueError, IndexError):
 
 \begin{frame}[fragile]
   \frametitle{\typ{try, except, else}}
+  \small
 \begin{lstlisting}
-data = input()
-try:
-    x = int(data.split(',')[1])
-    break
-except (ValueError, IndexError):
-    print("Invalid input ...")
-else:
-    print('All is well!')
+while True:
+    try:
+        data = input()
+        x = int(data.split(',')[1])
+    except (ValueError, IndexError):
+        print("Invalid input ...")
+    else:
+        print('All is well!')
+        break
   \end{lstlisting}
 
 \end{frame}
@@ -239,7 +242,7 @@ while True:
     except ValueError:
         print("Invalid number, try again...")
     finally:
-        print "All good!"
+        print("All good!")
 
       \end{lstlisting}
       \normalsize
