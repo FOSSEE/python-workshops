@@ -1,0 +1,669 @@
+
+\documentclass[14pt,compress]{beamer}
+
+
+\input{macros.tex}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Title page
+\title[Testing]{Unit Testing in Python}
+
+\author[FOSSEE] {Prabhu Ramachandran}
+
+\institute[FOSSEE -- IITB] {Department of Aerospace Engineering\\IIT Bombay}
+\date[] {Mumbai, India}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% DOCUMENT STARTS
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}
+  \frametitle{Outline}
+  \tableofcontents
+  % You might wish to add the option [pausesections]
+\end{frame}
+
+\section{Introduction}
+
+\begin{frame}
+  \frametitle{Objectives}
+  At the end of this session, you will be able to:
+  \begin{itemize}
+  \item Write your code using the TDD paradigm
+  \item Use the \typ{pytest} module to test your code
+  \item Run your tests on \url{travis-ci.org}
+  \item Look at test coverage of your code
+  \item Look at automatic coverage with \url{codecov.io}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Why?  What?}
+  \begin{itemize}
+  \item Do you think we make bridges without testing them?
+    \pause
+    \vspace*{1in}
+  \item Why should software be any different?
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{So what?}
+  \begin{itemize}
+  \item Easy to develop code
+  \item Easy to refactor/improve code
+  \item Confidence in code base
+  \item Make you feel warm all over!
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}[plain]
+  \frametitle{What is TDD?}
+  \small
+
+  The basic steps of TDD are roughly as follows --
+  \begin{enumerate}
+  \item<1-> Decide upon feature to implement and methodology of
+    testing
+  \item<2-> Write tests for feature decided upon
+  \item<3-> Just write enough code, so that the test can be run, but it fails.
+  \item<4-> Improve the code, to just pass the test and at the same time
+    passing all previous tests
+  \item<5-> Run the tests to see, that all of them run successfully
+  \item<6-> Refactor the code you've just written -- optimize the algorithm,
+    remove duplication, add documentation, etc.
+  \item<7-> Run the tests again, to see that all the tests still pass
+  \item<8-> Go back to 1
+  \end{enumerate}
+\end{frame}
+
+\section{Let us TDD}
+
+\begin{frame}[fragile]
+  \frametitle{First Test -- GCD}
+  \begin{itemize}
+  \item simple program -- GCD of two numbers
+  \item What are our code units?
+    \begin{itemize}
+    \item Only one function \texttt{gcd}
+    \item Takes two numbers as arguments
+    \item Returns one number, which is their GCD
+    \end{itemize}
+\begin{lstlisting}
+c = gcd(44, 23)
+\end{lstlisting}
+  \item c will contain the GCD of the two numbers.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Test Cases}
+  \begin{itemize}
+  \item Important to have test cases and expected outputs even before
+    writing the first test!
+  \item $a=48$, $b=48$, $GCD=48$
+  \item $a=44$, $b=19$, $GCD=1$
+  \item Tests are just a series of assertions
+  \item True or False, depending on expected and actual behavior
+  \end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Test Cases -- general idea}
+  \small
+\begin{lstlisting}
+tc1 = gcd(48, 64)
+if tc1 != 16:
+    print "Failed for a=48, b=64. Expected 16. \
+    Obtained %d instead." % tc1
+    exit(1)
+
+tc2 = gcd(44, 19)
+if tc2 != 1:
+    print "Failed for a=44, b=19. Expected 1. \
+    Obtained %d instead." % tc2
+    exit(1)
+
+print "All tests passed!"
+\end{lstlisting}
+\begin{itemize}
+\item The function \texttt{gcd} doesn't even exist!
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Test Cases -- code}
+  \begin{itemize}
+      \item Let us make it a function!
+      \item Use assert!
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Test Cases -- code}
+\begin{lstlisting}
+# gcd.py
+def test_gcd():
+    assert gcd(48, 64) == 16
+    assert gcd(44, 19) == 1
+
+test_gcd()
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Stubs}
+  \begin{itemize}
+  \item First write a very minimal definition of \texttt{gcd}
+    \begin{lstlisting}
+def gcd(a, b):
+    pass
+    \end{lstlisting}
+  \item Written just, so that the tests can run
+  \item Obviously, the tests are going to fail
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{\texttt{gcd.py}}
+\begin{lstlisting}
+def gcd(a, b):
+    pass
+
+def test_gcd():
+    assert gcd(48, 64) == 16
+    assert gcd(44, 19) == 1
+
+if __name__ == '__main__':
+    test_gcd()
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{First run}
+\begin{lstlisting}
+$ python gcd.py
+Traceback (most recent call last):
+  File "gcd.py", line 9, in <module>
+    test_gcd()
+  File "gcd.py", line 5, in test_gcd
+    assert gcd(48, 64) == 16
+AssertionError
+\end{lstlisting} %$
+
+  \begin{itemize}
+  \item We have our code unit stub, and a failing test.
+  \item The next step is to write code, so that the test just passes.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,plain]
+  \frametitle{Euclidean Algorithm}
+  \begin{itemize}
+  \item Modify the \texttt{gcd} stub function
+  \item Then, run the script to see if the tests pass.
+  \end{itemize}
+\begin{lstlisting}
+def gcd(a, b):
+    if a == 0:
+        return b
+    while b != 0:
+        if a > b:
+            a = a - b
+        else:
+            b = b - a
+    return a
+\end{lstlisting}
+\begin{lstlisting}
+$ python gcd.py
+All tests passed!
+\end{lstlisting} %$
+  \begin{itemize}
+  \item \alert{Success!}
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]
+  \frametitle{Euclidean Algorithm -- Modulo}
+  \begin{itemize}
+  \item Repeated subtraction can be replaced by a modulo
+  \item modulo of \texttt{a\%b} is always less than b
+  \item when \texttt{a < b}, \texttt{a\%b} equals \texttt{a}
+  \item Combine these two observations, and modify the code
+\begin{lstlisting}
+def gcd(a, b):
+    while b != 0:
+        a, b = b, a % b
+    return a
+\end{lstlisting}
+  \item Check that the tests pass again
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Euclidean Algorithm -- Recursive}
+  \begin{itemize}
+  \item Final improvement -- make \texttt{gcd} recursive
+  \item More readable and easier to understand
+\begin{lstlisting}
+def gcd(a, b):
+    if b == 0:
+        return a
+    return gcd(b, a%b)
+\end{lstlisting}
+  \item Check that the tests pass again
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Document \texttt{gcd}}
+  \begin{itemize}
+  \item Undocumented function is as good as unusable
+  \item Let's add a docstring \& We have our first test!
+  \end{itemize}
+\end{frame}
+\begin{frame}[fragile]
+  \frametitle{Document \texttt{gcd}}
+\small
+\begin{lstlisting}
+def gcd(a, b):
+    """Returns the Greatest Common Divisor of the
+    two integers passed as arguments.
+
+    Args:
+      a: an integer
+      b: another integer
+
+    Returns: Greatest Common Divisor of a and b
+    """
+    if b == 0:
+        return a
+    return gcd(b, a%b)
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]
+  \frametitle{Persistent Test Cases}
+  \begin{itemize}
+  \item Tests should be pre-determined and written, before the code
+  \item The file shall have multiple lines of test code/data
+  \item Separates the code from the tests
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Separate \texttt{test\_gcd.py}}
+\begin{lstlisting}
+from gcd import gcd
+
+def test_gcd():
+    assert gcd(48, 64) == 16
+    assert gcd(44, 19) == 1
+
+if __name__ == '__main__':
+    test_gcd()
+\end{lstlisting}
+\end{frame}
+
+\section{Using \texttt{pytest}}
+
+\begin{frame}
+  \frametitle{\texttt{pytest}}
+  \begin{itemize}
+  \item \url{doc.pytest.org}
+  \item Is a powerful test runner!
+  \item Detailed info from simple assert statements
+  \item Automatic discovery of tests
+  \item Modular fixures
+  \end{itemize}
+\end{frame}
+
+\subsection{Basics}
+
+\begin{frame}[fragile]
+  \frametitle{Lets start using it}
+  \begin{lstlisting}
+    $ pytest
+  \end{lstlisting}%$
+  Note that it automatically tested \typ{test\_gcd.py}\\
+
+  Now try:
+  \begin{lstlisting}
+    $ pytest -h
+  \end{lstlisting}%$
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Lets start using it}
+  Let us make a mistake in \typ{gcd.py}
+  \begin{lstlisting}
+    $ pytest
+  \end{lstlisting}%$
+  Note that it produces far nicer output
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Some basic features}
+\small
+  \begin{lstlisting}
+import pytest
+
+def test_casting_raises_value_error():
+    with pytest.raises(ValueError):
+        int('asd')
+
+def test_floating_point():
+    assert 0.1 + 0.2 == pytest.approx(0.3)
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Basic features}
+\small
+  \begin{lstlisting}
+class TestSomething(object):
+    def test_something_has_hello(self):
+        x = 'hello'
+        y = 'hello world'
+        assert x in y
+
+    def test_something_else(self):
+        a = [1,2,3]
+        b = {1, 2, 3}
+        assert a == b
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Another example as exercise}
+  \begin{block}{Problem}
+  Find all git repositories recursively inside a root directory
+\end{block}
+\pause
+\begin{itemize}
+\item Simplify the problem
+\item Make it testable
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Some rules for writing tests}
+  \begin{itemize}
+  \item The test should be runnable by anyone (even by a computer), almost anywhere.
+  \item Don't write anything in the current directory (use a temporary directory).
+  \item Cleanup any files you create while testing.
+  \item Make sure tests do not affect global state.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{How do we do this?}
+  \begin{itemize}
+  \item Create some test data in a temporary directory
+  \item Test!
+  \item Cleanup the test data
+  \end{itemize}
+\end{frame}
+
+
+\subsection{Fixtures}
+
+\begin{frame}
+  \frametitle{Fixtures}
+  \begin{itemize}
+  \item What if you want to do something common before all tests?
+  \item Typically called a \textbf{fixture}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{pytest fixtures}
+  \begin{lstlisting}
+import pytest
+@pytest.fixture
+def my_fixture():
+    print('Hello there')
+
+def test_foo(my_fixture):
+    print('runing test')
+
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{pytest fixture cleanup}
+  \begin{lstlisting}
+import pytest
+@pytest.fixture
+def fix1():
+    print('Hello there')
+    yield
+    print('Good bye')
+
+def test_foo(fix1):
+    print('runing test')
+
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{pytest fixture with data}
+  \begin{lstlisting}
+@pytest.fixture
+def some_data(my_fixture):
+    print('some_data fixture')
+    yield {'a': 1, 'b': 2}
+    # Cleanup
+    print('Good bye: fix2')
+
+
+def test_some_data(some_data):
+    print(some_data)
+    print('Running test_fix2')
+  \end{lstlisting}
+\end{frame}
+
+
+
+\begin{frame}[fragile]
+  \frametitle{pytest fixtures can use other fixtures}
+  \begin{lstlisting}
+@pytest.fixture
+def fix2(my_fixture):
+    yield
+    # Cleanup
+    print('Good bye')
+
+
+def test_fix2(fix2):
+    print('Running test_fix2')
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Another way to use fixtures}
+  \begin{lstlisting}
+@pytest.mark.usefixtures('fix1', 'fix2')
+class TestClass:
+    def test_method1(self):
+         # ...
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Fixture scope}
+  \begin{itemize}
+  \item \typ{@pytest.fixture(scope='module')}
+  \item Scope can be
+    \begin{itemize}
+    \item \typ{'function'}: the default, executes for each function
+    \item \typ{'module'}
+    \item \typ{'class'}
+    \item \typ{'session'}: run only once!
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\subsection{Writing nicer tests}
+
+\begin{frame}
+  \frametitle{Some rules for writing tests}
+  \begin{itemize}
+  \item The test should be runnable by anyone (even by a computer), almost anywhere.
+  \item Don't write anything in the current directory (use a temporary directory).
+  \item Cleanup any files you create while testing.
+  \item Make sure tests do not affect global state.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Writing nicer tests}
+  \begin{itemize}
+  \item Names of test functions
+  \item Use descriptive function names
+  \item Intent matters
+  \item Segregate the test code into the following
+
+    \begin{itemize}
+    \item Given: what is the context of the test?
+    \item When: what action is taken to actually test the problem
+    \item Then: what do we actually ensure.
+    \end{itemize}
+
+  \item \url{dannorth.net/introducing-bdd/}
+  \item \url{martinfowler.com/bliki/GivenWhenThen.html}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Improve previous exercise}
+  \begin{block}{Problem}
+  Find all git repositories recursively inside a root directory
+\end{block}
+\begin{itemize}
+  \item Use all ideas discussed previously
+\end{itemize}
+
+\end{frame}
+
+
+\section{Travis-CI}
+
+\begin{frame}
+  \frametitle{Continuous integration}
+  \begin{itemize}
+  \item Run tests automatically
+  \item On every push
+  \item On every branch
+  \item On every pull-request
+  \item Free for public repos usually
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Continuous integration: services}
+  \begin{itemize}
+  \item \url{travis-ci.org}
+  \item \url{appveyor.com}
+  \item \url{shippable.com}
+  \item \url{codeship.com}
+  \item Work with github, bitbucket and gitlab
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Let us get started}
+  \begin{enumerate}
+  \item Commit code to local repo
+  \item Push to public github repo (say pytest-tutorial)
+  \item Visit \url{travis-ci.org}
+  \item Connect Travis to Github
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{\texttt{.travis.yml}}
+  Create a \typ{.travis.yml} in your repo
+  \begin{lstlisting}
+language: python
+
+python:
+  - 2.7
+
+install:
+  - pip install -U pytest
+
+script:
+  - pytest
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Starting travis}
+  \begin{itemize}
+  \item Push the \typ{.travis.yml}
+  \item Thats it!
+  \item Can add other versions of Python etc.
+  \item Useful to validate YAML: \url{www.yamllint.com/}
+  \end{itemize}
+\end{frame}
+
+
+\section{Coverage}
+
+\begin{frame}
+  \frametitle{Coverage of tests}
+  \begin{itemize}
+    \item Assess the amount of code that is covered by testing
+    \item \url{coverage.readthedocs.io}
+    \item \typ{pip install coverage}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Using coverage}
+  \begin{lstlisting}
+    $ coverage run -m pytest my_package
+    $ coverage report
+    $ coverage html
+  \end{lstlisting}%$
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Narrowing the source to look at}
+  \begin{lstlisting}
+$ coverage run --source . \
+     -m pytest my_package
+$ coverage report
+$ coverage html
+  \end{lstlisting}%$
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Using a \texttt{.coveragerc}}
+  Create a \typ{.coveragerc}
+  \begin{lstlisting}
+    [run]
+    source = .
+    branch = True
+    omit = */tests/*
+  \end{lstlisting}
+\end{frame}
+
+
+\section{Codecov}
+
+
+\section{Some advanced features}
+
+
+\end{document}
