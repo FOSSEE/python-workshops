@@ -13,5 +13,4 @@
 *.zip
 *.gz
 *~
-build
-advanced/code/*.c
+**/auto
