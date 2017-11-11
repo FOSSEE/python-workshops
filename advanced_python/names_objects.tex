@@ -333,5 +333,24 @@ f(2)
 
 \end{frame}
 
+\begin{frame}[fragile]
+  \frametitle{Exercise 5}
+\begin{lstlisting}
+def mul(x):
+    def g(y):
+        return y*x
+    return g
+
+twice = mul(2.0)
+twice(20)
+\end{lstlisting}
+\vspace*{0.1in}
+  \begin{itemize}
+  \item Run step-by-step on \url{pythontutor.com}
+  \item Predict the output before you see the answer
+  \end{itemize}
+
+\end{frame}
+
 
 \end{document}
