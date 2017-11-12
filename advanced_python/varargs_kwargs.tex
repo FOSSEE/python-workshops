@@ -1,0 +1,178 @@
+\documentclass[14pt,compress]{beamer}
+
+\input{macros.tex}
+
+\title[*args, **kw]{Advanced Python}
+\subtitle{Arbitrary arguments for functions}
+
+\author[FOSSEE] {The FOSSEE Group}
+
+\institute[IIT Bombay] {Department of Aerospace Engineering\\IIT Bombay}
+\date[] {Mumbai, India}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}
+  \frametitle{Overview}
+  \begin{itemize}
+  \item Advanced unpacking
+  \item Variable arguments
+  \item Arbitrary keyword arguments
+  \item Unpacking arguments
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Advanced unpacking}
+\begin{lstlisting}
+In []: a, b = 1, 2  # We know this!
+\end{lstlisting}
+  \pause
+  \begin{itemize}
+  \item In Python 3.x we can also do
+  \end{itemize}
+\begin{lstlisting}
+In []: first, *rest = range(5)
+
+In []: first
+Out[]: 0
+
+In []: first, *middle, last = range(5)
+
+In []: middle
+Out[]: [1, 2, 3]
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Advanced unpacking ...}
+  \begin{itemize}
+    \item Also works for files
+  \end{itemize}
+\begin{lstlisting}
+In []: f = open('file.txt')
+
+In []: first, *ign, last = f.readlines()
+
+In []: f.close()
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Arbitrary positional arguments}
+  \begin{itemize}
+  \item Arbitrary positional arguments: \lstinline{*arg}
+  \end{itemize}
+
+\begin{lstlisting}
+In []: def func(a, b, *args):
+  ...:     print(a, b, args)
+\end{lstlisting}
+\pause
+\begin{lstlisting}
+In []: func(1, 2)
+1 2 ()
+
+In []: func(1, 2, 'a')
+1 2 ('a',)
+
+In []: func(1, 2, 3, 'a')
+1 2 (3, 'a')
+\end{lstlisting}
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Arbitrary positional arguments}
+
+  Nothing special about \lstinline{args}:
+
+\begin{lstlisting}
+In []: def func(a, b, *rest):
+  ...:     print(a, b, rest)
+
+\end{lstlisting}
+Also is perfectly valid
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Arbitrary keyword arguments}
+  \begin{itemize}
+  \item Keyword arguments using \lstinline{**kw}
+  \end{itemize}
+\begin{lstlisting}
+In []: def func(a, b='b', **kw):
+  ...:    print(a, b, kw)
+\end{lstlisting}
+  \pause
+\begin{lstlisting}
+In []: func(1)
+1 b {}
+
+In []: func(1, 2)
+1 2 {}
+
+In []: func(1, b=2)
+1 2 {}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Arbitrary keyword arguments}
+\begin{lstlisting}
+In []: def func(a, b='b', **k):
+  ...:    print(a, b, k)
+
+In []: func(1, c=3)
+1 b {'c': 3}
+
+In []: func(1, c=3, d=4)
+1 b {'c': 3, 'd': 4}
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]
+  \frametitle{Argument unpacking}
+\begin{lstlisting}
+In []: def func(a, b):
+  ...:    print(a, b)
+
+In []: func(*[5, 10])
+5 10
+
+In []: func(*(5, 10))
+5 10
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Argument unpacking ...}
+\begin{lstlisting}
+In []: def func(a=1, b=2):
+  ...:     print(a, b)
+
+In []: func(**{'a':5, 'b':10})
+5 10
+
+In []: func(**dict(a=5, b=10))
+5 10
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Summary}
+  \begin{itemize}
+  \item Advanced unpacking
+  \item Arbitrary positional arguments with \lstinline{*args}
+  \item Arbitrary keyword arguments with \lstinline{**kw}
+  \item Argument unpacking
+  \end{itemize}
+\end{frame}
+
+
+\end{document}
