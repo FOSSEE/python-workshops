@@ -1,0 +1,222 @@
+\documentclass[14pt,compress]{beamer}
+
+\input{macros.tex}
+
+\title[Practice advanced functions]{Advanced Python}
+\subtitle{Practice advanced functions}
+
+\author[FOSSEE] {The FOSSEE Group}
+
+\institute[IIT Bombay] {Department of Aerospace Engineering\\IIT Bombay}
+\date[] {Mumbai, India}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}[plain, fragile]
+  \frametitle{Exercise: product of all arguments}
+  \begin{block}{}
+    Write a function called \lstinline{prod} that can be called with any
+    number of arguments (at least one) but computes the product of all the
+    given values as seen below.
+  \end{block}
+
+\begin{lstlisting}
+In []: prod(2.,  2.)
+Out[]: 4.0
+
+In []: prod(1, 2, 3)
+Out[]: 6
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[plain, fragile]
+  \frametitle{Solution}
+\begin{lstlisting}
+def prod(*args):
+    res = 1.0
+    for x in args:
+        res *= x
+    return res
+
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[plain, fragile]
+  \frametitle{Another solution}
+\begin{lstlisting}
+def prod(*args):
+    res = args[0]
+    for i in range(1, len(args)):
+        res *= args[i]
+    return res
+
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[plain, fragile]
+  \frametitle{Exercise: function applied to arguments}
+  \begin{block}{}
+    Write a function called \lstinline{apply} which takes a function followed
+    by an arbitrary number of arguments and returns a list with the function
+    applied to all the arguments as shown below.
+  \end{block}
+
+\begin{lstlisting}
+In []: def twice(x):
+  ...:     return x*2
+
+In []: apply(twice,  1, 2)
+Out[]: [2, 4]
+
+In []: apply(twice,  1, 2, 3)
+Out[]: [2, 4, 6]
+
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[plain, fragile]
+  \frametitle{Solution}
+\begin{lstlisting}
+def apply(f, *args):
+    result = []
+    for arg in args:
+        result.append(f(arg))
+    return result
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[plain, fragile]
+  \frametitle{Exercise: number of kwargs}
+  \begin{block}{}
+    Write a function \lstinline{nkw} that takes an arbitrary number of
+    keyword arguments and returns the number of keyword arguments passed.
+  \end{block}
+
+\begin{lstlisting}
+In []: nkw(x=1, y=2)
+Out[]: 2
+
+In []: nkw()
+Out[]: 0
+
+In []: nkw(x=1)
+Out[]: 1
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[plain, fragile]
+  \frametitle{Solution}
+\begin{lstlisting}
+def nkw(**kw):
+    return len(kw)
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[plain, fragile]
+  \frametitle{Exercise: name of kwargs}
+  \begin{block}{}
+    Write a function \lstinline{kwname} that takes an arbitrary number of
+    keyword arguments and returns a sorted list of the keyword arguments
+    passed.
+  \end{block}
+
+\begin{lstlisting}
+In []: nkw(x=1, y=2)
+Out[]: ['x', 'y']
+
+In []: nkw()
+Out[]: []
+
+In []: nkw(z=1, a=2)
+Out[]: ['a', 'z']
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[plain, fragile]
+  \frametitle{Solution}
+\begin{lstlisting}
+def nkw(**kw):
+    return sorted(kw.keys())
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[plain, fragile]
+  \frametitle{Exercise: power function}
+  \begin{block}{}
+    Write a function called \lstinline{power} that is given a single integer
+    and returns a function that takes a single number but returns its power.
+    For example:
+  \end{block}
+
+\begin{lstlisting}
+In []: pow2 = power(2)
+In []: pow2(2)
+Out[]: 4
+In []: pow2(4)
+Out[]: 16
+
+In []: pow3 = power(3)
+In []: pow3(2)
+Out[]: 8
+\end{lstlisting}
+  Hint: this is a closure.
+\end{frame}
+
+
+\begin{frame}[plain, fragile]
+  \frametitle{Solution}
+\begin{lstlisting}
+def power(n):
+    def g(x):
+        return x**n
+    return g
+
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[plain, fragile]
+  \frametitle{Exercise: debug function}
+  \begin{block}{}
+    Write a function called \lstinline{debug} that takes any function as a
+    single positional argument but returns a function that first prints out
+    the arguments passed to the function before calling it and returning its
+    value. For example:
+  \end{block}
+
+\begin{lstlisting}
+In []: debug(max)(1, 2)
+(1, 2) {}
+Out[]: 2
+
+In []: import math
+
+In []: debug(math.sin)(1.0)
+(1.0,) {}
+Out[]: 0.8414709848078965
+
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[plain, fragile]
+  \frametitle{Solution}
+\begin{lstlisting}
+def debug(f):
+    def g(*args, **kw):
+        print(args, kw)
+        return f(*args, **kw)
+    return g
+\end{lstlisting}
+\end{frame}
+
+
+\end{document}
