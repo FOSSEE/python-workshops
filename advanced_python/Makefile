@@ -8,7 +8,8 @@ SLIDES= intro.pdf \
 			  names_objects.pdf \
         varargs_kwargs.pdf \
 				only_kwargs.pdf \
-        closures.pdf
+        closures.pdf \
+        practice_functions.pdf
 
 all:    $(SLIDES)
 
