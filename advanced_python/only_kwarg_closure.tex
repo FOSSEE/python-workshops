@@ -1,0 +1,180 @@
+\documentclass[14pt,compress]{beamer}
+
+\input{macros.tex}
+
+\title[only kwargs]{Advanced Python}
+\subtitle{Keyword-only args and closures}
+
+\author[FOSSEE] {The FOSSEE Group}
+
+\institute[IIT Bombay] {Department of Aerospace Engineering\\IIT Bombay}
+\date[] {Mumbai, India}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}
+  \frametitle{Overview}
+  \begin{itemize}
+  \item Only-keyword arguments
+  \item Higher-order functions
+  \item Closures
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Motivation}
+  \begin{itemize}
+  \item One can mix positional and keyword arguments
+  \end{itemize}
+  \begin{lstlisting}
+In []: def f(a, b=2):
+  ...:     print(a, b)
+
+In []: f(a=2, b=3)
+2 3
+
+In []: f(b=2, a=3)
+3 2
+
+In []: f(10, 20)
+1 2
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Motivation}
+  \begin{itemize}
+  \item Function changes: positional arguments change in order or number
+  \item Accidentally passing an extra argument
+  \item Can we have purely keyword arguments?
+
+    \vspace*{0.5in}
+  \item Yes, in Python 3.x!
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Keyword-only arguments}
+  \begin{lstlisting}
+In []: def f(a, *args, b=False):
+  ...:    print(a, args, b)
+
+In []: f(1, 20)
+1 (20,) False
+
+In []: f(1, b=20)
+1 () 20
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Keyword-only arguments}
+ \noindent Without any extra arguments:
+\vspace*{0.25in}
+  \begin{lstlisting}
+In []: def f(a, *, b=False):
+  ...:    print(a, b)
+
+In []: f(1, 20)
+TypeError: f() takes 1 positional arg...
+\end{lstlisting}
+\pause
+  \begin{lstlisting}
+In []: f(1, b=20)
+1 20
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Discussion}
+  \begin{itemize}
+  \item Solves the problem nicely
+  \item \typ{b}: can only be specified as keyword argument
+
+  \item Cannot be called as a positional argument
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Recap of higher-order functions}
+  \begin{lstlisting}
+In []: def sqr(x):
+  ...:    return x*x
+
+In []: def sum(func, n):
+  ...:     result = 0
+  ...:     for i in range(n):
+  ...:         result += func(n)
+  ...:     return result
+
+In []: sum(sqr, 5)
+Out[]: 125
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Recap of higher-order functions}
+  \begin{lstlisting}
+def f():
+    def g(x):
+        return x+1
+    return g
+
+In []: func = f()
+In []: func(1)
+In []: f()(1)  # Also valid!
+  \end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]
+  \frametitle{Closures}
+  \begin{lstlisting}
+def mul(x):
+    def g(y):
+        return y*x
+    return g
+
+In []: twice = mul(2.0)
+In []: twice(20)
+Out[]: 40.0
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Closures ...}
+  \begin{lstlisting}
+
+In []: twice = mul(3.0)
+In []: twice(20)
+Out[]: 60.0
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Discussion}
+  \begin{itemize}
+  \item \typ{g} uses \typ{x}
+  \item \typ{x} is different in each case
+  \item So \typ{twice, thrice} ``curry'' the passed \typ{x}
+  \item This function is called a closure
+  \item Encloses its local environment
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]
+  \frametitle{Higher-order functions}
+  \begin{itemize}
+  \item Functions that manipulate functions
+  \item Passing a function as an argument
+  \item A function that returns another function
+  \item A closure
+  \end{itemize}
+\end{frame}
+
+\end{document}
