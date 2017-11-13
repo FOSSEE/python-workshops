@@ -4,12 +4,15 @@
 	pdflatex $*.tex
 	pdflatex $*.tex
 
-SLIDES= names_objects.pdf
+SLIDES= intro.pdf \
+			  names_objects.pdf \
+        varargs_kwargs.pdf \
+				only_kwarg_closure.pdf
 
 all:    $(SLIDES)
 
-cleanall:
-	rm -f *.dvi *.log *.bak *.aux *.bbl *.blg *.idx *.ps *.eps *.pdf *.toc *.out *~ *.vrb *.nav *.snm
+cleanall: clean
+	rm -f *.dvi *.ps *.eps *.pdf
 
 clean:
 	rm -f *.log *.bak *.aux *.bbl *.blg *.idx *.toc *.out *~ *.vrb *.nav *.snm *.synctex.gz
