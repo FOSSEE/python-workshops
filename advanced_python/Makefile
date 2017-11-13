@@ -7,7 +7,8 @@
 SLIDES= intro.pdf \
 			  names_objects.pdf \
         varargs_kwargs.pdf \
-				only_kwarg_closure.pdf
+				only_kwargs.pdf \
+        closures.pdf
 
 all:    $(SLIDES)
 

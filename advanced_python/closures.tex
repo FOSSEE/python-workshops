@@ -2,8 +2,8 @@
 
 \input{macros.tex}
 
-\title[only kwargs]{Advanced Python}
-\subtitle{Keyword-only args and closures}
+\title[Closures]{Advanced Python}
+\subtitle{Closures}
 
 \author[FOSSEE] {The FOSSEE Group}
 
@@ -19,83 +19,8 @@
 \begin{frame}
   \frametitle{Overview}
   \begin{itemize}
-  \item Only-keyword arguments
   \item Higher-order functions
   \item Closures
-  \end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]
-  \frametitle{Motivation}
-  \begin{itemize}
-  \item One can mix positional and keyword arguments
-  \end{itemize}
-  \begin{lstlisting}
-In []: def f(a, b=2):
-  ...:     print(a, b)
-
-In []: f(a=2, b=3)
-2 3
-
-In []: f(b=2, a=3)
-3 2
-
-In []: f(10, 20)
-1 2
-\end{lstlisting}
-\end{frame}
-
-\begin{frame}[fragile]
-  \frametitle{Motivation}
-  \begin{itemize}
-  \item Function changes: positional arguments change in order or number
-  \item Accidentally passing an extra argument
-  \item Can we have purely keyword arguments?
-
-    \vspace*{0.5in}
-  \item Yes, in Python 3.x!
-  \end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]
-  \frametitle{Keyword-only arguments}
-  \begin{lstlisting}
-In []: def f(a, *args, b=False):
-  ...:    print(a, args, b)
-
-In []: f(1, 20)
-1 (20,) False
-
-In []: f(1, b=20)
-1 () 20
-\end{lstlisting}
-\end{frame}
-
-\begin{frame}[fragile]
-  \frametitle{Keyword-only arguments}
- \noindent Without any extra arguments:
-\vspace*{0.25in}
-  \begin{lstlisting}
-In []: def f(a, *, b=False):
-  ...:    print(a, b)
-
-In []: f(1, 20)
-TypeError: f() takes 1 positional arg...
-\end{lstlisting}
-\pause
-  \begin{lstlisting}
-In []: f(1, b=20)
-1 20
-  \end{lstlisting}
-\end{frame}
-
-\begin{frame}
-  \frametitle{Discussion}
-  \begin{itemize}
-  \item Solves the problem nicely
-  \item \typ{b}: can only be specified as keyword argument
-
-  \item Cannot be called as a positional argument
   \end{itemize}
 \end{frame}
 
