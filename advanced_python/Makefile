@@ -11,7 +11,8 @@ SLIDES= intro.pdf \
         closures.pdf \
         practice_functions.pdf \
 				oop_basics.pdf \
-				oop_inheritance.pdf
+				oop_inheritance.pdf \
+				oop_containership.pdf
 
 all:    $(SLIDES)
 

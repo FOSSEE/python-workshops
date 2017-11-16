@@ -1,0 +1,164 @@
+\documentclass[14pt,compress,aspectratio=169]{beamer}
+
+\input{macros.tex}
+
+\title[OOP containership]{Advanced Python}
+\subtitle{Object Oriented Programming: containership }
+
+\author[FOSSEE] {The FOSSEE Group}
+
+\institute[IIT Bombay] {Department of Aerospace Engineering\\IIT Bombay}
+\date[] {Mumbai, India}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}
+  \frametitle{Recap}
+  \begin{itemize}
+  \item Created \lstinline{Talk} and \lstinline{Tutorial} classes
+  \item Know how to create objects: instantiation of a class
+    \vspace*{0.5in}
+
+  \item Let us create a conference!
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Conference class}
+  \vspace*{-0.1in}
+\begin{lstlisting}
+class Conference:
+    def __init__(self, talks=None):
+        if talks is None:
+            talks = []
+        self.talks = talks
+
+    def add_talk(self, talk):
+        self.talks.append(talk)
+
+    def schedule(self):
+        for talk in self.talks:
+            print(talk.speaker, talk.title)
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Using this}
+\begin{lstlisting}
+In []: c = Conference()
+
+In []: t = Talk('Guido', 'Python4', 'py,core')
+
+In []: c.add_talk(t)
+
+In []: c.schedule()
+
+\end{lstlisting}
+  \begin{itemize}
+  \item Easy to read
+  \item Nicely split up
+  \item Reflects the real world
+
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{But why not this?}
+\begin{lstlisting}
+class Conference:
+    def __init__(self, talks=[]):
+        self.talks = talks
+\end{lstlisting}
+  \begin{itemize}
+  \item Easier
+  \item Less code
+  \item Let's try it!
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Gotcha!}
+\begin{lstlisting}
+In []: c1 = Conference()
+In []: c1.add_talk(1)
+In []: c1.talks
+
+In []: c2 = Conference()
+In []: c2.talks
+
+\end{lstlisting}
+
+  \begin{itemize}
+  \item What is going on?
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Beware of mutable default arguments!}
+  \begin{itemize}
+  \item Default arguments are evaluated once
+  \item When the method/function is defined
+  \item So, if the object is mutable we have a problem
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Which is why we have this}
+\begin{lstlisting}
+class Conference:
+    def __init__(self, talks=None):
+        if talks is None:
+            talks = []
+        self.talks = talks
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Containership}
+  \begin{itemize}
+  \item \lstinline{Conference} class manages all the talks
+  \item It contains the talks and tutorials
+  \item Allows us to build complexity by \alert{composition}
+  \item Hierarchical organization
+  \item Allows us to mirror the real objects in code
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Some more examples}
+  \begin{itemize}
+  \item OOP for a \lstinline{Company} class
+  \item OOP for a \lstinline{Bank}
+  \item OOP for a \lstinline{School} or \lstinline{College}
+  \item OOP for a cell phone, computer, ...
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Design guidelines}
+  \begin{itemize}
+  \item Important to make sense
+  \item Should be easy to explain the relationships and responsibilities of
+    each class
+  \item Inheritance should ``read'' correctly and make sense
+  \item No object should be too responsible
+  \item Functionality should be suitably delegated
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Summary}
+  \begin{itemize}
+  \item Creating a more complex class
+  \item Containing other objects
+  \item Issue with mutable default arguments
+  \item Important design guidelines
+  \end{itemize}
+\end{frame}
+
+
+\end{document}
