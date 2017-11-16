@@ -9,7 +9,9 @@ SLIDES= intro.pdf \
         varargs_kwargs.pdf \
 				only_kwargs.pdf \
         closures.pdf \
-        practice_functions.pdf
+        practice_functions.pdf \
+				oop_basics.pdf \
+				oop_inheritance.pdf
 
 all:    $(SLIDES)
 

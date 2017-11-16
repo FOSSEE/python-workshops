@@ -1,0 +1,191 @@
+\documentclass[14pt,compress,aspectratio=169]{beamer}
+
+\input{macros.tex}
+
+\title[Introduction to OOP]{Advanced Python}
+\subtitle{Introduction to Object Oriented Programming }
+
+\author[FOSSEE] {The FOSSEE Group}
+
+\institute[IIT Bombay] {Department of Aerospace Engineering\\IIT Bombay}
+\date[] {Mumbai, India}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}
+  \frametitle{Background and caveats}
+  \begin{itemize}
+  \item You don't need OOP for everything!
+  \item Helps with larger programs
+  \item Appreciate it, when you write more code
+  \item Very useful to organize/modularize your code
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{What are the benefits?}
+  \begin{itemize}
+  \item Create new data types
+  \item Create objects to simulate a real problem
+  \item Makes problem solving more natural and elegant
+  \item Can be easier to understand
+  \item Allows for code-reuse
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]
+  \frametitle{Example: Managing Talks}
+  \begin{itemize}
+  \item Want to manage list of talks at a conference
+  \end{itemize}
+  \begin{lstlisting}
+talk = {'Speaker': 'Guido van Rossum',
+        'Title': 'The History of Python'
+        'Tags': 'python,history,C,advanced'}
+
+def get_first_name(talk):
+    return talk['Speaker'].split()[0]
+
+def get_tags(talk):
+    return talk['Tags'].split(',')
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Issues}
+  \begin{itemize}
+  \item Not convenient to handle large number of talks
+  \item Data separate from functions to manipulate talk
+  \item Must pass \lstinline{talk} to each function
+  \item No clear organization
+  \item What if we had different kinds of talks?
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]
+  \frametitle{Creating a \typ{class}}
+  \begin{lstlisting}
+class Talk:
+    """A class for the Talks."""
+    def __init__(self, speaker, title, tags):
+        self.speaker = speaker
+        self.title = title
+        self.tags = tags
+  \end{lstlisting}
+  \begin{itemize}
+  \item \lstinline{class} is a keyword
+  \item \lstinline{Talk} is the name of the class
+  \item Notice the class doc-string
+  \item Notice the indentation
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{methods and \lstinline{self}}
+  \begin{lstlisting}
+class Talk:
+    # ...
+    def get_speaker_firstname(self):
+        return self.speaker.split()[0]
+
+    def get_tags(self):
+        return self.tags.split(',')
+  \end{lstlisting}
+  \begin{itemize}
+  \item \lstinline{self} is a reference to the object itself
+  \item The name \lstinline{self} is a convention
+  \item Instance variables: \lstinline{self.name}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile, plain]
+  \frametitle{Exercise: type this out}
+  \vspace*{-0.1in}
+  \begin{lstlisting}
+class Talk:
+    """A class for the Talks."""
+    def __init__(self, speaker, title, tags):
+        self.speaker = speaker
+        self.title = title
+        self.tags = tags
+
+    def get_speaker_firstname(self):
+        return self.speaker.split()[0]
+
+    def get_tags(self):
+        return self.tags.split(',')
+  \end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]
+  \frametitle{Instantiating a class to create objects}
+  \begin{itemize}
+  \item Creating objects or instances of a class is simple
+  \item Call class, with arguments required by \lstinline{__init__}
+  \end{itemize}
+  \begin{lstlisting}
+In []: bdfl = Talk('Guido van Rossum',
+  ...:             'The History of Python',
+  ...:             'python,history,C,advanced')
+  \end{lstlisting}
+  \begin{itemize}
+  \item We can now call the methods of the Class
+  \end{itemize}
+  \begin{lstlisting}
+In []: bdfl.get_tags()
+In []: bdfl.get_speaker_firstname()
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{\lstinline{__init__} method}
+  \begin{itemize}
+  \item A special method
+  \item Called every time an instance of the class is created
+  \end{itemize}
+  \begin{lstlisting}
+In []: print(bdfl.speaker)
+In []: print(bdfl.tags)
+In []: print(bdfl.title)
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Creating more instances}
+  \begin{lstlisting}
+In []: talk = Talk('Arun K',
+  ...:      'Python in biosciences', 'python,bio')
+In []: talk.get_tags()
+In []: talk.tags
+
+In []: type(talk)
+Out[]: __main__.Talk
+In []: type(bdfl)
+\end{lstlisting}
+\begin{itemize}
+\item Note that \lstinline{talk} and \lstinline{bdfl} are different objects
+\item Different values but same type
+\item \lstinline{Talk} \alert{encapsulates} the data and behavior of a talk
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Summary}
+  \begin{itemize}
+  \item Introduction to Object Oriented Programming
+  \item A simple example
+  \item Defining a \lstinline{class}
+  \item Methods and attributes: encapsulation
+  \end{itemize}
+\end{frame}
+
+
+
+\end{document}

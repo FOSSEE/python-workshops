@@ -1,0 +1,219 @@
+\documentclass[14pt,compress,aspectratio=169]{beamer}
+
+\input{macros.tex}
+
+\title[OOP Inheritance]{Advanced Python}
+\subtitle{Object Oriented Programming: Inheritance}
+
+\author[FOSSEE] {The FOSSEE Group}
+
+\institute[IIT Bombay] {Department of Aerospace Engineering\\IIT Bombay}
+\date[] {Mumbai, India}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}
+  \frametitle{Recap}
+  \begin{itemize}
+  \item Created a new \lstinline{Talk} class
+  \item Puts together data and methods
+  \item Can make instances of the class
+  \item Each instance has its own data
+  \item Objects encapsulate data and behavior
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile, plain]
+  \frametitle{Recap: the Talk class}
+  \vspace*{-0.1in}
+  \begin{lstlisting}
+class Talk:
+    """A class for the Talks."""
+    def __init__(self, speaker, title, tags):
+        self.speaker = speaker
+        self.title = title
+        self.tags = tags
+
+    def get_speaker_firstname(self):
+        return self.speaker.split()[0]
+
+    def get_tags(self):
+        return self.tags.split(',')
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Instantiating a class to create objects}
+  \begin{lstlisting}
+In []: bdfl = Talk('Guido van Rossum',
+  ...:             'The History of Python',
+  ...:             'python,history,C,advanced')
+In []: bdfl.get_tags()
+In []: bdfl.get_speaker_firstname()
+In []: bdfl.tags
+
+In []: type(bdfl)
+  \end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]
+  \frametitle{Classes: the big picture}
+  \begin{itemize}
+  \item Lets you create new data types
+  \item Class is a template for an object belonging to that class
+  \item Instantiating a class creates an instance (an object)
+  \item An instance encapsulates the state (data) and behavior
+    (methods)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Objects and Methods}
+  \begin{itemize}
+  \item Objects group data with functions
+  \item Everything in Python is an object
+  \item Strings, lists, functions and even modules
+  \end{itemize}
+  \begin{lstlisting}
+    s = "Hello World"
+    s.lower()
+
+    l = [1, 2, 3, 4, 5]
+    l.append(6)
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Classes}
+  \begin{lstlisting}
+In []: s = "Hello World"
+In []: type(s)
+  \end{lstlisting}
+  \begin{itemize}
+  \item A new string, comes along with methods
+  \item A template or a blue-print, where these definitions lie
+  \item This blue print for building objects is called a
+    \lstinline{class}
+  \item \lstinline{s} is an object of the \lstinline{str} class
+  \item An object is an ``instance'' of a class
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]
+  \frametitle{Classes: inheritance}
+  \begin{itemize}
+  \item Allows you to define an inheritance hierarchy
+    \begin{itemize}
+    \item ``A Honda car \alert{is a} car.''
+    \item ``A car \alert{is an} automobile.''
+    \item ``A Python \alert{is a} reptile.''
+    \end{itemize}
+  \item All data/behavior of a car should be there in a ``Honda'' car
+  \item All data/behavior associated with a reptile ought to inhere in a snake
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]
+  \frametitle{Inheritance}
+  \vspace*{-0.1in}
+  \begin{itemize}
+  \item Suppose, we wish to write a \lstinline{Tutorial} class
+  \item It's almost same as \lstinline{Talk} except for minor differences
+  \item We can ``inherit'' from \lstinline{Talk}
+  \end{itemize}
+  \pause
+  \begin{lstlisting}
+class Tutorial(Talk):
+    """A class for the tutorials."""
+    def __init__(self, speaker, title, tags,
+                 needs_computer=True):
+        super().__init__(speaker, title, tags)
+        self.needs_computer = needs_computer
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Inheritance}
+  \vspace*{-0.1in}
+  \begin{itemize}
+  \item Modified \lstinline{__init__} method
+  \item Inherits: \lstinline{get_tags} and
+    \lstinline{get_speaker_firstname}
+  \end{itemize}
+  \begin{lstlisting}
+tut = Tutorial('Travis Oliphant',
+               'Numpy Basics',
+               'numpy,python,beginner')
+tut.get_speaker_firstname()
+tut.needs_computer
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Some points}
+  \begin{itemize}
+  \item \lstinline{Tutorial} is a subclass (or child) of \lstinline{Talk}
+  \item \lstinline{Talk} is the base class (or parent class)
+  \item Only the \lstinline{__init__} has been changed
+  \item This is called overriding
+  \item \lstinline{super} ensures that the parent class is called
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Exercise: try this}
+\begin{lstlisting}
+class Tutorial(Talk):
+    def __init__(self, speaker, title, tags,
+                 needs_computer=True):
+        self.needs_computer = needs_computer
+
+In []: t = Tutorial('G v R', 'Python', 'py,tut')
+
+In []: t.needs_computer
+
+In []: t.speaker
+
+In []: t.get_speaker_firstname())
+
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Inheritance}
+  \begin{itemize}
+  \item A \lstinline{Tutorial} is a \lstinline{Talk}
+  \item A \lstinline{Talk} is not a \lstinline{Tutorial}
+  \item The sentence above should make sense!
+  \item A \lstinline{Cat} is an \lstinline{Animal}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Incorrect inheritance}
+  \begin{itemize}
+  \item A \lstinline{Talk} is a \lstinline{Speaker} or
+  \item A \lstinline{Speaker} is a \lstinline{Room}
+  \item Something is wrong in your OO design!
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Summary}
+  \begin{itemize}
+  \item Inheritance
+  \item The importance of making sense
+  \item The \lstinline{super} function
+  \end{itemize}
+\end{frame}
+
+
+
+\end{document}
