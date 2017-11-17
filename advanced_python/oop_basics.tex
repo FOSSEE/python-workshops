@@ -177,13 +177,138 @@ In []: type(bdfl)
 \end{frame}
 
 \begin{frame}[fragile]
+  \frametitle{Changing/adding attributes}
+\begin{lstlisting}
+In []: talk.speaker = 'Arun K P'
+
+In []: talk.tags = 'python,bioscience'
+\end{lstlisting}
+\pause
+\begin{lstlisting}
+# Adding attributes
+
+In []: talk.x = 1
+
+In []: talk.y = 'hello'
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}
   \frametitle{Summary}
   \begin{itemize}
   \item Introduction to Object Oriented Programming
   \item A simple example
   \item Defining a \lstinline{class}
   \item Methods and attributes: encapsulation
+  \item Changing/adding attributes
   \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Exercise: simplest class}
+  \begin{block}{}
+    Create the simplest possible class, called \lstinline{Simple}, which has
+    no attributes or methods.  Try this out on your own IPython interpreters.
+    You should be able to instantiate it as follows:
+  \end{block}
+\begin{lstlisting}
+In []: s = Simple()
+\end{lstlisting}
+  \pause
+  \begin{block}{Hint}
+    Remember the \lstinline{pass} statement?
+  \end{block}
+\end{frame}
+
+
+\begin{frame}[plain, fragile]
+  \frametitle{Solution}
+\begin{lstlisting}
+class Simple:
+    pass
+\end{lstlisting}
+  \vspace*{0.5in}
+
+  That is all!
+\end{frame}
+
+\begin{frame}[fragile,plain, fragile]
+  \frametitle{Exercise: \lstinline{Person} class 1}
+  \begin{block}{}
+    Create a simple \lstinline{Person} class with two attributes: a
+    \lstinline{name} (a string) and an \lstinline{age} (a float).  To be used
+    as follows:
+  \end{block}
+\begin{lstlisting}
+In []: p = Person('Arun', 22.0)
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[plain, fragile]
+  \frametitle{Solution}
+\begin{lstlisting}
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[plain, fragile]
+  \frametitle{Exercise: \lstinline{Person} class 2}
+  \begin{block}{}
+    Create a simple \lstinline{Person} class with two attributes a
+    \lstinline{name} and an \lstinline{age}.  However, let the name default to
+    the string \lstinline{'name'} and the age default to 0.0.
+  \end{block}
+\begin{lstlisting}
+In []: p = Person()
+In []: print(p.name, p.age)
+name 0.0
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[plain, fragile]
+  \frametitle{Solution}
+\begin{lstlisting}
+class Person:
+    def __init__(self, name='name', age=0.0):
+        self.name = name
+        self.age = age
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,plain, fragile]
+  \frametitle{Exercise: simple method}
+  \begin{block}{}
+    Create a simple \lstinline{Person} class with two attributes as before.
+    Add a method called \lstinline{birthday} which takes no arguments and
+    which prints \lstinline{'HBD <name>'} and also increases the age by 1.
+    Note that \lstinline{<name>} is the name of the instance.
+  \end{block}
+
+\begin{lstlisting}
+In []: p = Person(name='Ram')
+In []: p.birthday()
+HBD Ram
+In []: p.age
+Out[]: 1.0
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[plain, fragile]
+  \frametitle{Solution}
+\begin{lstlisting}
+class Person:
+    def __init__(self, name='name', age=0.0):
+        self.name = name
+        self.age = age
+
+    def birthday(self):
+        print('HBD', self.name)
+        self.age += 1.0
+\end{lstlisting}
 \end{frame}
 
 

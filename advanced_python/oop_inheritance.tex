@@ -2,6 +2,8 @@
 
 \input{macros.tex}
 
+\newcommand{\py}[1]{\lstinline{#1}}
+
 \title[OOP Inheritance]{Advanced Python}
 \subtitle{Object Oriented Programming: Inheritance}
 
@@ -216,6 +218,221 @@ In []: t.get_speaker_firstname())
   \end{itemize}
 \end{frame}
 
+\begin{frame}[fragile]
+  \frametitle{Exercise: \lstinline{Animal} class}
+  \begin{block}{}
+    Create an \lstinline{Animal} class that has a name attribute (str) and a
+    single method called \lstinline{greet} which takes no arguments but returns
+    a string about how the animal makes a greeting.  By default let
+    \lstinline{greet} return \lstinline{'<name> says greet'}.
+  \end{block}
+\begin{lstlisting}
+In []: a = Animal('human')
+In []: a.greet()
+Out[]: 'human says greet'
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[plain, fragile]
+  \frametitle{Solution}
+\begin{lstlisting}
+class Animal:
+    def __init__(self, name):
+        self.name = name
+    def greet(self):
+        return self.name + ' says greet'
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[plain, fragile]
+  \frametitle{Solution}
+  \begin{itemize}
+  \item Note that this is the same as
+  \end{itemize}
+\begin{lstlisting}
+class Animal(object):
+    # ...
+\end{lstlisting}
+  \begin{itemize}
+  \item Otherwise \lstinline{object} is implicitly the base class
+  \end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Exercise: \lstinline{Cat} class}
+  \begin{block}{}
+    Create \lstinline{Cat} class which derives from the \lstinline{Animal}
+    class \alert{override} \lstinline{greet} return
+    \lstinline{'<name> says meow'}.
+  \end{block}
+\begin{lstlisting}
+In []: a = Cat('Felix')
+In []: a.greet()
+Out[]: 'Felix says meow'
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[plain, fragile]
+  \frametitle{Solution}
+\begin{lstlisting}
+class Animal:
+    def __init__(self, name):
+        self.name = name
+    def greet(self):
+        return self.name + ' says greet'
+
+class Cat(Animal):
+    def greet(self):
+        return self.name + ' says meow'
+\end{lstlisting}
+  \begin{itemize}
+  \item Note, no need to override \lstinline{__init__}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[plain, fragile]
+  \frametitle{Exercise: \lstinline{Mammal} class}
+  \begin{block}{}
+    Create a \lstinline{Mammal} class that derives from \lstinline{Animal}
+    that takes an additional argument that takes an additional argument
+    specifying the number of legs (an integer) and stores it in the attribute
+    \lstinline{legs}.
+  \end{block}
+
+\begin{lstlisting}
+In []: m = Mammal('dog', 4)
+In []: m.legs
+Out[]: 4
+In []: m.greet()
+Out[]: 'dog says greet'
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[plain, fragile]
+  \frametitle{Solution}
+\begin{lstlisting}
+class Mammal(Animal):
+    def __init__(self, name, legs):
+        super().__init__(name)
+        self.legs = legs
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[plain, fragile]
+  \frametitle{Solution alternative}
+\begin{lstlisting}
+class Mammal(Animal):
+    def __init__(self, name, legs):
+        self.name = name
+        self.legs = legs
+\end{lstlisting}
+  \begin{itemize}
+  \item Will also work but a \alert{bad} idea
+  \item What if \lstinline{Animal.__init__} changes?
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[plain, fragile]
+  \frametitle{Exercise: \lstinline{Human} class}
+  \begin{block}{}
+    Create a \lstinline{Human} class that derives from \lstinline{Mammal}
+    modify its \lstinline{greet} method to return
+    \lstinline{'<name> says hello'}.  Also change the default number of legs
+    to 2.
+  \end{block}
+
+\begin{lstlisting}
+In []: h = Human('Ram')
+In []: h.legs
+Out[]: 2
+In []: h.greet()
+Out[]: 'Ram says hello'
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[plain, fragile]
+  \frametitle{Solution}
+\begin{lstlisting}
+class Human(Mammal):
+    def __init__(self, name, legs=2):
+        super().__init__(name, legs)
+    def greet(self):
+        return self.name + ' says hello'
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[plain, fragile]
+  \frametitle{Complete Solution}
+  \vspace*{-0.1in}
+  \small
+\begin{lstlisting}
+class Animal:
+    def __init__(self, name):
+        self.name = name
+    def greet(self):
+        return self.name + ' says greet'
+
+class Mammal(Animal):
+    def __init__(self, name, legs):
+        super().__init__(name)
+        self.legs = legs
+
+class Human(Mammal):
+    def __init__(self, name, legs=2):
+        super().__init__(name, legs)
+    def greet(self):
+        return self.name + ' says hello'
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Observations}
+  \begin{itemize}
+  \item \py{Human} is a \py{Mammal}
+  \item \py{Human} is an \py{Animal}
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}[plain, fragile]
+  \frametitle{Exercise: Methods in subclass}
+  \begin{block}{}
+    Add a method to \py{Human} called \py{speak} which prints
+    \py{'My name is <name>'}.
+  \end{block}
+
+\begin{lstlisting}
+In []: h = Human('Ram')
+In []: h.speak()
+My name is Ram
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[plain, fragile]
+  \frametitle{Solution}
+\begin{lstlisting}
+class Human(Mammal):
+    def __init__(self, name, legs=2):
+        super().__init__(name, legs)
+    def greet(self):
+        return self.name + ' says hello'
+    def speak(self):
+        print('My name is', self.name)
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Observations}
+  \begin{itemize}
+  \item \py{Human} is a \py{Mammal}
+  \item \py{Human} is an \py{Animal}
+  \item \py{Human} can speak but \py{Mammal, Animal} cannot
+  \end{itemize}
+\end{frame}
 
 
 \end{document}
