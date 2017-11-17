@@ -33,11 +33,11 @@ In []: def sqr(x):
 In []: def sum(func, n):
   ...:     result = 0
   ...:     for i in range(n):
-  ...:         result += func(n)
+  ...:         result += func(i)
   ...:     return result
 
 In []: sum(sqr, 5)
-Out[]: 125
+Out[]: 30
   \end{lstlisting}
 \end{frame}
 
@@ -74,8 +74,8 @@ Out[]: 40.0
   \frametitle{Closures ...}
   \begin{lstlisting}
 
-In []: twice = mul(3.0)
-In []: twice(20)
+In []: thrice = mul(3.0)
+In []: thrice(20)
 Out[]: 60.0
   \end{lstlisting}
 \end{frame}
@@ -93,7 +93,7 @@ Out[]: 60.0
 
 
 \begin{frame}[fragile]
-  \frametitle{Higher-order functions}
+  \frametitle{Summary: Higher-order functions}
   \begin{itemize}
   \item Functions that manipulate functions
   \item Passing a function as an argument
