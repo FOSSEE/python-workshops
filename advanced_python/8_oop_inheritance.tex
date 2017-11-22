@@ -2,8 +2,6 @@
 
 \input{macros.tex}
 
-\newcommand{\py}[1]{\lstinline{#1}}
-
 \title[OOP Inheritance]{Advanced Python}
 \subtitle{Object Oriented Programming: Inheritance}
 
@@ -185,7 +183,7 @@ In []: t.needs_computer
 
 In []: t.speaker
 
-In []: t.get_speaker_firstname())
+In []: t.get_speaker_firstname()
 
 \end{lstlisting}
 \end{frame}
@@ -217,6 +215,9 @@ In []: t.get_speaker_firstname())
   \item The \lstinline{super} function
   \end{itemize}
 \end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Exercises
 
 \begin{frame}[fragile]
   \frametitle{Exercise: \lstinline{Animal} class}
@@ -262,7 +263,7 @@ class Animal(object):
 \begin{frame}[fragile]
   \frametitle{Exercise: \lstinline{Cat} class}
   \begin{block}{}
-    Create \lstinline{Cat} class which derives from the \lstinline{Animal}
+    Create a \lstinline{Cat} class which derives from the \lstinline{Animal}
     class \alert{override} \lstinline{greet} return
     \lstinline{'<name> says meow'}.
   \end{block}
@@ -293,12 +294,31 @@ class Cat(Animal):
 \end{frame}
 
 \begin{frame}[plain, fragile]
+  \frametitle{Observation: order matters}
+\begin{lstlisting}
+class Cat(Animal):
+    def greet(self):
+        return self.name + ' says meow'
+
+class Animal:
+    def __init__(self, name):
+        self.name = name
+    def greet(self):
+        return self.name + ' says greet'
+
+\end{lstlisting}
+  \begin{itemize}
+  \item Will the above code work? Explore this and see what error you get.
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}[plain, fragile]
   \frametitle{Exercise: \lstinline{Mammal} class}
   \begin{block}{}
     Create a \lstinline{Mammal} class that derives from \lstinline{Animal}
-    that takes an additional argument that takes an additional argument
-    specifying the number of legs (an integer) and stores it in the attribute
-    \lstinline{legs}.
+    that takes an additional argument specifying the number of legs (an
+    integer) and stores it in the attribute \lstinline{legs}.
   \end{block}
 
 \begin{lstlisting}
@@ -321,6 +341,7 @@ class Mammal(Animal):
 \end{lstlisting}
 \end{frame}
 
+
 \begin{frame}[plain, fragile]
   \frametitle{Solution alternative}
 \begin{lstlisting}
@@ -334,6 +355,26 @@ class Mammal(Animal):
   \item What if \lstinline{Animal.__init__} changes?
   \end{itemize}
 \end{frame}
+
+\begin{frame}[plain, fragile]
+  \frametitle{More on \typ{super}}
+We can also do:
+\begin{lstlisting}
+class Mammal(Animal):
+    def __init__(self, name, legs):
+        super(Mammal, self).__init__(name)
+
+In []: super?
+
+In []: m = Mammal('dog', 4)
+In []: super(Mammal, m)
+
+In []: super(Mammal, m).greet()
+
+In []: super(Animal, m).greet() # ??
+\end{lstlisting}
+\end{frame}
+
 
 \begin{frame}[plain, fragile]
   \frametitle{Exercise: \lstinline{Human} class}
@@ -433,6 +474,58 @@ class Human(Mammal):
   \item \py{Human} can speak but \py{Mammal, Animal} cannot
   \end{itemize}
 \end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Exercise: class in a module}
+
+  \begin{block}{}
+    Put the \py{Animal, Mammal, Human} classes inside a Python file, called
+    \texttt{oop.py} somewhere convenient in your computer.  Add the following
+    code at the bottom.
+  \end{block}
+\begin{lstlisting}
+print(__name__)
+h = Human('Sam')
+print(h.greet())
+print(h.legs)
+print(type(h))
+\end{lstlisting}
+
+  \begin{itemize}
+  \item Execute this module using \texttt{python oop.py}
+  \item Import the \py{Human} class from IPython
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[plain, fragile]
+  \frametitle{Exercise: overriding a \typ{list} method}
+  \begin{block}{}
+    Create a subclass of the standard Python \py{list} called \py{MyList} and
+    override just the \py{append} method to print the item appended as
+    \py{'appending <item>'} and then call the parent append so as to
+    internally append the item. The usage should be as follows:
+  \end{block}
+
+\begin{lstlisting}
+In []: l = MyList()
+In []: l.append(1)
+appending 1
+In []: l
+Out[]: [1]
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[plain, fragile]
+  \frametitle{Solution}
+\begin{lstlisting}
+class MyList(list):
+    def append(self, item):
+        print('appending', item)
+        super().append(item)
+\end{lstlisting}
+\end{frame}
+
 
 
 \end{document}

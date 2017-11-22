@@ -131,7 +131,7 @@ class Conference:
 \begin{frame}
   \frametitle{Some more examples}
   \begin{itemize}
-  \item OOP for a \lstinline{Company} class
+  \item OOP for a \lstinline{Company}
   \item OOP for a \lstinline{Bank}
   \item OOP for a \lstinline{School} or \lstinline{College}
   \item OOP for a cell phone, computer, ...
@@ -160,5 +160,48 @@ class Conference:
   \end{itemize}
 \end{frame}
 
+\begin{frame}[plain, fragile]
+  \frametitle{Exercise: Create a Zoo}
+  \begin{block}{}
+    Create a \py{Zoo} class which allows someone to add any number of animals.
+    This means it should work for \py{Animal, Mammal, Human} objects. It
+    should have a single \py{greet} method which calls the greet method of all
+    of the animals it has and prints that:
+  \end{block}
+
+\begin{lstlisting}
+In []: b = Animal('crow')
+In []: m = Mammal('dog', legs=4)
+In []: h = Human('Abhinav')
+In []: z = Zoo(b, m, h)
+In []: z.greet()
+crow says greet
+dog says greet
+Abhinav says hello
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[plain, fragile]
+  \frametitle{Solution}
+\begin{lstlisting}
+class Zoo:
+    def __init__(self, *animals):
+        self.animals = list(animals)
+
+    def greet(self):
+        for animal in self.animals:
+            print(animal.greet())
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Observations}
+  \begin{itemize}
+  \item Notice the abstraction of \py{Animal}
+  \item The \py{Zoo} will work with any object that has the \py{greet} method
+  \item That is, any \py{Animal}
+  \end{itemize}
+\end{frame}
 
 \end{document}
