@@ -1,0 +1,204 @@
+\documentclass[14pt,compress,aspectratio=169]{beamer}
+
+\input{macros.tex}
+
+\title[OOP: Class Attributes]{Advanced Python}
+\subtitle{Object Oriented Programming: class attributes}
+
+\author[FOSSEE] {The FOSSEE Group}
+
+\institute[IIT Bombay] {Department of Aerospace Engineering\\IIT Bombay}
+\date[] {Mumbai, India}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}
+  \frametitle{Recap}
+  \begin{itemize}
+  \item Classes for encapsulation
+  \item Inheritance
+  \item \py{super,isinstance,issubclass}
+  \item Containership
+    \vspace*{0.3in}
+  \item Look at class attributes/methods
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]
+  \frametitle{Class/instance attributes}
+  \begin{itemize}
+  \item So far: instance attributes
+  \end{itemize}
+\begin{lstlisting}
+class A:
+    x = 1
+
+In []: a = A()
+In []: a.x
+Out[]: 1
+
+In []: b = A()
+In []: assert b.x == a.x
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Class/instance attributes}
+\begin{lstlisting}
+class A:
+    x = 1
+
+In []: a, b = A(), A()
+
+In []: A.x = 2
+In []: b.x
+Out[]: 2
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Class/instance attributes: beware}
+\begin{lstlisting}
+class A:
+    x = 1
+
+In []: a = A()
+In []: a.x = 1
+In []: A.x = 2
+In []: a.x
+Out[]: ??
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Understanding the scope}
+  \begin{itemize}
+  \item If \py{a.x} is not an instance attribute
+  \item Python looks in the class for the attribute!
+    \pause
+    \vspace*{0.25in}
+  \item So \py{a.x = 1} sets an instance attribute!
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,fragile]
+  \frametitle{Class attribute scope}
+\begin{lstlisting}
+class A:
+    x = 1
+    def f(self):
+        return self.x + 1
+
+In []: a = A()
+In []: a.f()
+\end{lstlisting}
+  \pause
+\begin{lstlisting}
+Out[]: 2
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]
+  \frametitle{Class methods}
+  \begin{itemize}
+  \item Can we have methods on the class?
+  \end{itemize}
+\begin{lstlisting}
+class A:
+    @classmethod
+    def method(cls, x):
+        print(cls, x)
+
+In []: A.method(1)
+<class '__main__.A'> 1
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Class methods}
+  \begin{itemize}
+  \item \py{@classmethod} is a special decorator
+  \item Makes the method a class method
+  \item Implicit argument is the class (and not the instance)
+  \item Useful when you don't want to construct the object
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Summary}
+  \begin{itemize}
+  \item Class attributes
+  \item Class methods and the \py{@classmethod} decorator
+  \end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[plain, fragile]
+  \frametitle{Exercise: Point class attribute}
+  \begin{block}{}
+    Create a simple \py{Point} class with class attributes \py{x, y} that
+    default to 0.0.
+  \end{block}
+
+\begin{lstlisting}
+In []: p = Point()
+In []: p.x, p.y
+Out[]: (0.0, 0.0)
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[plain, fragile]
+  \frametitle{Solution}
+\begin{lstlisting}
+class Point:
+    x = 0.0
+    y = 0.0
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[plain, fragile]
+  \frametitle{Exercise: classmethod}
+  \begin{block}{}
+    Create a simple \py{Point} class with instance attributes \py{x, y} but
+    add a class method \py{polar(r, theta)} that takes coordinates in $(r,
+    \theta)$ form but returns a suitable point. Remember that, $x=r
+    \cos(\theta), y=r\sin(\theta)$. For example:
+  \end{block}
+
+\begin{lstlisting}
+In []: p = Point.polar(1.0, 0.0)
+In []: p.x, p.y
+Out[]: (1.0, 0.0)
+\end{lstlisting}
+
+\end{frame}
+
+
+\begin{frame}[plain, fragile]
+  \frametitle{Solution}
+\begin{lstlisting}
+from math import sin, cos
+class Point:
+    def __init__(self, x=0.0, y=0.0):
+        self.x = x
+        self.y = y
+    @classmethod
+    def polar(cls, r, theta):
+        x = r*cos(theta)
+        y = r*sin(theta)
+        return cls(x, y)
+
+\end{lstlisting}
+\end{frame}
+
+
+
+\end{document}

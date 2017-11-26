@@ -1,0 +1,154 @@
+\documentclass[14pt,compress,aspectratio=169]{beamer}
+
+\input{macros.tex}
+
+\title[OOP: Miscellaneous]{Advanced Python}
+\subtitle{Object Oriented Programming: miscellaneous}
+
+\author[FOSSEE] {The FOSSEE Group}
+
+\institute[IIT Bombay] {Department of Aerospace Engineering\\IIT Bombay}
+\date[] {Mumbai, India}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}
+  \frametitle{Recap}
+  \begin{itemize}
+  \item Classes for encapsulation
+  \item Inheritance
+  \item \py{super,isinstance,issubclass}
+  \item Containership
+  \item Class attributes and methods
+    \vspace*{0.3in}
+  \item Look at some odds and ends
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{More on methods}
+\begin{lstlisting}
+class A:
+    def f(self):
+        print("A.f")
+
+In []: a = A()
+In []: a.f()
+A.f
+In []: A.f(a)
+
+In []: A.f()
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{More on methods}
+\begin{lstlisting}
+In []: type(a.f)
+Out[]: method
+In []: type(A.f)
+Out[]: function
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Private and public attributes}
+  \begin{itemize}
+  \item No explicit support
+  \item In practice, use \py{_attr} for private attributes/methods
+  \end{itemize}
+\begin{lstlisting}
+class A:
+    def __init__(self, x):
+        self._x = x
+    def _private_method(self):
+        pass
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Private and public attributes}
+  \begin{itemize}
+  \item Access private methods/attributes inside class
+  \item Avoid access from outside
+  \end{itemize}
+
+\begin{lstlisting}
+In []: a = A()
+In []: a._method() # Bad!
+In []: a._x # Bad!
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Private and public attributes}
+\begin{lstlisting}
+class B:
+    def _f(self):
+        # OK!
+        return self._x
+
+    def func(self):
+        # Also OK!
+        return self._f()
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Abstract classes}
+  \begin{itemize}
+  \item Used to specify an ``interface''
+  \item Not meant to instantiate but subclass
+  \item Useful to specify behavior
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Abstract classes}
+\begin{lstlisting}
+class Abstract:
+    def func(self):
+        raise NotImplementedError('override')
+
+class Derived(Abstract):
+    def func(self):
+        print("Hello world!")
+\end{lstlisting}
+  \begin{itemize}
+  \item \py{Derived} is a concrete class
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Modern abstract classes}
+\begin{lstlisting}
+from abc import ABC, abstractmethod
+
+class Abstract(ABC):
+    @abstractmethod
+    def func(self):
+        pass
+\end{lstlisting}
+  \begin{itemize}
+  \item More elegant and simple
+  \item Cannot instantiate \py{Abstract}
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Summary}
+  \begin{itemize}
+  \item Understanding methods a bit better
+  \item Private/public methods/attributes
+  \item Abstract and concrete classes
+  \item Using the \py{abc} module
+  \end{itemize}
+\end{frame}
+
+
+\end{document}
