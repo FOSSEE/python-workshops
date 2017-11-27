@@ -1,0 +1,148 @@
+\documentclass[14pt,compress,aspectratio=169]{beamer}
+
+\usepackage{hyperref}
+\input{macros.tex}
+
+
+\title[OOP: special methods]{Advanced Python}
+\subtitle{Object Oriented Programming: special methods}
+
+\author[FOSSEE] {The FOSSEE Group}
+
+\institute[IIT Bombay] {Department of Aerospace Engineering\\IIT Bombay}
+\date[] {Mumbai, India}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}
+  \frametitle{Special methods}
+  \begin{itemize}
+  \item \py{__init__} is one such method
+  \item \py{__}, dunder, on both sides
+  \item Support operations on the object
+  \item Pretty string representations
+  \item Numerical data types supporting addition/ multiplication etc.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Motivating example}
+\begin{lstlisting}
+class Value:
+    def __init__(self, x=0):
+        self.x = x
+
+In []: a = Value()
+In []: print(a)
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Motivation: \typ{str} and \typ{repr}}
+\begin{lstlisting}
+In []: import numpy as np
+In []: x = np.array([1,2,3])
+In []: print(x)
+[1 2 3]
+In []: str(x)
+'[1 2 3]'
+In []: repr(x)
+'array([1, 2, 3])'
+\end{lstlisting}
+  \begin{itemize}
+  \item \py{print} uses \py{str}
+  \item \py{repr} seems to show how to create the object
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{The \py{__str__} method}
+\begin{lstlisting}
+class Value:
+    def __init__(self, x=0):
+        self.x = x
+
+    def __str__(self):
+        return str(self.x)
+
+In []: a = Value()
+In []: print(a)
+
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{The \py{__repr__} method}
+\begin{lstlisting}
+class Value:
+    def __init__(self, x=0):
+        self.x = x
+
+    def __str__(self):
+        return str(self.x)
+
+    def __repr__(self):
+        return 'Value(%s)' % self.x
+
+In []: a = Value()
+In []: repr(a)
+
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Doing more}
+  \begin{itemize}
+  \item Have many more of these special methods
+  \item Explore later
+  \item See: \url{docs.python.org/reference/datamodel.html\#special-method-names}
+  \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Summary}
+  \begin{itemize}
+  \item Introduction to special methods
+  \item \py{__str__} and \py{__repr__}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[plain, fragile]
+  \frametitle{Exercise: \py{Point} class}
+  \begin{block}{}
+    Write a \py{Point} class with two attributes \py{x, y} with useful
+    \py{__str__, __repr__} methods as follows.
+  \end{block}
+
+\begin{lstlisting}
+In []: p = Point(1, 2)
+In []: str(p)
+'(1, 2)'
+In []: repr(p)
+'Point(1, 2)'
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[plain, fragile]
+  \frametitle{Solution}
+\begin{lstlisting}
+class Point:
+    def __init__(self, x=0, y=0):
+        self.x = x
+        self.y = y
+    def __str__(self):
+        return '(%s, %s)' % (self.x, self.y)
+    def __repr__(self):
+        return 'Point' + self.__str__()
+\end{lstlisting}
+\end{frame}
+
+
+\end{document}
