@@ -1,0 +1,303 @@
+\documentclass[14pt,compress,aspectratio=169]{beamer}
+
+\usepackage{hyperref}
+\input{macros.tex}
+
+
+\title[OOP: more special methods]{Advanced Python}
+\subtitle{Object Oriented Programming: more special methods}
+
+\author[FOSSEE] {The FOSSEE Group}
+
+\institute[IIT Bombay] {Department of Aerospace Engineering\\IIT Bombay}
+\date[] {Mumbai, India}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}
+  \frametitle{Special methods}
+  \begin{itemize}
+  \item \py{__init__} is one such method
+  \item \py{__str__, __repr__}
+  \item Many more
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Motivation}
+\begin{lstlisting}
+class A:
+    def __init__(self, x=0):
+        self.x = x
+
+In []: a, b = A(), A()
+\end{lstlisting}
+\pause
+\begin{lstlisting}
+In []: a == b
+Out[]: False
+
+In []: a < b # ?
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]
+  \frametitle{Comparison operators: rich comparison}
+  \begin{itemize}
+  \item \py{__lt__(self, other)}: \py{self < other}
+  \item \py{__le__(self, other)}: \py{self <= other}
+  \item \py{__gt__(self, other)}: \py{self > other}
+  \item \py{__ge__(self, other)}: \py{self >= other}
+  \item \py{__eq__(self, other)}: \py{self == other}
+  \item \py{__ne__(self, other)}: \py{self != other}
+    \vspace*{0.2in}
+  \item \py{__bool__(self)}: used for truth values
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Example}
+  \small
+\begin{lstlisting}
+class A:
+    def __init__(self, x=0):
+        self.x = x
+    def __eq__(self, other):
+        return self.x == other.x
+    def __lt__(self, other):
+        return self.x < other.x
+\end{lstlisting}
+  \pause
+\begin{lstlisting}
+In []: a, b = A(), B()
+In []: a == b
+Out[]: True
+
+In []: a.x = 1
+In []: a == b
+Out[]: False
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]
+  \frametitle{Container types}
+  \begin{itemize}
+  \item \py{__len__(self)}: \py{len(object)}
+  \item \py{__getitem__(self, key)}: \py{object[key]}
+  \item \py{__setitem__(self, key, value)}: \py{object[key] = value}
+  \item \py{__delitem__(self, name)}: \py{del object[key]}
+  \item \py{__iter__(self)}: \py{for x in object}
+  \item \py{__contains__(self, item)}: \py{item in object}
+
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Emulating numeric types}
+  \begin{itemize}
+  \item \py{__add__(self, other)}: \py{object + other}
+  \item \py{__sub__(self, other)}: \py{object - other}
+  \item \py{__mul__(self, other)}: \py{object * other}
+  \item \py{__div__(self, other)}: \py{object / other}
+  \item \py{__matmul__(self, other)}: \py{object @ other}
+  \item ...
+
+  \item \py{__radd__(self, other)}: \py{other + object}
+  \item \py{__rsub__(self, other)}: \py{other - object}
+  \item More similar
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Emulating numeric types}
+  \begin{itemize}
+  \item \py{__iadd__(self, other)}: \py{object += other}
+  \item \py{__isub__(self, other)}: \py{object -= other}
+  \item ...
+
+  \item \py{__neg__(self)}: \py{-object}
+  \item \py{__pos__(self)}: \py{+object}
+  \item \py{__abs__(self)}: \py{abs(object)}
+  \item  ...
+
+  \item \py{__int__(self)}: \py{int(object)}
+  \item \py{__float__(self)}: \py{float(object)}
+
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]
+  \frametitle{Example}
+\begin{lstlisting}
+class A:
+    def __init__(self, x=0):
+        self.x = x
+    def __add__(self, other):
+        return A(self.x + other.x)
+
+In []: a, b = A(1), A(1)
+In []: c = a + b
+In []: print(c.x)
+2
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]
+  \frametitle{Callable objects}
+  \begin{itemize}
+  \item \py{__call__(self [, args...])}: \py{object()}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Attribute access}
+  \begin{itemize}
+  \item \py{__getattr__(self, name)}: \py{self.name}
+  \item \py{__getattribute__(self, name)}: \py{self.name}
+  \item \py{__setattr__(self, name, value)}: \py{self.name = value}
+  \item \py{__delattr__(self, name)}: \py{del self.name}
+  \item \py{__dir__(self)}: \py{dir(object)}
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Doing more}
+  \begin{itemize}
+  \item Explore later
+  \item See: \url{docs.python.org/reference/datamodel.html}
+  \end{itemize}
+
+\end{frame}
+
+\begin{frame}[plain, fragile]
+  \frametitle{Exercise: Animal weights}
+  \begin{block}{}
+    Create an \py{Animal} class with a \py{name} (str) and \py{weight} (float)
+    attribute.  Allow a user to perform rich comparisons of animals based on
+    their weight (it should support all comparisons). For example:
+  \end{block}
+
+\begin{lstlisting}
+In []: cat = Animal('cat', 5)
+In []: dog = Animal('dog', 10)
+In []: dog > cat
+Out[]: True
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[plain, fragile]
+  \frametitle{Solution}
+  \small
+\begin{lstlisting}
+class Animal:
+    def __init__(self, name, weight=0.0):
+        self.name = name
+        self.weight = weight
+    def __lt__(self, other):
+        return self.weight < other.weight
+    def __le__(self, other):
+        return self.weight <= other.weight
+    def __eq__(self, other):
+        return self.weight == other.weight
+    # ...
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[plain, fragile]
+  \frametitle{Exercise: Zoo class container}
+  \begin{block}{}
+    Create a \py{Zoo} class which can contain animals.  The Zoo should behave
+    like a container.
+  \end{block}
+
+\begin{lstlisting}
+In []: a = Animal('cat', 5)
+In []: b = Animal('dog', 10)
+In []: zoo = Zoo(a, b)
+In []: len(zoo)
+Out[]: 2
+In []: a in zoo
+Out[]: True
+\end{lstlisting}
+  Implement all other container related methods.
+\end{frame}
+
+
+\begin{frame}[plain, fragile]
+  \frametitle{Solution}
+  \vspace*{-0.1in}
+  \small
+\begin{lstlisting}
+class Animal:
+    def __init__(self, name, weight=0.0):
+        self.name = name
+        self.weight = weight
+
+class Zoo:
+    def __init__(self, *animals):
+        self.animals = list(animals)
+    def __len__(self):
+        return len(self.animals)
+    def __contains__(self, item):
+        return item in self.animals
+    def __getitem__(self, key):
+        return self.animals[key]
+    def __iter__(self):
+        return self.animals
+\end{lstlisting}
+\end{frame}
+
+
+
+\begin{frame}[plain, fragile]
+  \frametitle{Exercise: \py{Point} class addition}
+  \begin{block}{}
+    Write a \py{Point} class with two instance attributes \py{x, y}.  Make it
+    possible to add and subtract two points.  Also allow \py{abs()} to be
+    callable on a point.
+  \end{block}
+
+\begin{lstlisting}
+In []: p1 = Point(1, 2)
+In []: p2 = Point(1, 0)
+In []: p = p1 + p2
+In []: p.x, p.y
+Out[]: (2, 2)
+In []: abs(p)
+Out[]: 2.8284271247461903
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[plain, fragile]
+  \frametitle{Solution}
+  \small
+\begin{lstlisting}
+from math import sqrt
+
+class Point:
+    def __init__(self, x=0, y=0):
+        self.x = x
+        self.y = y
+    def __add__(self, other):
+        return Point(self.x + other.x, self.y + other.y)
+    def __sub__(self, other):
+        return Point(self.x - other.x, self.y - other.y)
+    def __abs__(self):
+        return sqrt(self.x*self.x + self.y*self.y)
+
+\end{lstlisting}
+\end{frame}
+
+
+\end{document}

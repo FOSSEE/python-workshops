@@ -14,7 +14,9 @@ SLIDES= 1_intro.pdf \
 				8_oop_inheritance.pdf \
 				9_oop_containership.pdf \
 				10_oop_classattr.pdf \
-				11_oop_misc.pdf
+				11_oop_misc.pdf \
+				12_oop_simple_special_methods.pdf \
+        13_oop_special_methods.pdf
 
 all:    $(SLIDES)
 
