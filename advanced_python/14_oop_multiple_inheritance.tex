@@ -1,0 +1,228 @@
+\documentclass[14pt,compress,aspectratio=169]{beamer}
+
+\usepackage{hyperref}
+\input{macros.tex}
+
+
+\title[OOP: multiple inheritance]{Advanced Python}
+\subtitle{Object Oriented Programming: Multiple Inheritance}
+
+\author[FOSSEE] {The FOSSEE Group}
+
+\institute[IIT Bombay] {Department of Aerospace Engineering\\IIT Bombay}
+\date[] {Mumbai, India}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Overview}
+  \begin{itemize}
+  \item Thus far, single inheritance
+  \end{itemize}
+  \begin{lstlisting}
+    class Animal:
+        def greet(self): ...
+
+    class Cat(Animal):
+        def greet(self): ...
+
+    class Dog(Animal):
+        def greet(self): ...
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Motivation}
+  \begin{itemize}
+  \item What if you wanted two parents?
+  \end{itemize}
+
+\begin{lstlisting}
+class Animal:
+    def eat(self): pass
+  \end{lstlisting}
+  \pause
+  \begin{lstlisting}
+class Mammal(Animal):
+    def hair_color(self): pass
+  \end{lstlisting}
+  \pause
+\begin{lstlisting}
+class FlyingAnimal(Animal):
+    def fly(self): pass
+
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Motivation \ldots}
+\begin{lstlisting}
+class Bat(Mammal, FlyingAnimal):
+    pass
+
+In []: b = Bat()
+
+In []: b.eat(), b.hair_color(), b.fly()
+\end{lstlisting}
+\vspace*{0.25in}
+\footnotesize{Example from \href{https://en.wikipedia.org/wiki/Virtual_inheritance}{Wikipedia}}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Observations}
+  \begin{itemize}
+  \item \py{Mammal} is an \py{Animal}
+  \item \py{FlyingAnimal} is an \py{Animal}
+  \item \py{FlyingAnimal} is not a \py{Mammal}
+  \item \py{Bat} is a \py{Mammal} and a \py{FlyingAnimal}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile, plain]
+  \frametitle{Multiple inheritance and super}
+  \small
+  \vspace*{-0.1in}
+  \begin{lstlisting}
+class Base:
+    def __init__(self):
+        print('Base')
+
+class A(Base):
+    def __init__(self):
+        print('A')
+        super().__init__()
+
+class B(Base):
+    def __init__(self):
+        print('B')
+        super().__init__()
+
+  \end{lstlisting}
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Multiple inheritance and super}
+  \small
+  \begin{lstlisting}
+class C(A, B):
+    def __init__(self):
+        print('C')
+        super().__init__()
+
+In []: c = C()
+C
+A
+B
+Base
+\end{lstlisting}
+
+\end{frame}
+
+
+\begin{frame}[fragile]
+  \frametitle{Changing the order of parents}
+  \small
+  \begin{lstlisting}
+class C1(B, A):
+    def __init__(self):
+        print('C')
+        super().__init__()
+
+In []: c1 = C1()
+C1
+B
+A
+Base
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{\py{mro}:  method resolution order}
+  \begin{itemize}
+  \item \py{mro} method shows order of calls
+  \item A method on the class object, not the instance
+  \end{itemize}
+  \begin{lstlisting}
+In []: C.mro()
+Out[]: [__main__.C, __main__.A, __main__.B,
+        __main__.Base, object]
+
+In []: C1.mro()
+Out[]: [__main__.C1, __main__.B, __main__.A,
+        __main__.Base, object]
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile, plain]
+  \frametitle{Another example}
+  \small
+  \vspace*{-0.1in}
+  \begin{lstlisting}
+class A:
+    def __init__(self):
+        print('A')
+class B:
+    def __init__(self):
+        print('B')
+
+class C(A, B):
+    def __init__(self):
+        print('C')
+        super().__init__()
+
+In []: c = C()
+C
+A
+\end{lstlisting}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Observations}
+  \begin{itemize}
+  \item \py{A} and \py{B} did not call \py{super}
+  \item \py{super} is what calls the parent \py{__init__}
+  \item The order of calls is determined by \py{mro}
+  \item This works for any method, not just \py{__init__}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Question}
+  \begin{itemize}
+  \item What if \py{C} did not call \py{super}?
+  \end{itemize}
+  \begin{lstlisting}
+class C(A, B):
+    def __init__(self):
+        print('C')
+
+In []: c = C()
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Learning more}
+  \begin{itemize}
+  \item See: \url{docs.python.org/3.6/tutorial/classes.html}
+  \item See: \url{www.python.org/download/releases/2.3/mro/}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Summary}
+  \begin{itemize}
+  \item Multiple base classes
+  \item Important of \py{super}
+  \item \py{mro} determines order of calls
+  \end{itemize}
+\end{frame}
+
+
+\end{document}
