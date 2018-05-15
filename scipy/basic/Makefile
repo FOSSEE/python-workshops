@@ -4,15 +4,15 @@
 	pdflatex $*.tex
 	pdflatex $*.tex
 
-SLIDES= intro.pdf prelims.pdf ipython_plotting.pdf \
-  saving_scripts.pdf \
-	lists_arrays.pdf \
-	numpy.pdf \
-	more_numpy.pdf \
-	basic_scipy.pdf \
-	exercises.pdf \
-  mlab.pdf \
-  notebook.pdf
+SLIDES= 01_intro.pdf 02_prelims.pdf 03_ipython_plotting.pdf \
+  04_saving_scripts.pdf \
+	05_lists_arrays.pdf \
+	06_numpy.pdf \
+	07_more_numpy.pdf \
+	08_basic_scipy.pdf \
+	09_exercises.pdf \
+  10_mlab.pdf \
+  11_notebook.pdf
 
 all: 	$(SLIDES) quickref.pdf
 
