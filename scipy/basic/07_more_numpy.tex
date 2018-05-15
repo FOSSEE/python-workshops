@@ -302,13 +302,13 @@ Out[]: (3, 3)
   \frametitle{Elementary image processing}
 \begin{small}
   \begin{lstlisting}
-In []: a = imread('lena.png')
+In []: a = imread('penguins.png')
 
 In []: imshow(a)
-Out[]: <matplotlib.image.AxesImage object at 0xa0384cc>
+Out[]: <matplotlib.image.AxesImage object at ...>
   \end{lstlisting}
   \end{small}
-\typ{imread} returns an array of shape (512, 512, 4) which represents an image of 512x512 pixels and 4 shades.\\
+\typ{imread} returns an array of shape (370, 370, 4) which represents an image of 370x370 pixels and 4 shades.\\
 \typ{imshow} renders the array as an image.
 \end{frame}
 
@@ -316,7 +316,7 @@ Out[]: <matplotlib.image.AxesImage object at 0xa0384cc>
 \frametitle{Slicing \& Striding Exercises}
   \begin{itemize}
   \item Crop the image to get the top-left quarter
-  \item Crop the image to get only the face
+  \item Crop the image to get only the face of the baby penguin
   \item Resize image to half by dropping alternate pixels
   \end{itemize}
 
@@ -325,14 +325,14 @@ Out[]: <matplotlib.image.AxesImage object at 0xa0384cc>
   \frametitle{Solutions}
 \begin{small}
   \begin{lstlisting}
-In []: imshow(a[:256,:256])
-Out[]: <matplotlib.image.AxesImage object at 0xb6f658c>
+In []: imshow(a[:185,:185])
+Out[]: <matplotlib.image.AxesImage object at ...>
 
-In []: imshow(a[200:400,200:400])
-Out[]: <matplotlib.image.AxesImage object at 0xb757c2c>
+In []: imshow(a[225:300,150:250])
+Out[]: <matplotlib.image.AxesImage object at ...>
 
 In []: imshow(a[::2,::2])
-Out[]: <matplotlib.image.AxesImage object at 0xb765c8c>
+Out[]: <matplotlib.image.AxesImage object at ...>
   \end{lstlisting}
 \end{small}
 \inctime{15}

@@ -416,15 +416,15 @@ In []: x.dtype.<TAB> # Explore!
 \begin{frame}[fragile]
   \frametitle{Problem 6}
 
-  Edge detection looks much nicer with \typ{lena.png}, try it!  The
+  Edge detection looks much nicer with \typ{penguins.png}, try it!  The
   caveat is that it is a 4 component RGBA image with elements in the
   range $[0.0, 1.0]$.
 
 \begin{lstlisting}
-In []: x = imread('lena.png')
+In []: x = imread(penguins.png')
 
 In []: print(x.shape)
-(512, 512, 4)
+(370, 370, 4)
 
 In []: print(x.min(), x.max())
 (0.0, 1.0)
