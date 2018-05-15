@@ -4,15 +4,15 @@
 	pdflatex $*.tex
 	pdflatex $*.tex
 
-SLIDES= 1_intro.pdf \
-			  2_names_objects.pdf \
-        3_varargs_kwargs.pdf \
-				4_only_kwargs.pdf \
-        5_closures.pdf \
-        6_practice_functions.pdf \
-				7_oop_basics.pdf \
-				8_oop_inheritance.pdf \
-				9_oop_containership.pdf \
+SLIDES= 01_intro.pdf \
+			  02_names_objects.pdf \
+        03_varargs_kwargs.pdf \
+				04_only_kwargs.pdf \
+        05_closures.pdf \
+        06_practice_functions.pdf \
+				07_oop_basics.pdf \
+				08_oop_inheritance.pdf \
+				09_oop_containership.pdf \
 				10_oop_classattr.pdf \
 				11_oop_misc.pdf \
 				12_oop_simple_special_methods.pdf \
