@@ -1,0 +1,457 @@
+\documentclass[14pt,compress,aspectratio=169]{beamer}
+
+\usepackage{hyperref}
+\input{macros.tex}
+
+
+\title[Decorators]{Advanced Python}
+\subtitle{Decorators}
+
+\author[FOSSEE] {The FOSSEE Group}
+
+\institute[IIT Bombay] {Department of Aerospace Engineering\\IIT Bombay}
+\date[] {Mumbai, India}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Overview}
+  Decorators:
+  \begin{itemize}
+  \item transform a function/method using a function
+  \item are higher order functions
+  \item provide a handy syntax
+  \item are a powerful feature
+  \item used by many libraries
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Trivial example}
+\begin{lstlisting}
+def deco(func):
+    return func
+
+@deco
+def greet():
+    print("Namaste!")
+
+# @deco is equivalent to:
+greet = deco(greet)
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Understanding a bit more}
+\begin{lstlisting}
+def deco(func):
+    print("deco")  # <--
+    return func
+
+@deco
+def greet():
+    print("Namaste!")
+
+greet = deco(greet)
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Observations}
+  \begin{itemize}
+  \item Decorator is a convenient syntax
+  \item Called when the function is defined
+  \item Not called every time the decorated function is called
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile, plain]
+  \frametitle{Non-trivial example}
+Modify the function to print ``Hello'' before the function is called
+\begin{lstlisting}
+def deco(func):
+    def new_func(*args, **kw):
+        print("Hello")
+        return func(*args, **kw)
+    return new_func
+\end{lstlisting}
+\pause
+\begin{lstlisting}
+@deco
+def greet():
+    '''Print greeting.'''
+    print("Namaste!")
+
+In []: greet()
+
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Observations}
+  \begin{itemize}
+  \item Notice the use of the \py{*args, **kw}
+  \item The target function may have any arguments
+  \item We replace the original function with \py{new_func}
+  \item So does this cause any problems?
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Issues}
+  \begin{lstlisting}
+    In []: greet.__name__
+    Out[]: 'new_func'
+
+    In []: greet?
+
+    In []: greet.__doc__
+
+    In []: greet.__module__
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Using \py{wraps}}
+  \begin{itemize}
+  \item Using \py{functools.wraps} prevents these problems
+  \end{itemize}
+
+  \begin{lstlisting}
+from functools import wraps  # <--
+
+def deco(func):
+    @wraps(func)  # <--
+    def new_func(*args, **kw):
+        print("Hello")
+        return func(*args, **kw)
+    return new_func
+\end{lstlisting}
+
+Now try again.
+\end{frame}
+
+
+\begin{frame}[fragile]
+  \frametitle{Decorators taking arguments}
+  \begin{itemize}
+  \item Sometimes you want to customize the decorator
+  \item You wish to pass arguments to the decorator
+  \end{itemize}
+\pause
+First attempt:
+  \begin{lstlisting}
+from functools import wraps
+
+def deco(func, greet='Hello'):
+    @wraps(func)
+    def new_func(*args, **kw):
+        print(greet)
+        return func(*args, **kw)
+    return new_func
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Let us try}
+  \small
+  \begin{lstlisting}
+@deco
+def f():
+    print('Hi')
+
+In []: f()
+Hello
+Hi
+\end{lstlisting}
+\pause
+\begin{lstlisting}
+@deco(greet='Namaste')
+def f():
+    print('Hi')
+
+TypeError: deco() got an unexpected keyword argument 'greet'
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Fixing the problem}
+  \begin{itemize}
+  \item \py{deco(greet='Namaste')} is not passed the function!
+  \item So \py{deco(greet='Namaste')} should return a decorator
+    \vspace*{0.2in}
+  \end{itemize}
+\pause
+  \begin{block}{Solution}
+    \begin{itemize}
+    \item Must return a decorator when called without a function
+    \item When passed a function just call the decorator
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}[fragile, plain]
+  \frametitle{Fixing the problems}
+  \small
+  \begin{lstlisting}
+def deco(func=None, greet='Hello'):
+    def wrapper(func):  # <-- a decorator
+        @wraps(func)
+        def new_func(*args, **kw):
+            print(greet)
+            return func(*args, **kw)
+        return new_func
+
+    if func is None:
+        return wrapper
+    else:
+        return wrapper(func)
+
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Let us try}
+  \small
+  \begin{lstlisting}
+@deco
+def f():
+    print('Hi')
+
+In []: f()
+Hello
+Hi
+\end{lstlisting}
+\pause
+\begin{lstlisting}
+@deco(greet='Namaste')
+def f():
+    print('Hi')
+
+In []: f()
+Namaste
+Hi
+
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Summary}
+  \begin{itemize}
+  \item Creating simple decorators
+  \item Using \py{functools.wraps}
+  \item Decorators taking arguments
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[plain, fragile]
+  \frametitle{Exercise: simplest decorator}
+  \begin{block}{}
+    Write a decorator called \py{greet} that prints \py{'Hello'} before a
+    the function is called.
+  \end{block}
+  \begin{lstlisting}
+    @greet
+    def f(x):
+        print(x)
+
+    In []: f(1)
+    Hello
+    1
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[plain, fragile]
+  \frametitle{Solution}
+\begin{lstlisting}
+def greet(func):
+    def new_func(*args, **kw):
+        print("Hello")
+        return func(*args, **kw)
+    return new_func
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[plain, fragile]
+  \frametitle{Exercise: add goodbye}
+  \begin{block}{}
+    Modify decorator \py{greet} to print ``goodbye'' after executing the
+    function.
+  \end{block}
+  \begin{lstlisting}
+from functools import wraps
+def greet(func):
+    @wraps(func)
+    def new_func(*args, **kw):
+        print("Hello")
+        return func(*args, **kw)
+    return new_func
+\end{lstlisting}
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Solution}
+\begin{lstlisting}
+def greet(func):
+    @wraps(func)
+    def new_func(*args, **kw):
+        print("Hello")
+        result = func(*args, **kw)
+        print("goodbye")
+        return result
+    return new_func
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[plain, fragile]
+  \frametitle{Exercise: print function name}
+  \begin{block}{}
+    Write a decorator called \py{debug()} that prints the name of the function
+    before it is called.  \textbf{Hint:} Recall \py{__name__}
+  \end{block}
+
+\begin{lstlisting}
+    @debug
+    def my_func(x):
+        print(x)
+
+    In []: f(1)
+    my_func
+    1
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[plain, fragile]
+  \frametitle{Solution}
+\begin{lstlisting}
+from functools import wraps
+
+def debug(func):
+    @wraps(func)
+    def new_func(*args, **kw):
+        print(func.__name__)
+        return func(*args, **kw)
+    return new_func
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[plain, fragile]
+  \frametitle{Exercise: print function name with optional message}
+  \begin{block}{}
+    Write a decorator called \py{debug(f, message='')} that prints the name of
+    the function before it is called along with an optional message.
+  \end{block}
+
+\begin{lstlisting}
+    @debug(message='DEBUG: ')
+    def my_func(x):
+        print(x)
+
+    In []: f(1)
+    DEBUG: my_func
+    1
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[plain, fragile]
+  \frametitle{Solution}
+  \vspace*{-0.1in}
+  \small
+\begin{lstlisting}
+from functools import wraps
+
+def debug(func=None, message=''):
+    def wrapper(func)
+        @wraps(func)
+        def new_func(*args, **kw):
+            if message:
+                print(message, func.__name__)
+            else:
+                print(func.__name__)
+            return func(*args, **kw)
+        return new_func
+    if func:
+        return wrapper(func)
+    else:
+        return wrapper
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[plain, fragile]
+  \frametitle{Exercise: track number of calls}
+  \begin{block}{}
+    Write a decorator called \py{counter()} that keeps track of the number of
+    times a decorated function is called.  Write another function called
+    \py{show_counts()} which lists all the called functions.
+  \end{block}
+
+  \small
+\begin{lstlisting}
+@counter
+def sq(x): return x*x
+
+@counter
+def g(x): return x+2
+
+In []: for i in range(10): g(sq(i))
+In []: show_counts()
+sq : 10
+g : 10
+
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[plain, fragile]
+  \frametitle{Solution}
+\begin{lstlisting}
+_counter_data = {}
+
+def counter(func):
+    @wraps(func)
+    def new_func(*args, **kw):
+        if func in _counter_data:
+            _counter_data[func] += 1
+        else:
+            _counter_data[func] = 1
+        return func(*args, **kw)
+    return new_func
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[plain, fragile]
+  \frametitle{Solution}
+\begin{lstlisting}
+def show_counts():
+    for f, c in _counter_data.items():
+        print(f.__name__, ':', c)
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Homework}
+  \begin{block}{}
+    Convert the above into a class so that the global \py{_counter_data} and
+    the decorator is encapsulated into the class.\\
+
+    Hints:
+    \begin{itemize}
+    \item A decorator can be any callable, even a method
+    \item You can override the \py{__call__} special method to make the object callable
+    \end{itemize}
+
+  \end{block}
+\end{frame}
+
+
+\end{document}
