@@ -1,0 +1,73 @@
+cells:
+
+- markdown: |
+    # Simplest decorator
+
+- code: |
+
+    def deco(func):
+        #print("deco")
+        return func
+
+    @deco
+    def greet():
+        print("Namaste!")
+
+
+- code: |
+    greet()
+
+
+- markdown: |
+    # Using wraps
+
+- code: |
+
+    from functools import wraps
+
+    def deco(func):
+        @wraps(func)
+        def new_func(*args, **kw):
+            print("Hello")
+            return func(*args, **kw)
+        return new_func
+
+    @deco
+    def greet():
+        '''Print greeting.'''
+        print("Namaste!")
+
+- code: |
+    greet()
+
+
+- markdown: |
+    # Decorator taking arguments
+
+- code: |
+
+    from functools import wraps
+
+    def deco(func=None, greet='Hello'):
+        def wrapper(func):
+            @wraps(func)
+            def new_func(*args, **kw):
+                print(greet)
+                return func(*args, **kw)
+            return new_func
+        if func is None:
+            return wrapper
+        else:
+            return wrapper(func)
+
+    @deco
+    def f():
+        print('Hi')
+
+    @deco(greet='Namaste')
+    def g():
+        print('Hi')
+
+- code: |
+    f()
+    g()

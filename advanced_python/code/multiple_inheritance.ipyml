@@ -1,0 +1,83 @@
+cells:
+
+- markdown: |
+    # First example
+
+- code: |
+
+    class Animal:
+        def eat(self):
+            pass
+
+    class Mammal(Animal):
+        def hair_color(self):
+            pass
+
+    class FlyingAnimal(Animal):
+        def fly(self):
+            pass
+
+    class Bat(Mammal, FlyingAnimal):
+        pass
+
+- code: |
+
+    b = Bat()
+    b.eat()
+    b.hair_color()
+    b.fly()
+
+- markdown: |
+    # Example 2
+
+- code: |
+
+    class Base:
+        def __init__(self):
+            print('Base')
+
+    class A(Base):
+        def __init__(self):
+            print('A')
+            super().__init__()
+
+    class B(Base):
+        def __init__(self):
+            print('B')
+            super().__init__()
+
+    class C(A, B):
+        def __init__(self):
+            print('C')
+            super().__init__()
+
+    class C1(B, A):
+        def __init__(self):
+            print('C1')
+            super().__init__()
+
+
+- code: |
+    c = C()
+
+- code: |
+    c1 = C1()
+
+- markdown: |
+
+    # Example 3
+
+- code: |
+
+    class A:
+        def __init__(self):
+            print('A')
+
+    class B:
+        def __init__(self):
+            print('B')
+
+    class C(B, A):
+        def __init__(self):
+            print('C')
+            super().__init__()
