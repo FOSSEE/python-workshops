@@ -251,7 +251,7 @@ Hi
 \begin{frame}[plain, fragile]
   \frametitle{Exercise: simplest decorator}
   \begin{block}{}
-    Write a decorator called \py{greet} that prints \py{'Hello'} before a
+    Write a decorator called \py{greet} that prints \py{'Hello'} before
     the function is called.
   \end{block}
   \begin{lstlisting}
@@ -321,7 +321,7 @@ def greet(func):
     def my_func(x):
         print(x)
 
-    In []: f(1)
+    In []: my_func(1)
     my_func
     1
 \end{lstlisting}
@@ -355,7 +355,7 @@ def debug(func):
     def my_func(x):
         print(x)
 
-    In []: f(1)
+    In []: my_func(1)
     DEBUG: my_func
     1
 \end{lstlisting}
