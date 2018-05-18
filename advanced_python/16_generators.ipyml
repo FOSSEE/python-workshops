@@ -1,0 +1,390 @@
+cells:
+
+- markdown: |
+    # Advanced Python: Iterators and Generators
+
+    ### Prabhu Ramachandran
+    ### The FOSSEE Python group &
+    ### Department of Aerospace Engineering
+    ### IIT Bombay
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+
+- markdown: |
+    ## Background
+
+    - Container objects present a similar interface
+    - They can all be looped over using `for`
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    for i in [1, 2, 3]:
+        print(i)
+
+    for key in {'a': 1, 'b': 2}:
+        print(key)
+
+    for char in 'hello world':
+        print(char)
+
+    for line in open('file.txt'):
+        print(line, end='')
+
+- markdown: |
+    ## Background
+
+    - Similar interface for different objects
+    - These objects are all **iterable**
+    - They are all **iterators**
+
+  metadata:
+    slideshow:
+      slide_type: subslide
+
+- markdown: |
+    ## Introduction
+
+    - This is a powerful feature/abstraction
+    - Easy to create your own iterators
+    <br/>
+    <br/>
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    - A **generator** makes it easy to create an iterator
+    - How would you write a `range` function?
+    <br/>
+    <br/>
+
+    - Use the `yield` keyword
+
+  metadata:
+    slideshow:
+      slide_type: fragment
+
+- code: |
+    def counter(n):
+        count = 0
+        while count < n:
+            yield count
+            count += 1
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    c = counter(2)
+
+- code: |
+    next(c)
+
+- code: |
+    next(c)
+
+- code: |
+    next(c)
+
+- code: |
+    for i in counter(4):
+        print(i)
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Observations
+
+    - Note that `yield` resumes the function
+    - The function/method remembers its state
+    - It can yield any object
+    - An empty `yield` is also acceptable
+    - You can have multiple yields
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    def infinite_generator():
+        while True:
+            yield
+
+  metadata:
+    slideshow:
+      slide_type: fragment
+
+- markdown: |
+    ## Exercise: simple generator
+
+    Write a simple generator that generates the first `n` odd numbers. Call this
+    function `odd(n)`.
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    for x in odd(5):
+        print(x)
+
+- markdown: |
+    ## Solution
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    def odd(n):
+        for i in range(n):
+            yield 2*i + 1
+
+
+- markdown: |
+    ## Exercise: Fibonacci generator
+
+    Write a simple generator that returns the first `n` numbers of the Fibonacci
+    sequence, call this function `fib(n)`.
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    for x in fib(5):
+        print(x)
+
+- markdown: |
+    ## Solution
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    def fib(n):
+        a, b = 0, 1
+        yield 0
+        for i in range(n-1)
+            yield b
+            a, b = b, a + b
+
+
+# --------------- Part 2 --------------
+
+- markdown: |
+    ## Creating iterable objects
+
+    - What if you want to create an object that is iterable?
+    - Overload the `__iter__` and/or `__next__` methods.
+    - Recall our `Zoo` class?
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    class Zoo:
+        def __init__(self, *animals):
+            self.animals = list(animals)
+
+- markdown: |
+    We want the following to work,
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    c = Animal('crow')
+    m = Mammal('dog')
+    z = Zoo(c, m)
+
+    for animal in z:
+        animal.greet()
+
+- markdown: |
+    ## Making `Zoo` iterable
+
+    - Overload the `__iter__` to return an iterable
+    - An iterable should have a `__next__` method
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    class Zoo:
+        def __init__(self, *animals):
+            self.animals = list(animals)
+
+        def __iter__(self):
+            return self.animals
+
+- code: |
+    c = Animal('crow')
+    m = Mammal('dog')
+    z = Zoo(c, m)
+
+    for animal in z:
+        animal.greet()
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Observations
+
+    - Just returns `self.animals`
+    - `self.animals` is iterable as it is a list
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## A more complex example
+
+    - What if we cannot just return an internal list?
+    - We must provide a `__next__` method
+    - To stop the iteration: `raise StopIteration`
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    class SimpleRange:
+        def __init__(self, n):
+            self.n = n
+            self.count = 0
+        def __iter__(self):
+            return self
+        def __next__(self):
+            if self.count == self.n:
+                raise StopIteration
+            self.count += 1
+            return self.count
+
+  metadata:
+    slideshow:
+      slide_type: subslide
+
+- code: |
+    r = SillyRange(5)
+    for i in r:
+        print(i)
+
+  metadata:
+    slideshow:
+      slide_type: subslide
+
+
+- markdown: |
+    ## Observations
+
+    - Useful when you want an object to be iterable
+    - Notice the `__next__` method
+    - Notice the `raise StopIteration`
+    - Easier to use functions/methods with `yield`
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+
+- markdown: |
+    ## Summary
+
+    - Easy to use and write
+    - Allows one to abstract a loop
+    - `yield` for functions and methods
+    - Overload `__iter__, __next__` for objects
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+
+- markdown: |
+    ## Exercise: Fibonacci generator object
+
+    Create a class that when instantiated with an argument `n` can be used as a
+    sequence of the first `n` numbers of the Fibonacci sequence, call this
+    class `Fib`.
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    f = Fib(5)
+    for x in f:
+        print(x)
+
+- markdown: |
+    ## Solution
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    class Fib:
+        def __init__(self, n):
+            self.count = n
+            self.a, self.b = 0, 1
+        def __iter__(self):
+            return self
+        def __next__(self):
+            if self.count == 0:
+                raise StopIteration
+            old = self.a
+            self.count -= 1
+            self.a, self.b = self.b, self.a + self.b
+            return old
+
+- code: |
+    f = Fib(5)
+    for i in f:
+        print(i)
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+
+# The lines below here may be deleted if you do not need them.
+# ---------------------------------------------------------------------------
+metadata:
+  kernelspec:
+    display_name: Python 3
+    language: python
+    name: python3
+  language_info:
+    codemirror_mode:
+      name: ipython
+      version: 3
+    file_extension: .py
+    mimetype: text/x-python
+    name: python
+    nbconvert_exporter: python
+    pygments_lexer: ipython3
+    version: 3.6.0
+  rise:
+    scroll: true
+    transition: none
+nbformat: 4
+nbformat_minor: 2
