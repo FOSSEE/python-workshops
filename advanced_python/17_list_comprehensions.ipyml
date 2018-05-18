@@ -1,0 +1,228 @@
+cells:
+
+- markdown: |
+    # Advanced Python: List/dict comprehensions, generator expressions
+
+    ### Prabhu Ramachandran
+    ### The FOSSEE Python group &
+    ### Department of Aerospace Engineering
+    ### IIT Bombay
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Introduction
+
+    - A convenient way to quickly create lists
+    - Lets say we have the following
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    sqr = []
+    for i in range(5):
+        sqr.append(i*i)
+
+- markdown: |
+    Is done easily with the following
+
+- code: |
+    sqr = [i*i for i in range(5)]
+    sqr
+
+  metadata:
+    slideshow:
+      slide_type: fragment
+
+
+- markdown: |
+    ## More examples
+
+    - Concise, readable, and quick
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    [2*x + 1 for x in range(5)]
+
+- code: |
+    data = [-1, -2, 3, 4]
+    [abs(x) for x in data]
+
+- code: |
+    names = ['Amar', 'Akbar', 'Antony']
+    [x.upper() for x in names]
+
+- code: |
+    [(len(x), x) for x in names]
+
+- markdown: |
+    ## Filtering elements
+
+    - Filter elements using `if` clauses
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    data = [-1, -2, 3, 4]
+    positive = [x for x in data if x > 0]
+    positive
+
+- code: |
+    not_in_data = [x for x in range(-2, 5) if x not in data]
+    not_in_data
+
+
+- markdown: |
+    ## More complex comprehensions
+
+    - One can have many `for` and `if` clauses
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    [(i, j) for i in range(3) for j in range(2)]
+
+- code: |
+    [(i, j) for i in range(3) for j in range(2) if i > j]
+- code: |
+    [(i, j) for i in range(4) if i%2 for j in range(4) if i > j]
+
+- code: |
+    [(i, j) for i in range(4) if i%2 for j in range(4) if (i > j or j%2)]
+- code: |
+    [(i, j) for i in range(4) if i%2 for j in range(4) if i > j if j%2]
+
+- markdown: |
+    ## Observations
+
+    - Powerful and convenient.
+    - Can supply multiple `for` and `if` clauses
+    - Always create lists
+    <br/>
+    <br/>
+    - What if we want a generator?
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Generator expressions
+
+    - Like list comprehensions but:
+        - do not create lists
+        - and create a generator
+    - Values are generated when needed
+    - Memory efficient
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    (i*i for i in range(5))
+
+- code: |
+    sum(i*i for i in range(5))
+
+  metadata:
+    slideshow:
+      slide_type: fragment
+
+- code: |
+    from math import sin
+    max(sin(x) for x in range(10))
+
+  metadata:
+    slideshow:
+      slide_type: fragment
+
+- markdown: |
+    ## More examples
+
+    - `zip` is a handy function
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    a = [1.0, 2.0, 3.1]
+    b = [-1.5, -1.0, -0.5]
+    zip(a, b)
+
+- code: |
+    list(zip(a, b))
+
+- code: |
+    list(zip('hello', 'world'))
+
+- code: |
+    list(zip(range(5), 'hello'))
+
+- code: |
+    sum(x*y for x, y in zip(a, b))
+
+- markdown: |
+    ## Dictionary comprehensions
+
+    - Similar to list comprehensions
+    - Creates a dictionary easily
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    {x: len(x) for x in ('cat', 'dog', 'mouse')}
+
+- code: |
+    {x: x%2 == 0 for x in range(0, 5)}
+
+- markdown: |
+    ## Summary
+
+    - List comprehensions
+    - Generator expressions
+    - Dictionary comprehensions
+    - The `zip` builtin
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+
+
+# The lines below here may be deleted if you do not need them.
+# ---------------------------------------------------------------------------
+metadata:
+  kernelspec:
+    display_name: Python 3
+    language: python
+    name: python3
+  language_info:
+    codemirror_mode:
+      name: ipython
+      version: 3
+    file_extension: .py
+    mimetype: text/x-python
+    name: python
+    nbconvert_exporter: python
+    pygments_lexer: ipython3
+    version: 3.6.0
+  rise:
+    scroll: true
+    transition: none
+nbformat: 4
+nbformat_minor: 2
