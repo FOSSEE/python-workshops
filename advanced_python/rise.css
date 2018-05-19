@@ -8,11 +8,6 @@ div.cell.code_cell {
     font-size: 150%;
 }
 
-/*
-div.CodeMirror-lines {
-    font-size: 125%;
-}*/
-
 /* Tables were rendered out as tiny values
  since the font-size was set to 12px somehow.
 */
