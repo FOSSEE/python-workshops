@@ -2,7 +2,7 @@ cells:
 
 - markdown: |
     # Advanced Python: List/dict comprehensions, generator expressions
-
+    
     ### Prabhu Ramachandran
     ### The FOSSEE Python group &
     ### Department of Aerospace Engineering
@@ -14,7 +14,7 @@ cells:
 
 - markdown: |
     ## Introduction
-
+    
     - A convenient way to quickly create lists
     - Lets say we have the following
 
@@ -27,8 +27,10 @@ cells:
     for i in range(5):
         sqr.append(i*i)
 
+
 - markdown: |
     Is done easily with the following
+
 
 - code: |
     sqr = [i*i for i in range(5)]
@@ -38,10 +40,9 @@ cells:
     slideshow:
       slide_type: fragment
 
-
 - markdown: |
     ## More examples
-
+    
     - Concise, readable, and quick
 
   metadata:
@@ -51,20 +52,24 @@ cells:
 - code: |
     [2*x + 1 for x in range(5)]
 
+
 - code: |
     data = [-1, -2, 3, 4]
     [abs(x) for x in data]
+
 
 - code: |
     names = ['Amar', 'Akbar', 'Antony']
     [x.upper() for x in names]
 
+
 - code: |
     [(len(x), x) for x in names]
 
+
 - markdown: |
     ## Filtering elements
-
+    
     - Filter elements using `if` clauses
 
   metadata:
@@ -76,6 +81,7 @@ cells:
     positive = [x for x in data if x > 0]
     positive
 
+
 - code: |
     not_in_data = [x for x in range(-2, 5) if x not in data]
     not_in_data
@@ -83,7 +89,7 @@ cells:
 
 - markdown: |
     ## More complex comprehensions
-
+    
     - One can have many `for` and `if` clauses
 
   metadata:
@@ -93,19 +99,26 @@ cells:
 - code: |
     [(i, j) for i in range(3) for j in range(2)]
 
+
 - code: |
     [(i, j) for i in range(3) for j in range(2) if i > j]
+
+
 - code: |
     [(i, j) for i in range(4) if i%2 for j in range(4) if i > j]
 
+
 - code: |
     [(i, j) for i in range(4) if i%2 for j in range(4) if (i > j or j%2)]
+
+
 - code: |
     [(i, j) for i in range(4) if i%2 for j in range(4) if i > j if j%2]
 
+
 - markdown: |
     ## Observations
-
+    
     - Powerful and convenient.
     - Can supply multiple `for` and `if` clauses
     - Always create lists
@@ -119,7 +132,7 @@ cells:
 
 - markdown: |
     ## Generator expressions
-
+    
     - Like list comprehensions but:
         - do not create lists
         - and create a generator
@@ -131,10 +144,11 @@ cells:
       slide_type: slide
 
 - code: |
-    (i*i for i in range(5))
+    gexp = (i*i for i in range(5))
+
 
 - code: |
-    sum(i*i for i in range(5))
+    sum(gexp)
 
   metadata:
     slideshow:
@@ -150,7 +164,7 @@ cells:
 
 - markdown: |
     ## More examples
-
+    
     - `zip` is a handy function
 
   metadata:
@@ -162,21 +176,26 @@ cells:
     b = [-1.5, -1.0, -0.5]
     zip(a, b)
 
+
 - code: |
     list(zip(a, b))
+
 
 - code: |
     list(zip('hello', 'world'))
 
+
 - code: |
     list(zip(range(5), 'hello'))
+
 
 - code: |
     sum(x*y for x, y in zip(a, b))
 
+
 - markdown: |
     ## Dictionary comprehensions
-
+    
     - Similar to list comprehensions
     - Creates a dictionary easily
 
@@ -187,12 +206,14 @@ cells:
 - code: |
     {x: len(x) for x in ('cat', 'dog', 'mouse')}
 
+
 - code: |
     {x: x%2 == 0 for x in range(0, 5)}
 
+
 - markdown: |
     ## Summary
-
+    
     - List comprehensions
     - Generator expressions
     - Dictionary comprehensions
@@ -204,7 +225,7 @@ cells:
 
 - markdown: |
     ## Exercise: even number list comprehension
-
+    
     Write a simple list comprehension that generates the first 5 even
     numbers as a list.
 
@@ -221,7 +242,7 @@ cells:
 
 - markdown: |
     ## Exercise: positive `sin` values
-
+    
     Write a list comprehension that generates only positive values of the
     `math.sin` when applied to the first 10 values between $0$ to $2 \pi$.
 
@@ -231,7 +252,7 @@ cells:
 
 - code: |
     from math import sin, pi
-    [sin(i*2*pi) for i in range(0, 10) if sin(i*2*pi) > 0]
+    [sin(i*2*pi/9) for i in range(0, 10) if sin(i*2*pi/9) > 0]
 
   metadata:
     slideshow:
@@ -239,7 +260,7 @@ cells:
 
 - code: |
     # or
-    r = [sin(i*2*pi) for i in range(0, 10)]
+    r = [sin(i*2*pi/9) for i in range(0, 10)]
     [x for x in r if x > 0]
 
   metadata:
@@ -248,7 +269,7 @@ cells:
 
 - markdown: |
     ## Exercise: two letter permutations of 'hello'
-
+    
     Using a list comprehension, write all possible 2 letter permutations of
     the word 'hello', do not worry about repetitions.
 
@@ -266,7 +287,7 @@ cells:
 
 - markdown: |
     ## Exercise: unique two letter permutations of 'hello'
-
+    
     Write all possible 2 letter permutations of the word 'hello', this time
     show only the unique ones.
 
@@ -276,7 +297,7 @@ cells:
 
 - code: |
     word = 'hello'
-    set([x + y for x in word for y in word])
+    set(x + y for x in word for y in word)
 
   metadata:
     slideshow:
@@ -292,7 +313,7 @@ cells:
 
 - markdown: |
     ## Exercise: list of tuples
-
+    
     Using a list comprehension, create a list of tuples of the form `(x, x*x,
     x*x*x)` for the first 5 integers starting at 1.
 
@@ -309,7 +330,7 @@ cells:
 
 - markdown: |
     ## Exercise: simple dictionary comprehension
-
+    
     Create a dictionary with the keys being the lowercase characters of the
     English alphabet and the value being an empty list.
 
@@ -326,7 +347,7 @@ cells:
 
 - markdown: |
     ## Exercise: another simple dict comprehension
-
+    
     Create a dictionary with the keys being the lowercase words (only the
     first three characters) denoting the day of the week and the value being
     an integer corresponding to each with 0 being 'mon' and 6 'sun'.
@@ -336,7 +357,7 @@ cells:
       slide_type: slide
 
 - code: |
-    {x: i for i, x in enumerate('mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun') }
+    {x: i for i, x in enumerate(('mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'))}
 
   metadata:
     slideshow:
@@ -352,7 +373,7 @@ cells:
 
 - markdown: |
     ## Exercise: max `sin` generator expression
-
+    
     Using a generator expression find the maximum value of `math.sin` when
     applied to the first 100 values between $0$ to $2 \pi$.
 
@@ -362,7 +383,7 @@ cells:
 
 - code: |
     from math import sin, pi
-    max(sin(i*2*pi) for i in range(0, 100))
+    max(sin(i*2*pi/99) for i in range(0, 100))
 
   metadata:
     slideshow:
@@ -384,9 +405,10 @@ metadata:
     name: python
     nbconvert_exporter: python
     pygments_lexer: ipython3
-    version: 3.6.0
+    version: 3.5.2
   rise:
     scroll: true
     transition: none
 nbformat: 4
 nbformat_minor: 2
+

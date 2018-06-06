@@ -2,7 +2,7 @@ cells:
 
 - markdown: |
     # Advanced Python: `with` statements
-
+    
     ### Prabhu Ramachandran
     ### The FOSSEE Python group &
     ### Department of Aerospace Engineering
@@ -14,7 +14,7 @@ cells:
 
 - markdown: |
     ## Introduction
-
+    
     - `with` statement is used as follows
 
   metadata:
@@ -26,19 +26,17 @@ cells:
         for line in f:
             print(line, end='')
 
-  id: 0
 
 - code: |
     f.closed
 
-  id: 1
   metadata:
     slideshow:
       slide_type: fragment
 
 - markdown: |
     ## Observations
-
+    
     - Creates a context
     - `f` is automatically closed
     - Works even if there was an exception!
@@ -49,7 +47,7 @@ cells:
 
 - markdown: |
     ## Use cases
-
+    
     - Use it with locks (for threaded computing)
     - Database connections
     - File objects
@@ -60,7 +58,7 @@ cells:
 
 - markdown: |
     ## Creating your own
-
+    
     - Relatively easy to do
 
   metadata:
@@ -69,7 +67,7 @@ cells:
 
 - code: |
     from contextlib import contextmanager
-
+    
     @contextmanager
     def context():
         print("setup")
@@ -78,23 +76,23 @@ cells:
         finally:
             print("done")
 
+
 - code: |
     with context():
         print("do something")
 
+
 - markdown: |
     ## A more complex example
-
 
   metadata:
     slideshow:
       slide_type: slide
 
-
 - code: |
     import os
     from contextlib import contextmanager
-
+    
     @contextmanager
     def tempfile(filename):
         f = open(filename, 'w')
@@ -103,6 +101,11 @@ cells:
         finally:
             f.close()
             os.remove(filename)
+
+
+- code: |
+    %ls junk.txt
+
 
 - code: |
     with tempfile('junk.txt') as f:
@@ -114,8 +117,8 @@ cells:
       slide_type: slide
 
 - markdown: |
-    ## Comments
-
+    ## Summary
+    
     - Useful feature
     - Can define an object supporting this
     - Overload, `__enter__` and `__exit__`
@@ -125,11 +128,9 @@ cells:
     slideshow:
       slide_type: slide
 
-
-
 - markdown: |
     ## More information
-
+    
     - https://www.python.org/dev/peps/pep-0343
     - [With statement](https://docs.python.org/3/reference/datamodel.html#with-statement-context-managers)
     - [Context manager types](https://docs.python.org/3/library/stdtypes.html#typecontextmanager)
@@ -154,14 +155,10 @@ metadata:
     name: python
     nbconvert_exporter: python
     pygments_lexer: ipython3
-    version: 3.6.0
+    version: 3.5.2
   rise:
     scroll: true
     transition: none
 nbformat: 4
 nbformat_minor: 2
 
-# ---------------------------------------------------------------------------
-data:
-  [{execution_count: null, outputs: []}, {execution_count: null, outputs: []}, {execution_count: null,
-      outputs: []}, {execution_count: null, outputs: []}, {execution_count: null, outputs: []}]
