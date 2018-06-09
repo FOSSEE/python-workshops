@@ -1,0 +1,441 @@
+cells:
+
+- code: |
+    %matplotlib inline
+
+  metadata:
+    slideshow:
+      slide_type: skip
+
+-  markdown: |
+    # Data Analysis: Simple Statistics with `numpy`
+
+    ### Prabhu Ramachandran
+    ### The FOSSEE Python group &
+    ### Department of Aerospace Engineering
+    ### IIT Bombay
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Introduction
+
+    - Already exposed to `numpy`
+    - Provides convenient statistical functions
+
+    <br/>
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    - `np.mean`, `np.std`, etc.
+    - `np.random.random` etc.
+    - `np.percentile`
+
+  metadata:
+    slideshow:
+      slide_type: fragment
+
+- markdown: |
+    ## Simple NumPy functions
+
+    - `mean`, `std`, `var`, `median`
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    import numpy as np
+    data = [1.0, 4.5, 2.3, -0.5, 0.5, 2.8]
+
+  metadata:
+    slideshow:
+      slide_type: fragment
+
+- code: |
+    np.mean(data)
+
+- code: |
+    np.median(data)
+
+- code: |
+    np.std(data)
+
+- code: |
+    np.var(data)
+
+- markdown: |
+    ## Degrees of freedom?
+
+    - Sample standard deviation:   $S^2 = \frac{\sum_{i=1}^n (X_i - \bar{X})^2}{n-1}$
+
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    - Use the `ddof` keyword argument (defaults to zero)
+    - Denominator is `n - ddof`
+
+  metadata:
+    slideshow:
+      slide_type: fragment
+
+- code: |
+    # ddof defaults to zero
+    np.std(data, ddof=1)
+
+
+- markdown: |
+    ## Multi-dimensional data
+
+    - What if you have a multi-dimensional array?
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    md = np.arange(16)
+    md.shape = 4, 4
+
+- code: |
+    md
+
+- code: |
+    np.mean(md)
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    np.std(md)
+
+- code: |
+    np.mean(md, axis=0)
+
+- code: |
+    np.mean(md, axis=1)
+
+- markdown: |
+    ## Not-a-Number: `NaN`
+
+    - Part of the number system: `np.nan`
+    - Like `inf`: `np.inf`
+    - `nan`: Used to denote missing values in data
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    np.nan + 1
+
+  metadata:
+    slideshow:
+      slide_type: fragment
+
+- code: |
+    data = [1.0, 2.1, np.nan, 3.0]
+
+  metadata:
+    slideshow:
+      slide_type: fragment
+
+- code: |
+    np.mean(data), np.std(data)
+
+- markdown: |
+    ## Dealing with Nans?
+
+    - Use `np.nanmean, np.nanmedian, np.nanstd` etc.
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    np.nanmean(data)
+
+- code: |
+    np.nanstd(data)
+
+- markdown: |
+    - Do `np.nan<TAB>` to see more
+
+
+- markdown: |
+    ## Pseudo Random Numbers
+
+    - `np.random.random` etc.
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    data = np.random.random(5)
+
+  metadata:
+    slideshow:
+      slide_type: fragment
+
+- code: |
+    x = np.random.random((3, 3))
+    x.shape
+
+- code: |
+    # randint(low, high, size)
+    np.random.randint(-5, 10, size=5)
+
+- code: |
+    # loc: mean, scale: std-dev
+    np.random.normal(loc=0.0, scale=1.0, size=5)
+
+- markdown: |
+    - `size` keyword argument to specify shape
+
+- markdown: |
+    ## Other distributions
+
+    - Many univariate distributions
+    - A few multi-variate distributions
+    - Draw samples from these distributions
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    np.random?
+
+- markdown: |
+    ## Some exploration of the random variables
+
+    - Let us plot a few of these distributions
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    data = np.random.normal(size=1000)
+
+- code: |
+    from matplotlib import pyplot as plt
+    plt.hist(data)
+
+
+- code: |
+    data = np.random.normal(size=20)
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    plt.hist(data)
+
+- code: |
+    plt.hist(data, bins=6)
+
+
+- code: |
+    data = np.random.normal(size=10000)
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    plt.hist(data, normed=True)
+
+- code: |
+    plt.hist(data, cumulative=True)
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    data = np.random.poisson(lam=0.5, size=10000)
+    ax1 = plt.subplot(1, 2, 1)
+    ax1.hist(data, normed=True)
+    ax2 = plt.subplot(1, 2, 2)
+    ax2.hist(data, cumulative=True)
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Subplots
+
+    - `plt.subplot(nrows, ncols, plot_number)`
+    - `plot_number` starts from 1
+    - Axes returned can be used like `plt`
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    for i in range(1, 5):
+        ax = plt.subplot(2, 2, i)
+        ax.text(0.0, 0.5, 'plot number %d' % i)
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    data = np.random.chisquare(7, size=10000)
+    ax1 = plt.subplot(1, 2, 1)
+    ax1.hist(data, normed=True)
+    ax2 = plt.subplot(1, 2, 2)
+    ax2.hist(data, cumulative=True)
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+
+- markdown: |
+    ## Repeatable random numbers
+
+    - `np.random.xxx` gives different results each time
+
+    - Use `np.random.seed` to make this deterministic
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    np.random.seed(27)
+
+  metadata:
+    slideshow:
+      slide_type: fragment
+
+- code: |
+    np.random.random()
+
+- code: |
+    np.random.seed(27)
+    np.random.random()
+
+
+- markdown: |
+    ## Computing percentiles
+
+    - Use `np.percentile`
+    - Or `np.nanpercentile`
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    data = np.random.normal(loc=10, scale=2, size=1000)
+    np.percentile(data, 50)
+
+  metadata:
+    slideshow:
+      slide_type: fragment
+
+- code: |
+    np.median(data)
+
+- code: |
+    np.percentile(data, [25, 50, 75])
+
+
+- markdown: |
+    ## Some useful tools
+
+    - For computational work
+    - `np.shuffle`
+    - `np.permutation`
+    - `np.choice`
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+
+- code: |
+    data = np.random.randint(0, 100, size=5)
+
+  metadata:
+    slideshow:
+      slide_type: fragment
+
+- code: |
+    np.shuffle(data)
+
+- code: |
+    np.permutation(10)
+
+- code: |
+    np.permutation(data)
+
+
+- code: |
+    data = np.random.permutation(5)
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    np.choice(data)
+
+  metadata:
+    slideshow:
+      slide_type: fragment
+
+- code: |
+    np.choice(data, size=5)
+
+  metadata:
+    slideshow:
+      slide_type: fragment
+
+- code: |
+    np.choice(data, size=10)
+
+  metadata:
+    slideshow:
+      slide_type: fragment
+
+- code: |
+    np.choice(data, size=4, replace=False)
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    # Won't work!
+    np.choice(data, size=10, replace=False)
+
+
+- markdown: |
+    ## Summary
+
+    - Basic `numpy` stats functions
+    - Random number generators
+    - Plotting histograms and subplots
+    - Odds and ends
+
+  metadata:
+    slideshow:
+      slide_type: slide

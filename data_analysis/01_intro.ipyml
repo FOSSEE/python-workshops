@@ -1,0 +1,124 @@
+cells:
+
+- markdown: |
+    # Introduction to Data Analysis with Python
+
+    ### Prabhu Ramachandran
+    ### The FOSSEE Python group &
+    ### Department of Aerospace Engineering
+    ### IIT Bombay
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Introduction
+
+    - A world of data!
+
+    - Can we use data to drive decisions and form opinions?
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+
+- markdown: |
+    ## Real data is not perfect
+
+    - Partial information
+    - Uncertainty
+    - Errors
+
+    <br/>
+    <br/>
+
+    - Important to check and clean data
+
+  metadata:
+    slideshow:
+      slide_type: subslide
+
+
+- markdown: |
+    ## Statistical approach
+
+    - Data collection
+
+    <br/>
+    <br/>
+
+    - Visualization
+    - Inference
+    - Modeling
+    - Prediction
+
+  metadata:
+    slideshow:
+      slide_type: subslide
+
+
+- markdown: |
+    ## Importance of computers
+
+    - Datasets are large
+    - Easy to process on the computer
+    - Simulation!
+
+  metadata:
+    slideshow:
+      slide_type: subslide
+
+- markdown: |
+    ## This course
+
+    - Use Python for data analysis
+    - Exposes you to the basic tools available
+    - Does not teach you statistics!
+    - Will point out resources for this
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+
+- markdown: |
+    ## Pre-requisites
+
+    - Basic Python programming
+    - NumPy
+    - Python 3.x, Jupyter, scipy, matplotlib, pandas, statsmodels
+
+    - Mathematics (12th grade)
+    - Introduction to statistics
+
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Tools and Topics
+
+    - Simple statistics with `numpy`
+    - Statistical plots with `matplotlib`
+    - Random variables with `scipy.stats`
+    - Using `pandas` for data ingestion and analysis
+    - Introduction to `statsmodel` for regression
+
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Summary
+
+    - Introduction to data analysis
+    - Pre-requisites for this course
+    - Tools covered
+
+  metadata:
+    slideshow:
+      slide_type: slide
