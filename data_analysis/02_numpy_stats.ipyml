@@ -7,7 +7,7 @@ cells:
     slideshow:
       slide_type: skip
 
--  markdown: |
+- markdown: |
     # Data Analysis: Simple Statistics with `numpy`
 
     ### Prabhu Ramachandran
@@ -167,14 +167,15 @@ cells:
 - code: |
     np.nanstd(data)
 
-- markdown: |
-    - Do `np.nan<TAB>` to see more
+- code: |
+    # Try `np.nan<TAB>`
+    np.nan
 
 
 - markdown: |
     ## Pseudo Random Numbers
 
-    - `np.random.random` etc.
+    - `np.random.*`
 
   metadata:
     slideshow:
@@ -230,7 +231,7 @@ cells:
 
 - code: |
     from matplotlib import pyplot as plt
-    plt.hist(data)
+    plt.hist(data);
 
 
 - code: |
@@ -241,10 +242,10 @@ cells:
       slide_type: slide
 
 - code: |
-    plt.hist(data)
+    plt.hist(data);
 
 - code: |
-    plt.hist(data, bins=6)
+    plt.hist(data, bins=6);
 
 
 - code: |
@@ -255,10 +256,10 @@ cells:
       slide_type: slide
 
 - code: |
-    plt.hist(data, normed=True)
+    plt.hist(data, normed=True);
 
 - code: |
-    plt.hist(data, cumulative=True)
+    plt.hist(data, cumulative=True);
 
   metadata:
     slideshow:
@@ -269,7 +270,7 @@ cells:
     ax1 = plt.subplot(1, 2, 1)
     ax1.hist(data, normed=True)
     ax2 = plt.subplot(1, 2, 2)
-    ax2.hist(data, cumulative=True)
+    ax2.hist(data, cumulative=True);
 
   metadata:
     slideshow:
@@ -295,16 +296,20 @@ cells:
     slideshow:
       slide_type: slide
 
+- markdown: |
+    ## $\chi^2$ distributions
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
 - code: |
     data = np.random.chisquare(7, size=10000)
     ax1 = plt.subplot(1, 2, 1)
     ax1.hist(data, normed=True)
     ax2 = plt.subplot(1, 2, 2)
-    ax2.hist(data, cumulative=True)
+    ax2.hist(data, cumulative=True);
 
-  metadata:
-    slideshow:
-      slide_type: slide
 
 
 - markdown: |
