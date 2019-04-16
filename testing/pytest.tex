@@ -36,8 +36,8 @@
   \begin{itemize}
   \item Write your code using the TDD paradigm
   \item Use the \typ{pytest} module to test your code
-  \item Run your tests on \url{travis-ci.org}
   \item Look at test coverage of your code
+  \item Run your tests on \url{travis-ci.org}
   \item Look at automatic coverage with \url{codecov.io}
   \end{itemize}
 \end{frame}
@@ -166,7 +166,7 @@ test_gcd()
 def gcd(a, b):
     pass
     \end{lstlisting}
-  \item Written just, so that the tests can run
+  \item Written just so that the tests can run
   \item Obviously, the tests are going to fail
   \end{itemize}
 \end{frame}
@@ -267,7 +267,7 @@ def gcd(a, b):
   \frametitle{Document \texttt{gcd}}
   \begin{itemize}
   \item Undocumented function is as good as unusable
-  \item Let's add a docstring \& We have our first test!
+  \item Let's add a docstring
   \end{itemize}
 \end{frame}
 \begin{frame}[fragile]
@@ -555,6 +555,68 @@ class TestClass:
 
 \end{frame}
 
+\section{Coverage}
+
+\begin{frame}
+  \Large
+ \begin{quote}
+   If you can't measure it, you can't improve it.
+
+   \vspace*{0.5in}
+   \hfill - Peter Drucker
+  \end{quote}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Coverage of tests}
+  \begin{itemize}
+    \item Assess the amount of code that is covered by testing
+    \item \url{coverage.readthedocs.io}
+    \item \typ{pip install coverage}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Using coverage}
+  \begin{lstlisting}
+$ coverage run -m pytest my_package
+$ coverage report
+$ coverage html
+  \end{lstlisting}%$
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Narrowing the source to look at}
+  \begin{lstlisting}
+$ coverage run --source . \
+     -m pytest my_package
+$ coverage report
+$ coverage html
+  \end{lstlisting}%$
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Using a \texttt{.coveragerc}}
+  Create a \typ{.coveragerc}
+  \begin{lstlisting}
+[run]
+source = .
+branch = True
+omit = */tests/*
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,fragile]
+  \frametitle{Using \texttt{pytest-cov}}
+  \begin{itemize}
+  \item \typ{pytest-cov}, \url{https://pytest-cov.rtfd.io/}
+  \item Integrates directly with \typ{pytest}
+  \end{itemize}
+\begin{lstlisting}
+$ pytest --cov=myproj tests/
+\end{lstlisting}
+\end{frame}
+
 
 \section{Travis-CI}
 
@@ -617,47 +679,6 @@ script:
   \end{itemize}
 \end{frame}
 
-
-\section{Coverage}
-
-\begin{frame}
-  \frametitle{Coverage of tests}
-  \begin{itemize}
-    \item Assess the amount of code that is covered by testing
-    \item \url{coverage.readthedocs.io}
-    \item \typ{pip install coverage}
-  \end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]
-  \frametitle{Using coverage}
-  \begin{lstlisting}
-$ coverage run -m pytest my_package
-$ coverage report
-$ coverage html
-  \end{lstlisting}%$
-\end{frame}
-
-\begin{frame}[fragile]
-  \frametitle{Narrowing the source to look at}
-  \begin{lstlisting}
-$ coverage run --source . \
-     -m pytest my_package
-$ coverage report
-$ coverage html
-  \end{lstlisting}%$
-\end{frame}
-
-\begin{frame}[fragile]
-  \frametitle{Using a \texttt{.coveragerc}}
-  Create a \typ{.coveragerc}
-  \begin{lstlisting}
-[run]
-source = .
-branch = True
-omit = */tests/*
-  \end{lstlisting}
-\end{frame}
 
 
 \section{Codecov}
