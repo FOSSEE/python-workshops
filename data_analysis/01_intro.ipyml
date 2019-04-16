@@ -30,16 +30,19 @@ cells:
     - Partial information
     - Uncertainty
     - Errors
-
     <br/>
-    <br/>
-
-    - Important to check and clean data
 
   metadata:
     slideshow:
       slide_type: subslide
 
+- markdown: |
+
+    - Important to check and clean data
+
+  metadata:
+    slideshow:
+      slide_type: fragment
 
 - markdown: |
     ## Statistical approach
@@ -47,7 +50,12 @@ cells:
     - Data collection
 
     <br/>
-    <br/>
+
+  metadata:
+    slideshow:
+      slide_type: subslide
+
+- markdown: |
 
     - Visualization
     - Inference
@@ -56,8 +64,7 @@ cells:
 
   metadata:
     slideshow:
-      slide_type: subslide
-
+      slide_type: fragment
 
 - markdown: |
     ## Importance of computers
@@ -87,8 +94,8 @@ cells:
     ## Pre-requisites
 
     - Basic Python programming
-    - NumPy
-    - Python 3.x, Jupyter, scipy, matplotlib, pandas, statsmodels
+    - `numpy`
+    - Python 3.x, `Jupyter, scipy, matplotlib, pandas, statsmodels`
 
     - Mathematics (12th grade)
     - Introduction to statistics
@@ -113,11 +120,30 @@ cells:
       slide_type: slide
 
 - markdown: |
+    ## Resources for learning
+
+    - [Khan Academy Statistics and Probability](https://www.khanacademy.org/math/statistics-probability)
+    - [Concrete introduction to Probability](http://nbviewer.jupyter.org/url/norvig.com/ipython/Probability.ipynb) by Peter Norvig
+
+    - [Penn State Stat 414 course](https://onlinecourses.science.psu.edu/stat414)
+
+    - [Computational and Inferential Thinking](https://www.inferentialthinking.com/) by Ani Adhikari and John De Nero
+
+    - [Think Stats2](http://greenteapress.com/wp/think-stats-2e/) by Allen B. Downey
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+
+
+- markdown: |
     ## Summary
 
     - Introduction to data analysis
     - Pre-requisites for this course
     - Tools covered
+    - Resources for statistics and probability
 
   metadata:
     slideshow:
