@@ -1,0 +1,137 @@
+cells:
+
+- markdown: |
+    # Debugging with PDB
+
+    - `pdb` is Python's built-in debugger
+    - Available as a standard library
+    - Easy to use
+    - Powerful
+    - https://docs.python.org/3/library/pdb.html
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## A simple but broken script
+
+    - Let us first study the script
+    - Some useful programming principles
+
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    %load data/broken.py
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Debugging from IPython
+
+    - Easy to get started
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    %cd data
+
+- code: |
+    import broken
+
+- code: |
+    broken.test_simple()
+
+- code: |
+    %debug
+
+- markdown: |
+    ## `pdb` commands
+
+    - `h(elp) [command]`
+    - `p expression`
+    - `s(tep)`
+    - `n(ext)`
+    - `q(uit)`
+    - `l(ist) [first[, last]]`
+    - `c(ontinue)`
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## More pdb commands
+
+    - `w(here)`
+    - `d(own) [count]`
+    - `u(p) [count]`
+    - `b(reak) [([filename:]lineno | function) [, condition]]`
+    - `tbreak`
+    - `pp expression`
+    - `cl(ear) [filename:lineno | bpnumber [bpnumber ...]]`
+    - `condition bpnumber [condition]`
+    - `display [expression]`
+    - `interact`
+    - `run [args]`
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+
+- code: |
+    # Turn on auto-pdb
+    %pdb
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    %run -d script.py
+
+- code: |
+    %run -d -b20 script.py
+
+- markdown: |
+    ## Debugging from the console
+
+    - Allows one to debug a script
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    # Run this on a shell
+    !python -m pdb broken.py
+
+
+- markdown: |
+    ## Adding a manual breakpoint in code
+
+    Handy when writing code and you want to inspect at that point.
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    import pdb; pdb.set_trace()
+
+- markdown: |
+    ## More information
+
+    - See  https://docs.python.org/3/library/pdb.html
+
+  metadata:
+    slideshow:
+      slide_type: slide
