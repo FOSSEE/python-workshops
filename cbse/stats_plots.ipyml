@@ -1,0 +1,443 @@
+cells:
+
+- markdown: |
+    # More plotting and elementary stats
+
+    ## A quick exercise
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    # Start with this.
+    %pylab inline
+
+  id: 0
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Simple plotting
+
+    - Plot $x, -x, \sin(x), x \sin(x)$ in range $-5\pi$ to $5\pi$
+    - Add a legend
+    - Annotate the origin
+    - Set axes limits to the range of x
+
+    <img src="images/four_plot.png" alt="Sample plot to reproduce" width="50%"></img>
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    # Solution
+
+  id: 1
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Mean, standard deviation, percentiles, ...
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    x = np.array([3, 2, 1, 4, 4, 5, 15, 24, 22, 25, 18, 32, 33])
+
+- code: |
+    np.mean(x)
+
+- code: |
+    np.median(x)
+
+- markdown: |
+    ## Variance, standard deviation and degrees of freedom
+
+    $$S^2 = \frac{\sum_{i=1}^n (X_i - \bar{X})^2}{n-1}$$
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    np.var(x, ddof=1)
+
+- markdown: |
+    `ddof=1` corresponds to $n-1$ in the denominator.
+
+- code: |
+    np.std(x, ddof=1)
+
+- markdown: |
+    ## Percentiles
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    np.percentile(x, 34)
+
+  id: 3
+
+- code: |
+    np.percentile(x, [25, 50, 75, 34])
+
+  id: 4
+
+- code: |
+    sorted(x)
+
+  id: 5
+  metadata:
+    slideshow:
+      slide_type: slide
+
+
+- markdown: |
+    ## More statistics from `scipy.stats`
+
+    Use the `scipy.stats` module for more stats related functions
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    import scipy.stats
+
+- code: |
+    scipy.stats?
+
+- code: |
+    scipy.stats.mode(x)
+
+- code: |
+    scipy.stats.gmean(x)
+
+- code: |
+    scipy.stats.hmean(x)
+
+
+- markdown: |
+
+    ## Load the given `data.txt` file
+
+    - Load up the data file into numpy arrays.
+    - Plot the two columns one vs the other with points.
+    - Find the mean and standard deviation of the columns
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    x, y = loadtxt('data/data.txt', unpack=True)
+
+- code: |
+    # Find mean and standard deviation
+
+- code: |
+    # Your plotting code here...
+
+
+- markdown: |
+    ## More plotting functions
+
+    We explore more plotting functions below
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+
+- code: |
+    scatter(x, y, s=x, c=y);
+
+  id: 7
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    # Histogram
+    hist(y);
+
+  id: 8
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    hist(y, cumulative=True);
+
+  id: 9
+
+- code: |
+    # Boxplot
+    boxplot(y, showmeans=True);
+    grid()
+    axis('tight');
+
+  id: 10
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+
+    ## Simple image processing
+
+    - Load the image.
+    - Show the image.
+    - Drop every alternate pixel to reduce the size of the image
+    - Crop the picture to only show the baby penguin.
+
+    <img src="images/penguins.png" alt="Sample plot" width="50%"></img>
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    imshow(img[:,:,3], cmap='gray');
+    colorbar();
+
+  id: 11
+
+- code: |
+    img = imread('images/penguins.png')
+    figure(figsize=(10, 5))
+    subplot(2, 2, 1)
+    imshow(img)
+    subplot(2, 2, 2)
+    imshow(img[::2,::2])
+    subplot(2, 2, 3)
+    imshow(img[225:,100:250])
+    subplot(2, 2, 4)
+    imshow(img[:,:,1])
+
+  id: 12
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+
+    Use a for loop to plot the 3 channels of the image in a sub-plot,
+    i.e. r, g, b color channels.
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    # Solution.
+
+
+- markdown: |
+    ## Histogram of image pixel data
+
+    - Changing the dimensions of a numpy array.
+    - Making a 2D array into a 1D array.
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+
+- code: |
+    a = np.arange(9)
+    a.shape = (3, 3)
+    a.ravel()
+
+  id: 13
+
+- code: |
+    np.ravel(img[:, :, 0]).shape
+
+  id: 14
+
+- code: |
+    # Doing more
+    #print(numpy.ravel(img[:,:,0]).shape)
+    hist(numpy.ravel(img[:,:,3]));
+
+  id: 15
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    # Putting it together
+    print(numpy.ravel(img[:,:,0]).shape)
+    for color in [0, 1, 2, 3]:
+        subplot(2, 2, color + 1)
+        hist(numpy.ravel(img[:,:,color]), bins=40, density=True, edgecolor='b');
+
+  id: 17
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+
+    ## Pie charts
+
+    | **Cancer**  | Lung | Breast | Colon | Prostate | Melanoma | Bladder |
+    |-------------|------|--------|-------|----------|----------|---------|
+    | **Numbers** | 42   |  50    |  32   |   55     |  9       |  12     |
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    # Solution
+    cancer = ['Lung', 'Breast', 'Colon', 'Prostate', 'Melanoma', 'Bladder']
+    numbers = [42, 50, 32, 55, 9, 12]
+    pie(numbers, labels=cancer);
+
+  id: 18
+  metadata:
+    slideshow:
+      slide_type: slide
+
+
+- markdown: |
+    ## More statistics
+
+    - Covariance, correlation
+    - Linear regression
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+
+- markdown: |
+    ## Covariance/correlation
+
+    $$Cov(X, Y) = E[(X-\mu_x)(Y - \mu_y)] = E[XY] - E[X]E[Y]$$
+
+    $$Corr(X, Y) = Cov(X, Y)/\sqrt{Var(X) Var(Y)}$$
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    # Loading some data
+    x, y = loadtxt('data/data.txt', unpack=True)
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    np.cov(x, y)
+
+
+- code: |
+    np.corrcoef(x, y)
+
+
+- markdown: |
+    ## Trying with other data
+
+    - Find the correlation coefficient and covariance
+    - Plot the data.
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    x1 = np.array([ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+    y1 = np.array([30, 33, 53, 73, 78, 85, 91, 92, 100, 120])
+
+- code: |
+    # Your solution.
+
+
+- markdown: |
+    ## Simple linear regression
+
+    - Already seen how to do least-square fits with numpy
+    - Simpler way with `scipy.stats.linregress`
+    - Can also use `np.polyfit`
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+
+- code: |
+    scipy.stats.linregress(x1, y1)
+
+- code: |
+    # Result is a named tuple (collections.namedtuple)!
+
+- code: |
+    res = scipy.stats.linregress(x1, y1)
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    res
+
+- code: |
+    res[0]
+
+- code: |
+    res.slope
+
+- code: |
+    # Using np.polyfit
+
+    np.polyfit(x1, y1, deg=1)
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    np.polyfit?
+
+- markdown: |
+    * Use `deg=1` for linear regression.
+    * Use `deg=2` for quadratic functions.
+    * ...
+
+
+# The lines below here may be deleted if you do not need them.
+# ---------------------------------------------------------------------------
+metadata:
+  celltoolbar: Slideshow
+  kernelspec:
+    display_name: Python 3
+    language: python
+    name: python3
+  language_info:
+    codemirror_mode:
+      name: ipython
+      version: 3
+    file_extension: .py
+    mimetype: text/x-python
+    name: python
+    nbconvert_exporter: python
+    pygments_lexer: ipython3
+    version: 3.6.0
+  rise:
+    scroll: true
+    transition: none
+nbformat: 4
+nbformat_minor: 2

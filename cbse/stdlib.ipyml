@@ -1,0 +1,347 @@
+cells:
+
+- markdown: |
+    # Some useful standard library modules
+
+    Focus is on the syllabus:
+
+    - `math`
+    - `statistics`
+    - `urllib`
+    - More info from: https://docs.python.org/3/library/
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Basic mathematical functions: `math`
+
+    - Useful when `numpy` is not available
+    - Much simpler
+    - Does not handle lists or arrays
+    - Only scalars
+    - https://docs.python.org/3/library/math.html
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    import math
+
+- code: |
+    math?
+
+- code: |
+    math.sin(math.pi/4)
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    math.acos(0.5)*180/math.pi
+
+- code: |
+    math.degrees(math.acos(0.5))
+
+- code: |
+    dir(math)
+
+
+- code: |
+    math.fsum([.1, .1, .1, .1, .1, .1, .1, .1, .1, .1])
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    math.frexp(2)
+
+- code: |
+    math.frexp(1.01235e5)
+
+- markdown: |
+    ## Differences from numpy
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+
+- code: |
+    import numpy as np
+    np.sin([1, 2, 3])
+
+- code: |
+    math.sin([1, 2, 3])
+
+- markdown: |
+
+    See: https://docs.python.org/3/library/math.html
+
+
+- markdown: |
+    ## `statistics` module
+
+    - New since Python 3.4
+    - Again useful primarily when `numpy` is not available
+    - https://docs.python.org/3/library/statistics.html
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    import statistics
+
+- code: |
+    statistics?
+
+- code: |
+    statistics.mean([-1.0, 2.5, 3.25, 5.75])
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    statistics.median([1, 3, 5, 7])
+
+- code: |
+    statistics.median_low([1, 3, 5, 7])
+
+- code: |
+    statistics.median_high([1, 3, 5, 7])
+
+- code: |
+    statistics.median_grouped([1, 3, 5, 7])
+
+- code: |
+    statistics.mode([2, 3, 3, 5])
+
+- code: |
+    statistics.mode([2, 3, 3, 5, 5])
+
+- code: |
+    statistics.harmonic_mean([2.5, 3, 10])
+
+- code: |
+    statistics.stdev([1.5, 2.5, 2.5, 2.75, 3.25, 4.75])
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    statistics.pstdev([1.5, 2.5, 2.5, 2.75, 3.25, 4.75])
+
+- code: |
+    import numpy as np
+    np.std([1.5, 2.5, 2.5, 2.75, 3.25, 4.75])
+
+- code: |
+    np.std([1.5, 2.5, 2.5, 2.75, 3.25, 4.75], ddof=1)
+
+
+- markdown: |
+    ## `urllib` module
+
+    - Changed significantly in Python 3
+    - Very convenient
+    - https://docs.python.org/3/library/urllib.html
+
+    - Three parts:
+      - `urllib.request`
+      - `urllib.parse`
+      - `urllib.error`
+      - `urllib.robotparser`
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## Reading a web page
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    import urllib.request
+
+- code: |
+    f = urllib.request.urlopen('http://www.w3.org/')
+    f
+
+- code: |
+    # f can be used like a file object
+    print(f.read(300))
+
+- code: |
+    print(f.read(100))
+
+- code: |
+    f.close()
+    # close the request object
+
+- markdown: |
+    - `f.read()` will read everything.
+    - Note that the returned object is a "bytes" object
+
+
+- code: |
+    # Bytes and unicode
+    data = f.read(300)
+    type(data)
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    - Must use a suitable encoding to decode these bytes
+    - `'utf-8'` is good usually.
+
+- code: |
+    data.decode('utf-8')
+
+
+- code: |
+    # Using a with statement
+
+    with urllib.request.urlopen('http://www.w3.org/') as f:
+        print(f.read(300))
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    Avoids the need to explicitly close the request in the end.
+
+
+- markdown: |
+    ## More advanced tasks
+
+    - Lot more information in documentation
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    # Sending data to a CGI script via POST.
+    req = urllib.request.Request(url='https://localhost/cgi-bin/test.cgi',
+                          data=b'This data is passed to stdin of the CGI')
+
+- code: |
+    with urllib.request.urlopen(req) as f:
+        print(f.read().decode('utf-8'))
+
+
+- code: |
+    # A PUT request
+    DATA = b'some data'
+    req = urllib.request.Request(url='http://localhost:8080', data=DATA,method='PUT')
+    with urllib.request.urlopen(req) as f:
+        pass
+
+    print(f.status)
+    print(f.reason)
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+
+- markdown: |
+    ## Performing a GET with parameters
+
+    - Lets say you want to do a wikipedia search!
+    - Construct the parameters with `urllib.parse.urlencode`
+    - The wikipedia API requires this URL in a GET request
+
+    - https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=python
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    import urllib.parse
+
+- code: |
+    params = urllib.parse.urlencode(
+        {'action': 'query',
+        'list': 'search', 'srsearch': 'python'}
+    )
+    params
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    url = 'https://en.wikipedia.org/w/api.php?%s' % params
+    url
+
+- code: |
+    with urllib.request.urlopen(url) as f:
+        print(f.read().decode('utf-8'))
+
+
+- markdown: |
+    ## More on parsing
+
+    - Use `urllib.parse` to parse/construct URLs.
+
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    import urllib.parse
+
+- code: |
+    urllib.parse.urlparse('http://google.com')
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    urllib.parse.urlparse(ftp://ubuntu.com')
+
+- code: |
+    urllib.parse.urlparse('https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=python')
+
+- code: |
+    urllib.parse.urlsplit('https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=python')
+
+
+- markdown: |
+    ## Robots.txt
+
+    - Learn more: https://www.robotstxt.org
+    - Helps control robots which parse a website.
+    - `urllib.robotparser` helps parse and detect setup
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- markdown: |
+    ## More information
+
+    - See documentation for more information.
+    - https://docs.python.org/3/library/urllib.html
+
+
+  metadata:
+    slideshow:
+      slide_type: slide
