@@ -266,11 +266,15 @@ cells:
       slide_type: slide
 
 - code: |
+    plt.hist(data, bins=50, normed=True, cumulative=True);
+
+- code: |
     data = np.random.poisson(lam=0.5, size=10000)
     ax1 = plt.subplot(1, 2, 1)
+    plt.ylabel('PDF')
     ax1.hist(data, normed=True)
     ax2 = plt.subplot(1, 2, 2)
-    ax2.hist(data, cumulative=True);
+    ax2.hist(data, cumulative=True, normed=True);
 
   metadata:
     slideshow:
@@ -306,9 +310,9 @@ cells:
 - code: |
     data = np.random.chisquare(7, size=10000)
     ax1 = plt.subplot(1, 2, 1)
-    ax1.hist(data, normed=True)
+    ax1.hist(data, bins=50, normed=True)
     ax2 = plt.subplot(1, 2, 2)
-    ax2.hist(data, cumulative=True);
+    ax2.hist(data, bins=50, normed=True, cumulative=True);
 
 
 
@@ -367,9 +371,9 @@ cells:
     ## Some useful tools
 
     - For computational work
-    - `np.shuffle`
-    - `np.permutation`
-    - `np.choice`
+    - `np.random.shuffle`
+    - `np.random.permutation`
+    - `np.random.choice`
 
   metadata:
     slideshow:
@@ -384,13 +388,13 @@ cells:
       slide_type: fragment
 
 - code: |
-    np.shuffle(data)
+    np.random.shuffle(data)
 
 - code: |
-    np.permutation(10)
+    np.random.permutation(10)
 
 - code: |
-    np.permutation(data)
+    np.random.permutation(data)
 
 
 - code: |
@@ -408,21 +412,21 @@ cells:
       slide_type: fragment
 
 - code: |
-    np.choice(data, size=5)
+    np.random.choice(data, size=5)
 
   metadata:
     slideshow:
       slide_type: fragment
 
 - code: |
-    np.choice(data, size=10)
+    np.random.choice(data, size=10)
 
   metadata:
     slideshow:
       slide_type: fragment
 
 - code: |
-    np.choice(data, size=4, replace=False)
+    np.random.choice(data, size=4, replace=False)
 
   metadata:
     slideshow:
@@ -430,7 +434,7 @@ cells:
 
 - code: |
     # Won't work!
-    np.choice(data, size=10, replace=False)
+    np.random.choice(data, size=10, replace=False)
 
 
 - markdown: |
