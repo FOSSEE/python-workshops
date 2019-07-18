@@ -1,0 +1,876 @@
+cells:
+
+- markdown: |
+    Pandas
+    ======
+    
+    - Provides a powerful `DataFrame` object.
+    - Makes it easy to deal with "Tabular" data.
+    - Very easy to read, process and visualize data.
+    - See http://pandas.pydata.org
+
+
+- code: |
+    %matplotlib inline
+    import numpy as np
+    import pandas as pd
+
+  id: 0
+
+- code: |
+    x = np.linspace(0, 2*np.pi, 100)
+    sin = np.sin(x)
+    cos = np.cos(x)
+
+  id: 1
+
+- code: |
+    df = pd.DataFrame({'x': x, 'sin': sin, 'cos': cos, 'x-data':x})
+    # OR
+    #df = pd.DataFrame(dict(x=x, sin=sin, cos=cos))
+
+  id: 2
+
+- code: |
+    df.head() # or df.tail()
+
+  id: 3
+
+- code: |
+    df.tail()
+
+  id: 4
+
+- code: |
+    df.describe()
+
+  id: 5
+
+- code: |
+    df1 = df[10:13]
+    df1.head()
+
+  id: 6
+
+- code: |
+    df.x[::10]
+
+  id: 7
+
+- code: |
+    df1.describe()
+
+  id: 8
+
+- code: |
+    # df.x-data[:5] will not work!!
+    df['x-data'][:5]
+
+  id: 9
+
+- code: |
+    df['x'][:5]
+
+  id: 10
+
+- code: |
+    df.x[:10]
+
+  id: 11
+
+- code: |
+    df.columns
+
+  id: 12
+
+- code: |
+    len(df)
+
+  id: 13
+
+- code: |
+    df.index
+
+  id: 14
+
+- code: |
+    df1 = df.copy()
+    df1.head()
+
+  id: 15
+
+- markdown: |
+    Indexing
+    =========
+    
+    - Give me a data frame, where all cosine values are >0.
+
+
+- code: |
+    y = np.linspace(10, 11, 11)
+    y
+
+  id: 16
+
+- code: |
+    y> 10.5
+
+  id: 17
+
+- code: |
+    cond = y > 10.5
+    y[y > 10.7]
+
+  id: 18
+
+- code: |
+
+
+  id: 19
+
+- code: |
+
+
+  id: 20
+
+- code: |
+
+
+  id: 21
+
+- code: |
+    condition = df.cos > 0.0
+    print(len(condition))
+
+  id: 22
+
+- code: |
+    df_positive_cos = df[condition]
+    df_positive_cos.describe()
+
+  id: 23
+
+- code: |
+    # Combining conditionals
+    cond1 = df.sin > 0.0
+    df_all_positive = df[condition & cond1]
+    df_all_positive.describe()
+
+  id: 24
+
+- code: |
+    df_all_positive = df[(df.cos > 0.0) & (df.sin > 0)]
+    df_all_positive.describe()
+
+  id: 25
+
+- code: |
+    c = np.array([True, False, True, False])
+    c1 = np.array([False, True, False, False])
+    ~(c | c1)
+
+  id: 26
+
+- code: |
+    cond1 = df_positive_cos.sin > 0.0
+    df_all_positive = df_positive_cos[cond1]
+    df_all_positive.describe()
+
+  id: 27
+
+- code: |
+
+
+  id: 28
+
+- code: |
+    # This adds a new column sincos
+    df['sincos'] = df.sin*df.cos
+    len(df.sincos)
+
+  id: 29
+
+- code: |
+    df.describe()
+
+  id: 30
+
+- code: |
+    # Remove a column with del.
+    if 'x-data' in df:
+        del df['x-data']
+    df.head()
+
+  id: 31
+
+- markdown: |
+    Plotting
+    =========
+
+
+- code: |
+    df.plot() 
+    # or
+    #df.plot.line()
+
+  id: 32
+
+- markdown: |
+    Notice that everything is plotted w.r.t. the index!
+    Let us fix this!
+
+
+- code: |
+    df.plot.line(x='x', y=['sin', 'cos'])
+
+  id: 33
+
+- code: |
+    # See what this does
+    
+    df[(df.sin > 0.0) ^ (df.cos < 0.0)].plot.line(x='x', marker='o')
+
+  id: 34
+
+- code: |
+    df.plot.hist(y='cos')
+    # or
+    #df.plot(y='cos', kind='hist')
+
+  id: 35
+
+- markdown: |
+    Input and output CSV and other file formats
+    --------------------------------------------
+    
+    - `pd.read_csv()`
+    - `df.to_csv()`
+    - Can read/save to clip board.
+    - Directly read from URLs.
+
+
+- code: |
+    df.to_csv('sincos.csv', index=False)
+
+  id: 36
+
+- code: |
+    df1 = pd.read_csv('sincos.csv')
+    df1.head()
+
+  id: 37
+
+- code: |
+
+
+  id: 38
+
+- code: |
+
+
+  id: 39
+
+- markdown: |
+    ### Conversion to LaTeX and HTML
+
+
+- code: |
+    print(df[:5].to_latex())
+
+  id: 40
+
+- code: |
+    print(df[:5].to_latex(index=False))
+
+  id: 41
+
+- code: |
+    print(df[:5].to_html())
+
+  id: 42
+
+- code: |
+    from IPython.display import HTML
+    HTML(df[:5].to_html())
+
+  id: 43
+
+- markdown: |
+    Selecting from the clipboard
+    =============================
+    
+    - Let us select data from wikipedia:
+    - https://en.wikipedia.org/wiki/List_of_countries_by_GDP_(nominal)_per_capita
+    
+    Select some data and then do this:
+
+
+- code: |
+    df2 = pd.read_clipboard()
+    df2.columns = ['index', 'country', 'GDP']
+    df2.head()
+
+  id: 44
+
+- code: |
+    url = 'http://www.aero.iitb.ac.in/~prabhu/tmp/sslc_small.csv'
+    df = pd.read_csv(url, sep=';')
+
+  id: 45
+
+- code: |
+    df.head()
+    #df.describe()
+
+  id: 46
+
+- code: |
+    df.fl.iloc[0] = np.nan
+
+  id: 47
+
+- code: |
+    df.head()
+
+  id: 48
+
+- code: |
+    df.describe()
+
+  id: 49
+
+- code: |
+    pd.read_csv?
+
+  id: 50
+
+- markdown: |
+    Exercise
+    --------
+    
+    Look at the following:
+    
+    - https://data.gov.in/catalog/annual-and-seasonal-maximum-temperature-india
+    - https://data.gov.in/catalog/annual-and-seasonal-minimum-temperature-india
+    
+    
+    Download the csv file into a `datafile.csv` on your machine.
+
+
+- code: |
+    df = pd.read_csv('datafile.csv')
+    df.head()
+
+  id: 51
+
+- code: |
+    df.plot.line(x='YEAR')
+
+  id: 52
+
+- code: |
+
+
+  id: 53
+
+- markdown: |
+    Exercise
+    ---------
+    
+    
+    Consider a smaller file:
+    
+    - File is at: http://www.aero.iitb.ac.in/~prabhu/tmp/sslc_small.csv
+
+
+- code: |
+    url = 'http://www.aero.iitb.ac.in/~prabhu/tmp/sslc_small.csv'
+    df = pd.read_csv(url)
+    df.head()  # Produces only one strange column of data!
+
+  id: 54
+
+- markdown: |
+    Notice that this data is read incorrectly, this is because the separator is not a comma but a ';' so use this.
+
+
+- code: |
+    df = pd.read_csv(url, sep=';')
+    df.head()
+
+  id: 55
+
+- code: |
+    df['region'].value_counts()
+
+  id: 56
+
+- code: |
+    df.plot.scatter(x='fl', y='math')
+
+  id: 57
+
+- markdown: |
+    There are more options to `pd.read_csv`, for example if `'AA'` is a value indicating a non-existing value you can pass an option, called `na_values`.  Read more on the documentation for `read_csv`.
+
+
+- code: |
+    url = 'http://www.aero.iitb.ac.in/~prabhu/tmp/sslc1.csv.gz'
+
+  id: 58
+
+- markdown: |
+    - This has a very large CSV file that is gzipped to save space. 
+    - It can be loaded with the same method.
+    - You can download it and see the file.
+    
+    To unzip it if you want you can do
+    
+    ```
+    $ gunzip sslc1.csv.gz
+    ```
+    
+    The file has missing values in the form of 'AA' entries for absent students.
+
+
+- code: |
+    df = pd.read_csv(url, sep=';', na_values='AA')
+
+  id: 59
+
+- markdown: |
+    If you have the `sslc1.csv` file locally you can do this:
+
+
+- code: |
+    df = pd.read_csv('sslc1.csv', sep=';', na_values='AA')
+    df.head()
+
+  id: 60
+
+- code: |
+    df.describe()
+
+  id: 61
+
+- code: |
+    df['pass'].value_counts()
+
+  id: 62
+
+- code: |
+    df.groupby('region')['pass'].value_counts()
+
+  id: 63
+
+- code: |
+    df.plot.hist(y='sl')
+
+  id: 64
+
+- markdown: |
+    ## Pivoting
+    
+    - Powerful operation to group the data
+    - Performs a multi-dimensional summarization of the data
+    
+    Here is a simple example
+
+
+- code: |
+    pd.pivot_table(df, index=['region'])
+
+  id: 65
+
+- markdown: |
+    The default aggregation function here is an average, i.e. `np.average`.
+
+
+- code: |
+    # This is not useful but tells you how this can be changed.
+    pd.pivot_table(df, index=['region'], aggfunc=np.sum)
+
+  id: 66
+
+- markdown: |
+    More information
+    ==================
+    
+    - http://pandas.pydata.org
+    - Go through the tutorials here:
+    
+    http://nbviewer.jupyter.org/github/jvns/pandas-cookbook/tree/v0.1/cookbook/
+    
+    - Go over chapter 1 to 7.
+    
+    Excellent material on pivot tables with pandas 
+    
+    - https://pbpython.com/pandas-pivot-table-explained.html
+    
+    An excellent book on data science related tools has a nice section on pivot tables.
+    
+    - https://jakevdp.github.io/PythonDataScienceHandbook/03.09-pivot-tables.html
+    
+    Also has other material on pandas
+    
+    - https://jakevdp.github.io/PythonDataScienceHandbook/03.00-introduction-to-pandas.html
+    
+    The notebooks can also be edited live if you wish.
+
+
+- code: |
+
+
+  id: 67
+
+# The lines below here may be deleted if you do not need them.
+# ---------------------------------------------------------------------------
+metadata:
+  kernelspec:
+    display_name: Python 3
+    language: python
+    name: python3
+  language_info:
+    codemirror_mode:
+      name: ipython
+      version: 3
+    file_extension: .py
+    mimetype: text/x-python
+    name: python
+    nbconvert_exporter: python
+    pygments_lexer: ipython3
+    version: 3.6.0
+nbformat: 4
+nbformat_minor: 1
+
+# ---------------------------------------------------------------------------
+data:
+  [{execution_count: 1, outputs: []}, {execution_count: null, outputs: []}, {execution_count: null,
+      outputs: []}, {execution_count: null, outputs: []}, {execution_count: null, outputs: []},
+    {execution_count: null, outputs: []}, {execution_count: null, outputs: []}, {execution_count: null,
+      outputs: []}, {execution_count: null, outputs: []}, {execution_count: null, outputs: []},
+    {execution_count: null, outputs: []}, {execution_count: null, outputs: []}, {execution_count: null,
+      outputs: []}, {execution_count: null, outputs: []}, {execution_count: null, outputs: []},
+    {execution_count: null, outputs: []}, {execution_count: null, outputs: []}, {execution_count: null,
+      outputs: []}, {execution_count: null, outputs: []}, {execution_count: null, outputs: []},
+    {execution_count: null, outputs: []}, {execution_count: null, outputs: []}, {execution_count: null,
+      outputs: []}, {execution_count: null, outputs: []}, {execution_count: null, outputs: []},
+    {execution_count: null, outputs: []}, {execution_count: null, outputs: []}, {execution_count: null,
+      outputs: []}, {execution_count: null, outputs: []}, {execution_count: null, outputs: []},
+    {execution_count: null, outputs: []}, {execution_count: null, outputs: []}, {execution_count: null,
+      outputs: []}, {execution_count: null, outputs: []}, {execution_count: null, outputs: []},
+    {execution_count: null, outputs: []}, {execution_count: null, outputs: []}, {execution_count: null,
+      outputs: []}, {execution_count: null, outputs: []}, {execution_count: null, outputs: []},
+    {execution_count: null, outputs: []}, {execution_count: null, outputs: []}, {execution_count: null,
+      outputs: []}, {execution_count: null, outputs: []}, {execution_count: null, outputs: []},
+    {execution_count: 56, outputs: []}, {execution_count: 62, outputs: [{data: {text/html: "<div>\n\
+              <style scoped>\n    .dataframe tbody tr th:only-of-type {\n        vertical-align:\
+              \ middle;\n    }\n\n    .dataframe tbody tr th {\n        vertical-align:\
+              \ top;\n    }\n\n    .dataframe thead th {\n        text-align: right;\n\
+              \    }\n</style>\n<table border=\"1\" class=\"dataframe\">\n  <thead>\n\
+              \    <tr style=\"text-align: right;\">\n      <th></th>\n      <th>region</th>\n\
+              \      <th>roll_number</th>\n      <th>name</th>\n      <th>fl</th>\n\
+              \      <th>sl</th>\n      <th>math</th>\n      <th>sci</th>\n      <th>ss</th>\n\
+              \      <th>total</th>\n      <th>pass</th>\n      <th>withheld</th>\n\
+              \      <th>extra</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n  \
+              \    <th>0</th>\n      <td>A</td>\n      <td>10001</td>\n      <td>T N</td>\n\
+              \      <td>53</td>\n      <td>36</td>\n      <td>28</td>\n      <td>16</td>\n\
+              \      <td>44</td>\n      <td>177</td>\n      <td>NaN</td>\n      <td>NaN</td>\n\
+              \      <td>NaN</td>\n    </tr>\n    <tr>\n      <th>1</th>\n      <td>A</td>\n\
+              \      <td>10002</td>\n      <td>A R</td>\n      <td>58</td>\n      <td>37</td>\n\
+              \      <td>42</td>\n      <td>35</td>\n      <td>40</td>\n      <td>212</td>\n\
+              \      <td>P</td>\n      <td>NaN</td>\n      <td>NaN</td>\n    </tr>\n\
+              \    <tr>\n      <th>2</th>\n      <td>A</td>\n      <td>10003</td>\n\
+              \      <td>A M</td>\n      <td>72</td>\n      <td>56</td>\n      <td>71</td>\n\
+              \      <td>55</td>\n      <td>70</td>\n      <td>324</td>\n      <td>P</td>\n\
+              \      <td>NaN</td>\n      <td>NaN</td>\n    </tr>\n    <tr>\n      <th>3</th>\n\
+              \      <td>A</td>\n      <td>10004</td>\n      <td>S A</td>\n      <td>87</td>\n\
+              \      <td>64</td>\n      <td>83</td>\n      <td>58</td>\n      <td>65</td>\n\
+              \      <td>357</td>\n      <td>P</td>\n      <td>NaN</td>\n      <td>NaN</td>\n\
+              \    </tr>\n    <tr>\n      <th>4</th>\n      <td>A</td>\n      <td>10005</td>\n\
+              \      <td>N A</td>\n      <td>59</td>\n      <td>45</td>\n      <td>50</td>\n\
+              \      <td>35</td>\n      <td>48</td>\n      <td>237</td>\n      <td>P</td>\n\
+              \      <td>NaN</td>\n      <td>NaN</td>\n    </tr>\n  </tbody>\n</table>\n\
+              </div>", text/plain: '  region  roll_number name  fl  sl  math  sci  ss  total
+              pass  withheld  extra
+  
+              0      A        10001  T N  53  36    28   16  44    177  NaN       NaN    NaN
+  
+              1      A        10002  A R  58  37    42   35  40    212    P       NaN    NaN
+  
+              2      A        10003  A M  72  56    71   55  70    324    P       NaN    NaN
+  
+              3      A        10004  S A  87  64    83   58  65    357    P       NaN    NaN
+  
+              4      A        10005  N A  59  45    50   35  48    237    P       NaN    NaN'},
+          execution_count: 62, metadata: {}, output_type: execute_result}]}, {execution_count: 66,
+      outputs: []}, {execution_count: 68, outputs: [{data: {text/html: "<div>\n<style\
+              \ scoped>\n    .dataframe tbody tr th:only-of-type {\n        vertical-align:\
+              \ middle;\n    }\n\n    .dataframe tbody tr th {\n        vertical-align:\
+              \ top;\n    }\n\n    .dataframe thead th {\n        text-align: right;\n\
+              \    }\n</style>\n<table border=\"1\" class=\"dataframe\">\n  <thead>\n\
+              \    <tr style=\"text-align: right;\">\n      <th></th>\n      <th>region</th>\n\
+              \      <th>roll_number</th>\n      <th>name</th>\n      <th>fl</th>\n\
+              \      <th>sl</th>\n      <th>math</th>\n      <th>sci</th>\n      <th>ss</th>\n\
+              \      <th>total</th>\n      <th>pass</th>\n      <th>withheld</th>\n\
+              \      <th>extra</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n  \
+              \    <th>0</th>\n      <td>A</td>\n      <td>10001</td>\n      <td>T N</td>\n\
+              \      <td>NaN</td>\n      <td>36</td>\n      <td>28</td>\n      <td>16</td>\n\
+              \      <td>44</td>\n      <td>177</td>\n      <td>NaN</td>\n      <td>NaN</td>\n\
+              \      <td>NaN</td>\n    </tr>\n    <tr>\n      <th>1</th>\n      <td>A</td>\n\
+              \      <td>10002</td>\n      <td>A R</td>\n      <td>58.0</td>\n     \
+              \ <td>37</td>\n      <td>42</td>\n      <td>35</td>\n      <td>40</td>\n\
+              \      <td>212</td>\n      <td>P</td>\n      <td>NaN</td>\n      <td>NaN</td>\n\
+              \    </tr>\n    <tr>\n      <th>2</th>\n      <td>A</td>\n      <td>10003</td>\n\
+              \      <td>A M</td>\n      <td>72.0</td>\n      <td>56</td>\n      <td>71</td>\n\
+              \      <td>55</td>\n      <td>70</td>\n      <td>324</td>\n      <td>P</td>\n\
+              \      <td>NaN</td>\n      <td>NaN</td>\n    </tr>\n    <tr>\n      <th>3</th>\n\
+              \      <td>A</td>\n      <td>10004</td>\n      <td>S A</td>\n      <td>87.0</td>\n\
+              \      <td>64</td>\n      <td>83</td>\n      <td>58</td>\n      <td>65</td>\n\
+              \      <td>357</td>\n      <td>P</td>\n      <td>NaN</td>\n      <td>NaN</td>\n\
+              \    </tr>\n    <tr>\n      <th>4</th>\n      <td>A</td>\n      <td>10005</td>\n\
+              \      <td>N A</td>\n      <td>59.0</td>\n      <td>45</td>\n      <td>50</td>\n\
+              \      <td>35</td>\n      <td>48</td>\n      <td>237</td>\n      <td>P</td>\n\
+              \      <td>NaN</td>\n      <td>NaN</td>\n    </tr>\n  </tbody>\n</table>\n\
+              </div>", text/plain: "  region  roll_number name    fl  sl  math  sci\
+              \  ss  total pass  withheld  \\\n0      A        10001  T N   NaN  36\
+              \    28   16  44    177  NaN       NaN   \n1      A        10002  A R\
+              \  58.0  37    42   35  40    212    P       NaN   \n2      A        10003\
+              \  A M  72.0  56    71   55  70    324    P       NaN   \n3      A   \
+              \     10004  S A  87.0  64    83   58  65    357    P       NaN   \n4\
+              \      A        10005  N A  59.0  45    50   35  48    237    P      \
+              \ NaN   \n\n   extra  \n0    NaN  \n1    NaN  \n2    NaN  \n3    NaN \
+              \ \n4    NaN  "}, execution_count: 68, metadata: {}, output_type: execute_result}]},
+    {execution_count: 67, outputs: [{data: {text/html: "<div>\n<style scoped>\n    .dataframe\
+              \ tbody tr th:only-of-type {\n        vertical-align: middle;\n    }\n\
+              \n    .dataframe tbody tr th {\n        vertical-align: top;\n    }\n\n\
+              \    .dataframe thead th {\n        text-align: right;\n    }\n</style>\n\
+              <table border=\"1\" class=\"dataframe\">\n  <thead>\n    <tr style=\"\
+              text-align: right;\">\n      <th></th>\n      <th>roll_number</th>\n \
+              \     <th>fl</th>\n      <th>sl</th>\n      <th>math</th>\n      <th>sci</th>\n\
+              \      <th>ss</th>\n      <th>total</th>\n      <th>withheld</th>\n  \
+              \    <th>extra</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n    \
+              \  <th>count</th>\n      <td>40.000000</td>\n      <td>39.000000</td>\n\
+              \      <td>40.000000</td>\n      <td>40.000000</td>\n      <td>40.000000</td>\n\
+              \      <td>40.000000</td>\n      <td>40.000000</td>\n      <td>0.0</td>\n\
+              \      <td>0.0</td>\n    </tr>\n    <tr>\n      <th>mean</th>\n      <td>27708.800000</td>\n\
+              \      <td>73.230769</td>\n      <td>56.375000</td>\n      <td>65.425000</td>\n\
+              \      <td>51.825000</td>\n      <td>63.500000</td>\n      <td>309.850000</td>\n\
+              \      <td>NaN</td>\n      <td>NaN</td>\n    </tr>\n    <tr>\n      <th>std</th>\n\
+              \      <td>29338.523097</td>\n      <td>12.616742</td>\n      <td>15.903052</td>\n\
+              \      <td>23.915329</td>\n      <td>18.092196</td>\n      <td>17.558693</td>\n\
+              \      <td>81.745869</td>\n      <td>NaN</td>\n      <td>NaN</td>\n  \
+              \  </tr>\n    <tr>\n      <th>min</th>\n      <td>10001.000000</td>\n\
+              \      <td>43.000000</td>\n      <td>36.000000</td>\n      <td>25.000000</td>\n\
+              \      <td>16.000000</td>\n      <td>35.000000</td>\n      <td>161.000000</td>\n\
+              \      <td>NaN</td>\n      <td>NaN</td>\n    </tr>\n    <tr>\n      <th>25%</th>\n\
+              \      <td>19495.750000</td>\n      <td>65.500000</td>\n      <td>44.000000</td>\n\
+              \      <td>44.750000</td>\n      <td>36.750000</td>\n      <td>50.000000</td>\n\
+              \      <td>247.000000</td>\n      <td>NaN</td>\n      <td>NaN</td>\n \
+              \   </tr>\n    <tr>\n      <th>50%</th>\n      <td>27395.500000</td>\n\
+              \      <td>75.000000</td>\n      <td>53.500000</td>\n      <td>61.500000</td>\n\
+              \      <td>52.000000</td>\n      <td>61.500000</td>\n      <td>304.000000</td>\n\
+              \      <td>NaN</td>\n      <td>NaN</td>\n    </tr>\n    <tr>\n      <th>75%</th>\n\
+              \      <td>29276.250000</td>\n      <td>83.000000</td>\n      <td>70.250000</td>\n\
+              \      <td>86.750000</td>\n      <td>60.250000</td>\n      <td>74.500000</td>\n\
+              \      <td>357.000000</td>\n      <td>NaN</td>\n      <td>NaN</td>\n \
+              \   </tr>\n    <tr>\n      <th>max</th>\n      <td>199976.000000</td>\n\
+              \      <td>90.000000</td>\n      <td>90.000000</td>\n      <td>100.000000</td>\n\
+              \      <td>86.000000</td>\n      <td>97.000000</td>\n      <td>456.000000</td>\n\
+              \      <td>NaN</td>\n      <td>NaN</td>\n    </tr>\n  </tbody>\n</table>\n\
+              </div>", text/plain: "         roll_number         fl         sl     \
+              \   math        sci         ss  \\\ncount      40.000000  39.000000  40.000000\
+              \   40.000000  40.000000  40.000000   \nmean    27708.800000  73.230769\
+              \  56.375000   65.425000  51.825000  63.500000   \nstd     29338.523097\
+              \  12.616742  15.903052   23.915329  18.092196  17.558693   \nmin    \
+              \ 10001.000000  43.000000  36.000000   25.000000  16.000000  35.000000\
+              \   \n25%     19495.750000  65.500000  44.000000   44.750000  36.750000\
+              \  50.000000   \n50%     27395.500000  75.000000  53.500000   61.500000\
+              \  52.000000  61.500000   \n75%     29276.250000  83.000000  70.250000\
+              \   86.750000  60.250000  74.500000   \nmax    199976.000000  90.000000\
+              \  90.000000  100.000000  86.000000  97.000000   \n\n            total\
+              \  withheld  extra  \ncount   40.000000       0.0    0.0  \nmean   309.850000\
+              \       NaN    NaN  \nstd     81.745869       NaN    NaN  \nmin    161.000000\
+              \       NaN    NaN  \n25%    247.000000       NaN    NaN  \n50%    304.000000\
+              \       NaN    NaN  \n75%    357.000000       NaN    NaN  \nmax    456.000000\
+              \       NaN    NaN  "}, execution_count: 67, metadata: {}, output_type: execute_result}]},
+    {execution_count: 69, outputs: []}, {execution_count: null, outputs: []}, {execution_count: null,
+      outputs: []}, {execution_count: null, outputs: []}, {execution_count: 70, outputs: [
+        {data: {text/html: "<div>\n<style scoped>\n    .dataframe tbody tr th:only-of-type\
+              \ {\n        vertical-align: middle;\n    }\n\n    .dataframe tbody tr\
+              \ th {\n        vertical-align: top;\n    }\n\n    .dataframe thead th\
+              \ {\n        text-align: right;\n    }\n</style>\n<table border=\"1\"\
+              \ class=\"dataframe\">\n  <thead>\n    <tr style=\"text-align: right;\"\
+              >\n      <th></th>\n      <th>region;roll_number;name;fl;sl;math;sci;ss;total;pass;withheld;extra</th>\n\
+              \    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <th>0</th>\n      <td>A;010001;T\
+              \ N;053;036;28;16;44;177;;;</td>\n    </tr>\n    <tr>\n      <th>1</th>\n\
+              \      <td>A;010002;A R;058;037;42;35;40;212;P;;</td>\n    </tr>\n   \
+              \ <tr>\n      <th>2</th>\n      <td>A;010003;A M;072;056;71;55;70;324;P;;</td>\n\
+              \    </tr>\n    <tr>\n      <th>3</th>\n      <td>A;010004;S A;087;064;83;58;65;357;P;;</td>\n\
+              \    </tr>\n    <tr>\n      <th>4</th>\n      <td>A;010005;N A;059;045;50;35;48;237;P;;</td>\n\
+              \    </tr>\n  </tbody>\n</table>\n</div>", text/plain: "  region;roll_number;name;fl;sl;math;sci;ss;total;pass;withheld;extra\n\
+              0               A;010001;T N;053;036;28;16;44;177;;;                 \n\
+              1              A;010002;A R;058;037;42;35;40;212;P;;                 \n\
+              2              A;010003;A M;072;056;71;55;70;324;P;;                 \n\
+              3              A;010004;S A;087;064;83;58;65;357;P;;                 \n\
+              4              A;010005;N A;059;045;50;35;48;237;P;;                 "},
+          execution_count: 70, metadata: {}, output_type: execute_result}]}, {execution_count: 71,
+      outputs: [{data: {text/html: "<div>\n<style scoped>\n    .dataframe tbody tr th:only-of-type\
+              \ {\n        vertical-align: middle;\n    }\n\n    .dataframe tbody tr\
+              \ th {\n        vertical-align: top;\n    }\n\n    .dataframe thead th\
+              \ {\n        text-align: right;\n    }\n</style>\n<table border=\"1\"\
+              \ class=\"dataframe\">\n  <thead>\n    <tr style=\"text-align: right;\"\
+              >\n      <th></th>\n      <th>region</th>\n      <th>roll_number</th>\n\
+              \      <th>name</th>\n      <th>fl</th>\n      <th>sl</th>\n      <th>math</th>\n\
+              \      <th>sci</th>\n      <th>ss</th>\n      <th>total</th>\n      <th>pass</th>\n\
+              \      <th>withheld</th>\n      <th>extra</th>\n    </tr>\n  </thead>\n\
+              \  <tbody>\n    <tr>\n      <th>0</th>\n      <td>A</td>\n      <td>10001</td>\n\
+              \      <td>T N</td>\n      <td>53</td>\n      <td>36</td>\n      <td>28</td>\n\
+              \      <td>16</td>\n      <td>44</td>\n      <td>177</td>\n      <td>NaN</td>\n\
+              \      <td>NaN</td>\n      <td>NaN</td>\n    </tr>\n    <tr>\n      <th>1</th>\n\
+              \      <td>A</td>\n      <td>10002</td>\n      <td>A R</td>\n      <td>58</td>\n\
+              \      <td>37</td>\n      <td>42</td>\n      <td>35</td>\n      <td>40</td>\n\
+              \      <td>212</td>\n      <td>P</td>\n      <td>NaN</td>\n      <td>NaN</td>\n\
+              \    </tr>\n    <tr>\n      <th>2</th>\n      <td>A</td>\n      <td>10003</td>\n\
+              \      <td>A M</td>\n      <td>72</td>\n      <td>56</td>\n      <td>71</td>\n\
+              \      <td>55</td>\n      <td>70</td>\n      <td>324</td>\n      <td>P</td>\n\
+              \      <td>NaN</td>\n      <td>NaN</td>\n    </tr>\n    <tr>\n      <th>3</th>\n\
+              \      <td>A</td>\n      <td>10004</td>\n      <td>S A</td>\n      <td>87</td>\n\
+              \      <td>64</td>\n      <td>83</td>\n      <td>58</td>\n      <td>65</td>\n\
+              \      <td>357</td>\n      <td>P</td>\n      <td>NaN</td>\n      <td>NaN</td>\n\
+              \    </tr>\n    <tr>\n      <th>4</th>\n      <td>A</td>\n      <td>10005</td>\n\
+              \      <td>N A</td>\n      <td>59</td>\n      <td>45</td>\n      <td>50</td>\n\
+              \      <td>35</td>\n      <td>48</td>\n      <td>237</td>\n      <td>P</td>\n\
+              \      <td>NaN</td>\n      <td>NaN</td>\n    </tr>\n  </tbody>\n</table>\n\
+              </div>", text/plain: '  region  roll_number name  fl  sl  math  sci  ss  total
+              pass  withheld  extra
+  
+              0      A        10001  T N  53  36    28   16  44    177  NaN       NaN    NaN
+  
+              1      A        10002  A R  58  37    42   35  40    212    P       NaN    NaN
+  
+              2      A        10003  A M  72  56    71   55  70    324    P       NaN    NaN
+  
+              3      A        10004  S A  87  64    83   58  65    357    P       NaN    NaN
+  
+              4      A        10005  N A  59  45    50   35  48    237    P       NaN    NaN'},
+          execution_count: 71, metadata: {}, output_type: execute_result}]}, {execution_count: 72,
+      outputs: [{data: {text/plain: 'C    13
+  
+              B     9
+  
+              A     9
+  
+              D     9
+  
+              Name: region, dtype: int64'}, execution_count: 72, metadata: {}, output_type: execute_result}]},
+    {execution_count: 73, outputs: [{data: {text/plain: <matplotlib.axes._subplots.AxesSubplot
+              at 0x11ee08828>}, execution_count: 73, metadata: {}, output_type: execute_result},
+        {data: {image/png: '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
+  
+              ', text/plain: <Figure size 432x288 with 1 Axes>}, metadata: {needs_background: light},
+          output_type: display_data}]}, {execution_count: 3, outputs: []}, {execution_count: 4,
+      outputs: []}, {execution_count: null, outputs: []}, {execution_count: null, outputs: []},
+    {execution_count: 14, outputs: [{data: {text/plain: 'P    159072
+  
+              Name: pass, dtype: int64'}, execution_count: 14, metadata: {}, output_type: execute_result}]},
+    {execution_count: 18, outputs: [{data: {text/plain: 'region  pass
+  
+              A       P       31013
+  
+              B       P       36202
+  
+              C       P       26681
+  
+              D       P       22080
+  
+              E       P       20880
+  
+              F       P       22216
+  
+              Name: pass, dtype: int64'}, execution_count: 18, metadata: {}, output_type: execute_result}]},
+    {execution_count: null, outputs: []}, {execution_count: 7, outputs: [{data: {text/html: "<div>\n\
+              <style scoped>\n    .dataframe tbody tr th:only-of-type {\n        vertical-align:\
+              \ middle;\n    }\n\n    .dataframe tbody tr th {\n        vertical-align:\
+              \ top;\n    }\n\n    .dataframe thead th {\n        text-align: right;\n\
+              \    }\n</style>\n<table border=\"1\" class=\"dataframe\">\n  <thead>\n\
+              \    <tr style=\"text-align: right;\">\n      <th></th>\n      <th>fl</th>\n\
+              \      <th>math</th>\n      <th>roll_number</th>\n      <th>sci</th>\n\
+              \      <th>sl</th>\n      <th>ss</th>\n      <th>total</th>\n    </tr>\n\
+              \    <tr>\n      <th>region</th>\n      <th></th>\n      <th></th>\n \
+              \     <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n \
+              \     <th></th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <th>A</th>\n\
+              \      <td>54.156497</td>\n      <td>63.149551</td>\n      <td>105609.081674</td>\n\
+              \      <td>50.432756</td>\n      <td>73.686377</td>\n      <td>62.453164</td>\n\
+              \      <td>303.789099</td>\n    </tr>\n    <tr>\n      <th>B</th>\n  \
+              \    <td>55.239836</td>\n      <td>63.638822</td>\n      <td>105746.142280</td>\n\
+              \      <td>52.747653</td>\n      <td>74.455093</td>\n      <td>64.448891</td>\n\
+              \      <td>310.482572</td>\n    </tr>\n    <tr>\n      <th>C</th>\n  \
+              \    <td>54.080346</td>\n      <td>62.733572</td>\n      <td>124099.117879</td>\n\
+              \      <td>50.344222</td>\n      <td>74.076716</td>\n      <td>64.647672</td>\n\
+              \      <td>305.822393</td>\n    </tr>\n    <tr>\n      <th>D</th>\n  \
+              \    <td>52.968296</td>\n      <td>62.589993</td>\n      <td>86303.811307</td>\n\
+              \      <td>51.186670</td>\n      <td>73.665423</td>\n      <td>64.119590</td>\n\
+              \      <td>304.428818</td>\n    </tr>\n    <tr>\n      <th>E</th>\n  \
+              \    <td>52.085389</td>\n      <td>62.724153</td>\n      <td>97040.595682</td>\n\
+              \      <td>48.743782</td>\n      <td>72.772392</td>\n      <td>61.520147</td>\n\
+              \      <td>297.731881</td>\n    </tr>\n    <tr>\n      <th>F</th>\n  \
+              \    <td>53.396229</td>\n      <td>61.694766</td>\n      <td>105989.116946</td>\n\
+              \      <td>49.735712</td>\n      <td>72.041425</td>\n      <td>61.167210</td>\n\
+              \      <td>297.852010</td>\n    </tr>\n  </tbody>\n</table>\n</div>",
+            text/plain: "               fl       math    roll_number        sci    \
+              \     sl         ss  \\\nregion                                      \
+              \                                   \nA       54.156497  63.149551  105609.081674\
+              \  50.432756  73.686377  62.453164   \nB       55.239836  63.638822  105746.142280\
+              \  52.747653  74.455093  64.448891   \nC       54.080346  62.733572  124099.117879\
+              \  50.344222  74.076716  64.647672   \nD       52.968296  62.589993  \
+              \ 86303.811307  51.186670  73.665423  64.119590   \nE       52.085389\
+              \  62.724153   97040.595682  48.743782  72.772392  61.520147   \nF   \
+              \    53.396229  61.694766  105989.116946  49.735712  72.041425  61.167210\
+              \   \n\n             total  \nregion              \nA       303.789099\
+              \  \nB       310.482572  \nC       305.822393  \nD       304.428818  \n\
+              E       297.731881  \nF       297.852010  "}, execution_count: 7, metadata: {},
+          output_type: execute_result}]}, {execution_count: 8, outputs: [{data: {text/html: "<div>\n\
+              <style scoped>\n    .dataframe tbody tr th:only-of-type {\n        vertical-align:\
+              \ middle;\n    }\n\n    .dataframe tbody tr th {\n        vertical-align:\
+              \ top;\n    }\n\n    .dataframe thead th {\n        text-align: right;\n\
+              \    }\n</style>\n<table border=\"1\" class=\"dataframe\">\n  <thead>\n\
+              \    <tr style=\"text-align: right;\">\n      <th></th>\n      <th>extra</th>\n\
+              \      <th>fl</th>\n      <th>math</th>\n      <th>roll_number</th>\n\
+              \      <th>sci</th>\n      <th>sl</th>\n      <th>ss</th>\n      <th>total</th>\n\
+              \    </tr>\n    <tr>\n      <th>region</th>\n      <th></th>\n      <th></th>\n\
+              \      <th></th>\n      <th></th>\n      <th></th>\n      <th></th>\n\
+              \      <th></th>\n      <th></th>\n    </tr>\n  </thead>\n  <tbody>\n\
+              \    <tr>\n      <th>A</th>\n      <td>0.0</td>\n      <td>1970430.0</td>\n\
+              \      <td>2297949.0</td>\n      <td>3844276182</td>\n      <td>1835248.0</td>\n\
+              \      <td>2681742.0</td>\n      <td>2272858.0</td>\n      <td>11058227.0</td>\n\
+              \    </tr>\n    <tr>\n      <th>B</th>\n      <td>0.0</td>\n      <td>2282731.0</td>\n\
+              \      <td>2630638.0</td>\n      <td>4371651268</td>\n      <td>2180377.0</td>\n\
+              \      <td>3078048.0</td>\n      <td>2663866.0</td>\n      <td>12835660.0</td>\n\
+              \    </tr>\n    <tr>\n      <th>C</th>\n      <td>0.0</td>\n      <td>1689470.0</td>\n\
+              \      <td>1960926.0</td>\n      <td>3879462524</td>\n      <td>1573559.0</td>\n\
+              \      <td>2315490.0</td>\n      <td>2020563.0</td>\n      <td>9560008.0</td>\n\
+              \    </tr>\n    <tr>\n      <th>D</th>\n      <td>0.0</td>\n      <td>1348255.0</td>\n\
+              \      <td>1593729.0</td>\n      <td>2198158074</td>\n      <td>1303315.0</td>\n\
+              \      <td>1875890.0</td>\n      <td>1632613.0</td>\n      <td>7753802.0</td>\n\
+              \    </tr>\n    <tr>\n      <th>E</th>\n      <td>0.0</td>\n      <td>1290103.0</td>\n\
+              \      <td>1553740.0</td>\n      <td>2404665961</td>\n      <td>1207286.0</td>\n\
+              \      <td>1802936.0</td>\n      <td>1523731.0</td>\n      <td>7377796.0</td>\n\
+              \    </tr>\n    <tr>\n      <th>F</th>\n      <td>0.0</td>\n      <td>1407578.0</td>\n\
+              \      <td>1629112.0</td>\n      <td>2799596535</td>\n      <td>1313172.0</td>\n\
+              \      <td>1902542.0</td>\n      <td>1615059.0</td>\n      <td>7867463.0</td>\n\
+              \    </tr>\n  </tbody>\n</table>\n</div>", text/plain: "        extra\
+              \         fl       math  roll_number        sci         sl  \\\nregion\
+              \                                                                   \n\
+              A         0.0  1970430.0  2297949.0   3844276182  1835248.0  2681742.0\
+              \   \nB         0.0  2282731.0  2630638.0   4371651268  2180377.0  3078048.0\
+              \   \nC         0.0  1689470.0  1960926.0   3879462524  1573559.0  2315490.0\
+              \   \nD         0.0  1348255.0  1593729.0   2198158074  1303315.0  1875890.0\
+              \   \nE         0.0  1290103.0  1553740.0   2404665961  1207286.0  1802936.0\
+              \   \nF         0.0  1407578.0  1629112.0   2799596535  1313172.0  1902542.0\
+              \   \n\n               ss       total  \nregion                      \
+              \   \nA       2272858.0  11058227.0  \nB       2663866.0  12835660.0 \
+              \ \nC       2020563.0   9560008.0  \nD       1632613.0   7753802.0  \n\
+              E       1523731.0   7377796.0  \nF       1615059.0   7867463.0  "}, execution_count: 8,
+          metadata: {}, output_type: execute_result}]}, {execution_count: null, outputs: []}]
+
