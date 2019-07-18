@@ -1,0 +1,359 @@
+cells:
+
+- markdown: |
+    # Making GUIs with Tkinter
+
+    - Widgets
+    - Geometry management
+       - Packing
+       - Layout
+       - Events
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+
+- markdown: |
+    ## Widgets
+
+    - Basic elements of the UI toolkit
+    - Label
+    - Button
+    - Entry
+    - ComboBox
+    - CheckButton
+    - Radio
+    - ScrolledText
+    - SpinBox
+    - MenuBar
+    - Menu
+    - Canvas
+    - Frame
+    - ...
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+
+- code: |
+    # Starting up on IPython/Jupyter
+    %gui tk
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    import tkinter as tk
+
+- code: |
+    root = tk.Tk()
+    l = tk.Label(root, text='Hello world!')
+    l.pack()
+
+
+- code: |
+    root = tk.Tk()
+    f = tk.Frame(master=root)
+    f.pack()
+    l = tk.Label(f, text='Hello world!')
+    l.pack()
+
+- code: |
+    f.destroy()
+    # or
+    f.quit()
+
+- markdown: |
+    ## Doing more with widgets
+
+    - Create a simple window with label and button
+    - Configuration of the widgets
+    - When button is clicked do something.
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    root = tk.Tk()
+    f = tk.Frame(master=root)
+    f.pack()
+    l = tk.Label(f, text='Hello world!')
+    l.pack()
+    b = tk.Button(f, text='Click me!', fg='red')
+    b.pack()
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    # Configuring the widgets
+    l['fg'] = 'red'
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    l['text'] = 'Hello'
+
+- code: |
+    l.config(text='Hello world!')
+
+
+- code: |
+    root = tk.Tk()
+    f = tk.Frame(master=root)
+    f.pack()
+    l = tk.Label(f, text='Hello world!')
+    l.pack()
+    b = tk.Button(f, text='Click me!', fg='red')
+    b.pack()
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    # Doing something on clicked.
+    def clicked():
+        print("Hello")
+
+    b.config(command=clicked)
+    # or
+    #b.configure(command=clicked)
+
+
+- markdown: |
+    ## Exercise
+
+    - Write code to change the label's text and fg color on clicked
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    # Solution
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+
+- markdown: |
+    ## Creating an application
+
+    - Create a standalone application with Tkinter
+    - Must explicitly start the mainloop.
+
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    import tkinter as tk
+    root = tk.Tk()
+    f = tk.Frame(master=root)
+    f.pack()
+    l = tk.Label(f, text='Hello world!')
+    l.pack()
+    def clicked():
+        print("Hello")
+
+    b = tk.Button(f, text='Click me!', fg='red', command=clicked)
+    b.pack()
+
+    root.mainloop()
+
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+
+
+- markdown: |
+    ## Geometry management
+
+    - `pack`
+    - `grid`
+    - `place` -- not covered
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    l.pack?
+
+
+- code: |
+    root = tk.Tk()
+    f = tk.Frame(master=root)
+    f.pack()
+    l = tk.Label(f, text='Hello world!')
+    l.pack(side=tk.LEFT)
+    b = tk.Button(f, text='Click me!', fg='red')
+    b.pack(side=tk.LEFT)
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+
+- code: |
+    l.grid?
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    root = tk.Tk()
+    f = tk.Frame(master=root)
+    f.pack()
+    l = tk.Label(f, text='Hello world!')
+    l.grid(row=0, column=0)
+    b = tk.Button(f, text='Click me!', fg='red')
+    b.grid(row=0, column=1)
+
+
+- markdown: |
+    ## Other useful widgets
+
+    - Entry
+    - Checkbutton
+    - Combobox
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    root = tk.Tk()
+    f = tk.Frame(master=root)
+    f.pack()
+    l = tk.Label(f, text='Enter value')
+    l.grid(row=0, column=0)
+    e = tk.Entry(f, width=10)
+    e.grid(row=0, column=1)
+
+    def clicked():
+        print(e.get())
+    b = tk.Button(f, text='OK', command=clicked)
+    b.grid(row=1, columnspan=2)
+
+    # Use e.set to set the value.
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+
+- code: |
+    import tkinter.ttk as ttk
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    root = tk.Tk()
+    f = tk.Frame(master=root)
+    f.pack()
+
+    cb = ttk.Combobox(f, values=[1, 2, 3, 'hello'])
+    cb.pack()
+
+
+- code: |
+    cb.set(2)
+    cb.current()
+    cb.current(0)
+    cb.get()
+
+
+- markdown: |
+    ## Special variables
+
+    - A variable that is auto-updated based on UI
+    - Update variable, and UI updates.
+    - `StringVar`
+    - `IntVar`
+    - `DoubleVar`
+    - `BooleanVar`
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    root = tk.Tk()
+    f = tk.Frame(master=root)
+    f.pack()
+
+    cvar = tk.BooleanVar()
+    cvar.set(False)
+    cb = tk.Checkbutton(f, text='Select', variable=cvar)
+    cb.pack()
+
+
+- code: |
+    cvar.set(True)
+
+- code: |
+    cvar.set(False)
+
+- code: |
+    cvar.get()
+
+
+- markdown: |
+    ## Events and binding
+
+    - Use the `bind` method on widgets
+    - Pass a callback
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    root = tk.Tk()
+    f = tk.Frame(master=root)
+    f.pack()
+
+    b = tk.Button(f, text='Click me!')
+    b.pack()
+
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+- code: |
+    def on_mouse1(event):
+       print('M1', event)
+
+    def on_mouse2(event):
+       print('M2', event)
+
+    b.bind('<Button-1>', on_mouse1)
+    b.bind('<Button-2>', on_mouse2)
+
+- markdown: |
+    ## More information
+
+    - https://docs.python.org/3/library/tk.html
+    - http://effbot.org/tkinterbook/
+    - https://www.edureka.co/blog/tkinter-tutorial/
+
+  metadata:
+    slideshow:
+      slide_type: slide
