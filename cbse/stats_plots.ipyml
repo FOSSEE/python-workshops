@@ -417,6 +417,19 @@ cells:
     * Use `deg=2` for quadratic functions.
     * ...
 
+- code: |
+    # Showing the results
+    res = np.polyfit(x1, y1, deg=1)
+    # or
+    # scipy.stats.linregress(x1, y1)
+    plot(x1, y1, 'o')
+    plot(x1, res[0]*x1 + res[1]);
+
+  metadata:
+    slideshow:
+      slide_type: slide
+
+
 
 # The lines below here may be deleted if you do not need them.
 # ---------------------------------------------------------------------------
