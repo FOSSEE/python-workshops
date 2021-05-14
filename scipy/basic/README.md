@@ -46,12 +46,11 @@ The following packages need to be installed:
 - Matplotlib
 - Optionally install Mayavi.
 
-On Linux, Windows and Mac OS X it is easiest to install these by installing
-the Enthought Canopy. Download the Canopy Python distribution for your OS and
-architecture from here: https://store.enthought.com/downloads.
+On Linux, Windows and Mac OS X it is easiest to install Python and many other
+useful packages by installing Anaconda. Download the Anaconda Python distribution
+for your OS and architecture from here: https://www.anaconda.com/products/individual. The instructions to install are available here https://docs.anaconda.com/anaconda/install/
 
-You could also use Anaconda or Conda along with the Spyder editor to obtain
-the requirements.
+You can use Anaconda or Conda along with the Spyder editor or the VSCode editor.
 
 On many Linux distributions, these packages are easy to install.
 

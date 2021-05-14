@@ -37,11 +37,10 @@ hands-on session.
 Please install Python 3.x (or 2.7.x if 3.x is not available) for this course.
 
 On Linux, Windows and Mac OS X it is easiest to install Python and many other
-useful packages by installing Canopy. Download the Canopy Python distribution
-for your OS and architecture from here: https://store.enthought.com/downloads .
+useful packages by installing Anaconda. Download the Anaconda Python distribution
+for your OS and architecture from here: https://www.anaconda.com/products/individual. The instructions to install are available here https://docs.anaconda.com/anaconda/install/
 
-You could also use Anaconda or Conda along with the Spyder editor to obtain
-the requirements.
+You can use Anaconda or Conda along with the Spyder editor or the VSCode editor.
 
 On many Linux distributions, Python is already available. We suggest that you
 install Python 3.x and are comfortable with any text editor. Editors that

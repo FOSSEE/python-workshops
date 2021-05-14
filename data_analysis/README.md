@@ -22,7 +22,7 @@ attendees links to some useful material.
 - One should have a Python 3.x installation with the following packages:
     - IPython, scipy, matplotlib
     - pandas, statsmodels
-- Use a reasonable editor, Canopy will work.
+- Use a reasonable editor, Spyder will work.
 - If one desires a more advanced editor, I suggest VS Code
   (https://code.visualstudio.com/) which is free, open source, and very
   powerful.
