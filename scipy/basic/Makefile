@@ -4,7 +4,8 @@
 	pdflatex $*.tex
 	pdflatex $*.tex
 
-SLIDES= 01_intro.pdf 02_prelims.pdf 03_ipython_plotting.pdf \
+SLIDES= 01_intro.pdf 02_prelims.pdf 02a_anaconda.pdf \
+  03_ipython_plotting.pdf \
   04_saving_scripts.pdf \
 	05_lists_arrays.pdf \
 	06_numpy.pdf \
