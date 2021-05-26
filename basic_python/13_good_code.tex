@@ -1,0 +1,357 @@
+\documentclass[14pt,compress]{beamer}
+%\documentclass[draft]{beamer}
+%\documentclass[compress,handout]{beamer}
+%\usepackage{pgfpages}
+%\pgfpagesuselayout{2 on 1}[a4paper,border shrink=5mm]
+
+% Modified from: generic-ornate-15min-45min.de.tex
+\mode<presentation>
+{
+  \usetheme{Warsaw}
+  \useoutertheme{infolines}
+  \setbeamercovered{transparent}
+}
+
+\usepackage[english]{babel}
+\usepackage[latin1]{inputenc}
+%\usepackage{times}
+\usepackage[T1]{fontenc}
+\usepackage{pgf}
+
+% Taken from Fernando's slides.
+\usepackage{ae,aecompl}
+\usepackage{mathpazo,courier,euler}
+\usepackage[scaled=.95]{helvet}
+\usepackage{amsmath}
+
+\definecolor{darkgreen}{rgb}{0,0.5,0}
+
+\usepackage{listings}
+\lstset{language=Python,
+    basicstyle=\ttfamily\bfseries,
+    commentstyle=\color{red}\itshape,
+  stringstyle=\color{darkgreen},
+  showstringspaces=false,
+  keywordstyle=\color{blue}\bfseries}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Macros
+\setbeamercolor{emphbar}{bg=blue!20, fg=black}
+\newcommand{\emphbar}[1]
+{\begin{beamercolorbox}[rounded=true]{emphbar}
+      {#1}
+ \end{beamercolorbox}
+}
+
+\newcommand{\myemph}[1]{\structure{\emph{#1}}}
+\newcommand{\PythonCode}[1]{\lstinline{#1}}
+
+\newcounter{time}
+\setcounter{time}{0}
+\newcommand{\inctime}[1]{\addtocounter{time}{#1}{\tiny \thetime\ m}}
+
+\newcommand{\typ}[1]{\lstinline{#1}}
+
+\newcommand{\kwrd}[1]{ \texttt{\textbf{\color{blue}{#1}}}  }
+
+
+\newcommand\BackgroundPicture[1]{%
+  \setbeamertemplate{background}{%
+      \parbox[c][\paperheight]{\paperwidth}{%
+      \vfill \hfill
+        \pgfimage[width=1.0\paperwidth,height=1.0\paperheight]{#1}
+ \hfill \vfill
+}}}
+
+% For non-wide pictures, set the width so that the height scales
+% appropriately.
+\newcommand\BackgroundPictureWidth[1]{%
+  \setbeamertemplate{background}{%
+      \parbox[c][\paperheight]{\paperwidth}{%
+      \vfill \hfill
+        \pgfimage[width=1.0\paperwidth]{#1}
+ \hfill \vfill
+}}}
+
+% For shorter pictures, set the height so that the width scales
+% appropriately.
+\newcommand\BackgroundPictureHeight[1]{%
+  \setbeamertemplate{background}{%
+      \parbox[c][\paperheight]{\paperwidth}{%
+        \vfill \hfill
+        \pgfimage[height=1.0\paperheight]{#1}
+ \hfill \vfill
+}}}
+
+%%% This is from Fernando's setup.
+% \usepackage{color}
+% \definecolor{orange}{cmyk}{0,0.4,0.8,0.2}
+% % Use and configure listings package for nicely formatted code
+% \usepackage{listings}
+% \lstset{
+%    language=Python,
+%    basicstyle=\small\ttfamily,
+%    commentstyle=\ttfamily\color{blue},
+%    stringstyle=\ttfamily\color{orange},
+%    showstringspaces=false,
+%    breaklines=true,
+%    postbreak = \space\dots
+% }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Title page
+\title[Better code]{Introductory Scientific Computing with
+Python}
+\subtitle{Writing better code}
+
+\author{FOSSEE}
+
+\institute[FOSSEE -- IITB] {Department of Aerospace Engineering\\IIT Bombay}
+\date[] {
+Mumbai, India
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\pgfdeclareimage[height=0.75cm]{iitmlogo}{iitmlogo}
+%\logo{\pgfuseimage{iitmlogo}}
+
+
+%% Delete this, if you do not want the table of contents to pop up at
+%% the beginning of each subsection:
+\AtBeginSubsection[]
+{
+  \begin{frame}<beamer>
+    \frametitle{Outline}
+    \tableofcontents[currentsection,currentsubsection]
+  \end{frame}
+}
+
+\AtBeginSection[]
+{
+  \begin{frame}<beamer>
+    \frametitle{Outline}
+    \tableofcontents[currentsection,currentsubsection]
+  \end{frame}
+}
+
+% If you wish to uncover everything in a step-wise fashion, uncomment
+% the following command:
+%\beamerdefaultoverlayspecification{<+->}
+
+%\includeonlyframes{current,current1,current2,current3,current4,current5,current6}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% DOCUMENT STARTS
+\begin{document}
+
+\begin{frame}
+  \maketitle
+\end{frame}
+
+\begin{frame}
+  \frametitle{Basic tools}
+  \begin{itemize}
+  \item Use a good editor
+  \item Master it
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Editor features}
+  \begin{itemize}
+  \item Command completion
+  \item Documentation
+  \item PEP8
+  \item Linting support
+  \item Jump to source
+  \item Integration with IPython (bonus)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Other handy command line tools}
+  \begin{itemize}
+  \item Don't hesitate to read code
+  \item Learn git and use it
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{The purpose of programming}
+  \Large
+  \begin{quote}
+    Programs must be written for people to read,
+
+    \vspace*{0.5in}
+    \pause
+    and only incidentally for machines to execute.
+
+    \hfill -- Harold Abelson, SICP
+  \end{quote}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Simple guidelines}
+  \begin{itemize}
+  \item Name things well
+  \item Code should be a pleasure to read
+  \item Comments should be superfluous (remove!)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,fragile]
+  \frametitle{Bad variable names}
+
+\begin{lstlisting}
+a = ('jan feb mar apr may jun jul '
+     'aug sep oct nov dec').split()
+
+d = {}
+for i in range(len(a)):
+    d[a[i]] = i + 1
+
+i = input()[:3].lower()
+print(d[i])
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,fragile]
+  \frametitle{Better variable names}
+
+\begin{lstlisting}
+months = ('jan feb mar apr may jun jul'
+        ' aug sep oct nov dec').split()
+
+month2mm = {}
+for i in range(len(months)):
+    month2mm[months[i]] = i + 1
+
+month = input()[:3].lower()
+print(month2mm[month])
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Remove superfluous comments}
+\begin{lstlisting}
+# Store month names.
+months = ('jan feb mar apr may jun jul'
+        ' aug sep oct nov dec').split()
+
+# A dict to map the names to ints
+month2mm = {}
+for i in range(len(months)):
+    month2mm[months[i]] = i + 1
+
+# Get input from user.
+month = input()[:3].lower()
+print(month2mm[month])
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Signs}
+  \begin{itemize}
+  \item A comment signals that things can be clearer
+  \item Cut pasting: begs refactoring and reuse
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Comments}
+\begin{lstlisting}
+# Initializing arrays.
+x, y = np.mgrid[0:1:64j, 0:1:64j]
+phi = sin(x*x + y*y)
+
+# Solving equations
+for i in range(64):
+    for j in range(64):
+        # ...
+
+# Plot results.
+plt.contourf(phi)
+# ...
+
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Use functions}
+\begin{lstlisting}
+def initialize(n=64):
+    x, y = np.mgrid[0:1:64j, 0:1:64j]
+    return sin(x*x + y*y)
+
+def solve(phi):
+    for i in range(64):
+        for j in range(64):
+            # ...
+
+def plot(phi):
+    plt.contourf(phi)
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Reusable code}
+  \begin{itemize}
+  \item Refactor into functions
+  \item Each function does one thing well
+  \item Small functions
+  \item Convert \lstinline{input}s to function + args/kwargs
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{DRY}
+
+  \begin{center}
+    Don't Repeat Yourself
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Don't be overwhelmed}
+  \begin{itemize}
+  \item Start writing
+  \item Don't let the rules dictate terms
+  \item Use these as a guideline
+  \item Remember that coding is iterative
+  \item You should be comfortable throwing code away
+  \end{itemize}
+\end{frame}
+
+
+
+\begin{frame}[fragile]
+  \frametitle{Summary}
+  \begin{itemize}
+  \item Learned how to use basic Python
+  \item Builtin Python data structures
+  \item IPython, numpy, scipy, jupyter notebooks
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{What next?}
+  \begin{itemize}
+  \item Only covered the basics
+  \item Read the official Python tutorial:
+    \url{docs.python.org/tutorial/}
+  \item Advanced Python course
+  \item Additional topics
+
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \centering
+  \Huge
+
+  Thank you!
+\end{frame}
+\end{document}
+
+\end{document}
