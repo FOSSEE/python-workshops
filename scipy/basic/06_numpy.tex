@@ -197,23 +197,15 @@ Out[]: array([3, 5, 7, 9])
 In []: a*b
 Out[]: array([2, 6, 12, 20])
 In []: a/b
+Out[]: array([0.5, 0.666...7, 0.75, 0.8])
+In []: a//b
 Out[]: array([0, 0, 0, 0])
 \end{lstlisting}
   \begin{itemize}
   \item Operations are \alert{element-wise}
-  \item Types matter (only on Python 2.x)
+  \item Types matter
   \end{itemize}
   \inctime{10}
-\end{frame}
-
-\begin{frame}[fragile]
-  \frametitle{Data type matters}
-  Try again with this:
-\begin{lstlisting}
-In []: a = array([1.,2,3,4])
-In []: a/b
-\end{lstlisting}
-  This can happen on Python 2.x, so beware
 \end{frame}
 
 \begin{frame}[fragile]
@@ -232,7 +224,7 @@ In []: print(x[0], x[-1])
 \end{frame}
 
 \begin{frame}[fragile]
-    \frametitle{\typ{size, shape, rank} etc.}
+    \frametitle{\typ{size, shape} etc.}
 \vspace*{-8pt}
 \begin{lstlisting}
 In []: x = array([1., 2, 3, 4])
@@ -242,8 +234,6 @@ In []: x.dtype
 dtype('float64')
 In []: x.shape
 Out[] (4,)
-In []: rank(x)
-Out[]: 1
 In []: x.itemsize
 Out[]: 8
 \end{lstlisting}
